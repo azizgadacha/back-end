@@ -7,161 +7,39 @@ const jwt =require( 'jsonwebtoken');
 const mongoose =require("mongoose");
 const { checkToken } =require( '../config/safeRoutes');
 const User =require( '../model/user');
-const activeSession =require( '../model/activeSession');
+const login =require( '../controller/login');
+const edituser =require( '../controller/edituser');
+const getall =require( '../controller/gelall');
+const registre =require( '../controller/registre');
+
+const logout =require( '../controller/logout');
+
 
 
 // eslint-disable-next-line new-cap
 const router = express.Router();
 // Route: <HOST>:PORT/api/users/
 
-const userSchema = Joi.object().keys({
-
-    email: Joi.string().email().required(),
-    username: Joi.string().alphanum().min(4).max(15)
-        .optional(),
-    password: Joi.string().required(),
-});
-
-router.post('/register', async (req, res) => {
-    // Joy Validation
 
 
-    const result = userSchema.validate(req.body);
-    if (result.error) {
-        res.status(422).json({
-            success: false,
-            msg: `Validation err: ${result.error.details[0].message}`,
-        });
-        return;
-    }
+router.post('/register',registre.registre );
 
-    const {username, email, password} = req.body;
+router.post('/login', login.login);
+
+router.post('/logout', checkToken,logout.logout );
 
 
-    User.findOne({email}).then((user) => {
-        if (user) {
-            res.json({success: false, msg: 'Email already exists'});
-        } else {
-            bcrypt.genSalt(10, (_err, salt) => {
-                bcrypt.hash(password, salt).then((hash) => {
-                    const query = {
-                        username,
-                        email,
-                        password: hash,
-                    };
 
-                    User.create(query).then((u) => {
-                        res.json({success: true, userID: u._id, msg: 'The user was successfully registered'});
-                    });
-                });
-            });
-        }
-    });
-});
+router.post('/all', checkToken, getall.getall);
 
-router.post('/login', (req, res) => {
-    // Joy Validation
-    const result = userSchema.validate(req.body);
-    if (result.error) {
-        res.status(422).json({
-            success: false,
-            msg: `Validation err: ${result.error.details[0].message}`,
-        });
-        return;
-    }
-
-    const { email } = req.body;
-    const { password } = req.body;
-
-    User.findOne({ email }).then((user) => {
-        if (!user) {
-            return res.json({ success: false, msg: 'Wrong credentials' });
-        }
-
-        if (!user.password) {
-            return res.json({ success: false, msg: 'No password' });
-        }
-
-        bcrypt.compare(password, user.password, async (_err2, isMatch) => {
-            if (isMatch) {
-                if (!process.env.SECRET) {
-                    throw new Error('SECRET not provided');
-                }
-
-                const token = jwt.sign({
-                    id: user._id,
-                    username: user.username,
-                    email: user.email,
-                }, process.env.SECRET, {
-                    expiresIn: 86400, // 1 week
-                });
-
-                const query = {userId: user.id, token};
-
-                await activeSession.create(query);
-                // Delete the password (hash)
-                user.password = undefined;
-                return res.json({
-                    success: true,
-                    token,
-                    user,
-                });
-            }
-            return res.json({success: false, msg: 'Wrong credentials'});
-        });
-    });
-});
-
-router.post('/logout', checkToken, (req, res) => {
-    const { token } = req.body;
-
-    activeSession.findOneAndDelete({ token })
-        .then(() => res.json({ success: true }))
-        .catch(() => {
-            res.json({ success: false, msg: 'Token revoked' });
-        });
-});
-
-router.post('/checkSession', checkToken, (_req, res) => {
-    res.json({ success: true });
-});
-
-router.post('/all', checkToken, (_req, res) => {
-
-    User.find({}).then((users) => {
-        users = users.map((item) => {
-            const x = item;
-            x.password = undefined;
-            return x;
-        });
-        res.json({ success: true, users });
-    }).catch(() => res.json({ success: false }));
-});
-
-router.post('/edit', checkToken, (req, res) => {
-    const { userID, username, email } = req.body;
-
-
-    User.find({ _id: userID }).then((user) => {
-        if (user.length === 1) {
-            const query = { _id: user[0]._id };
-            const newvalues = { username, email };
-            User. findOneAndUpdate(query, newvalues).then(
-                () => {
-                    res.json({ success: true });
-                },
-            ).catch(() => {
-                res.json({ success: false, msg: 'There was an error. Please contract the administrator' });
-            });
-        } else {
-            res.json({ success: false, msg: 'Error updating user' });
-        }
-    });
-});
+router.post('/edit', checkToken,edituser.edituser);
 
 // Used for tests (nothing functional)
 router.get('/testme', (_req, res) => {
     res.status(200).json({ success: true, msg: 'all good' });
+});
+router.post('/checkSession', checkToken, (_req, res) => {
+    res.json({ success: true });
 });
 
 module.exports= router;
