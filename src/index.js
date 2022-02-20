@@ -10,7 +10,7 @@ const  user =require("./model/user")
 const  activeSession =require("./model/activeSession")
 
 const  mongoose=require("mongoose")
-q
+require("dotenv").config()
 mongoose.connect("mongodb+srv://azizgadacha:testtest1234@cluster0.m7cu6.mongodb.net/student?retryWrites=true&w=majority").then(
     ()=>{console.log("connectit")
         })

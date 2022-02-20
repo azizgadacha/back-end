@@ -1,17 +1,16 @@
-const  passport =require( 'passport');
-import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
+const { ExtractJwt, Strategy  }= require( 'passport-jwt');
 const User =require('../model/user');
 const  mongoose =require("mongoose")
 
 //import { connection } from '../server/database';
-export default (pass: passport.PassportStatic) => {
+function  Passport (pass)  {
     const opts = {
         jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('jwt'),
         secretOrKey: process.env.SECRET,
     };
 
     pass.use(
-        new JwtStrategy(opts, async (jwtPayload, done) => {
+        new Strategy(opts, async (jwtPayload, done) => {
             try {
 
                 const user = await User.findOne(jwtPayload._doc._id);
@@ -26,3 +25,4 @@ export default (pass: passport.PassportStatic) => {
         }),
     );
 };
+module.exports=Passport
