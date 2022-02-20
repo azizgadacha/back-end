@@ -1,8 +1,6 @@
 const { ExtractJwt, Strategy  }= require( 'passport-jwt');
 const User =require('../model/user');
-const  mongoose =require("mongoose")
 
-//import { connection } from '../server/database';
 function  Passport (pass)  {
     const opts = {
         jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('jwt'),

@@ -5,12 +5,11 @@ const cors=require("cors")
 const compression =require("compression")
 const initPassport =require( './config/passport.js');
 const passport =require('passport');
-
-const  user =require("./model/user")
-const  activeSession =require("./model/activeSession")
-
 const  mongoose=require("mongoose")
+const server = express();
 require("dotenv").config()
+
+
 mongoose.connect(process.env.mongodblink).then(
     ()=>{console.log("connectit")
         })
@@ -19,8 +18,7 @@ mongoose.connect(process.env.mongodblink).then(
 app.use(cors());
 app.use(express.json());
 
-const server = express();
-server.use(compression());
+app.use(compression());
 
 app.use(express.urlencoded({extended:true}))
 

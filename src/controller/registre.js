@@ -4,7 +4,6 @@ const verificationuser =require( '../model/verificationuser');
 
 
 exports.registre=async (req, res) => {
-    // Joy Validation
 
 
     const result = verificationuser.userSchema.validate(req.body);
