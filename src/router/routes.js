@@ -25,13 +25,12 @@ const userSchema = Joi.object().keys({
 router.post('/register', async (req, res) => {
     // Joy Validation
 
-    await mongoose.connect("mongodb+srv://azizgadacha:testtest1234@cluster0.m7cu6.mongodb.net/student?retryWrites=true&w=majority")
 
     const result = userSchema.validate(req.body);
     if (result.error) {
         res.status(422).json({
             success: false,
-            msg: `Validation err: ${result.error.details[0]}`,
+            msg: `Validation err: ${result.error.details[0].message}`,
         });
         return;
     }
@@ -52,7 +51,7 @@ router.post('/register', async (req, res) => {
                     };
 
                     User.create(query).then((u) => {
-                        res.json({success: true, userID: u.id, msg: 'The user was successfully registered'});
+                        res.json({success: true, userID: u._id, msg: 'The user was successfully registered'});
                     });
                 });
             });
@@ -83,23 +82,23 @@ router.post('/login', (req, res) => {
             return res.json({ success: false, msg: 'No password' });
         }
 
-        bcrypt.compare(password, user.password, (_err2, isMatch) => {
+        bcrypt.compare(password, user.password, async (_err2, isMatch) => {
             if (isMatch) {
                 if (!process.env.SECRET) {
                     throw new Error('SECRET not provided');
                 }
 
                 const token = jwt.sign({
-                    id: user.id,
+                    id: user._id,
                     username: user.username,
                     email: user.email,
                 }, process.env.SECRET, {
                     expiresIn: 86400, // 1 week
                 });
 
-                const query = { userId: user.id, token };
+                const query = {userId: user.id, token};
 
-                activeSession.save(query);
+                await activeSession.create(query);
                 // Delete the password (hash)
                 user.password = undefined;
                 return res.json({
@@ -108,7 +107,7 @@ router.post('/login', (req, res) => {
                     user,
                 });
             }
-            return res.json({ success: false, msg: 'Wrong credentials' });
+            return res.json({success: false, msg: 'Wrong credentials'});
         });
     });
 });
@@ -143,9 +142,9 @@ router.post('/edit', checkToken, (req, res) => {
     const { userID, username, email } = req.body;
 
 
-    User.find({ id: userID }).then((user) => {
+    User.find({ _id: userID }).then((user) => {
         if (user.length === 1) {
-            const query = { id: user[0].id };
+            const query = { _id: user[0]._id };
             const newvalues = { username, email };
             User. findOneAndUpdate(query, newvalues).then(
                 () => {
