@@ -11,7 +11,7 @@ const  activeSession =require("./model/activeSession")
 
 const  mongoose=require("mongoose")
 require("dotenv").config()
-mongoose.connect("mongodb+srv://azizgadacha:testtest1234@cluster0.m7cu6.mongodb.net/student?retryWrites=true&w=majority").then(
+mongoose.connect(process.env.mongodblink).then(
     ()=>{console.log("connectit")
         })
 
