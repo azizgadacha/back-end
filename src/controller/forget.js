@@ -5,6 +5,7 @@ const nodemailer=require("nodemailer")
 const {v4 : uuidv4}=require("uuid")
 const activeSession =require( '../model/activeSession');
 const verificationuser =require( '../model/verificationuser');
+const {text} = require("express");
 require("dotenv").config()
 
 
@@ -35,21 +36,22 @@ exports.forget=(req, res) => {
         console.log(process.env.PASSWORD)
 
         let transporter = nodemailer.createTransport({
-            service: "gmail",
+              hos:req.hostname,
+              service: "gmail",
+            port:3000,
+            secure:true,
             auth: {
                 user: process.env.EMAIL,
                 pass: process.env.PASSWORD
             }
         })
-        await transporter.verify((error, success) => {
-                if (error) {
-                    console.log(error)
-                } else {
-                    console.log("ready")
-                }
+        await transporter.sendMail({
+            from:process.env.EMAIL,
+            to:req.body.email,
+            subject:"Restauration du mot de passe",
+            text:"<h1>bonjour</h1><br><h3>un personne a esseyer de reainstaller votre mot de passe si c'est vous vous devez</h3> <br><h3> entrer cet code 5888887</h3>"
 
-            }
-        )
+        })
 
         return res.json({
             success: false,

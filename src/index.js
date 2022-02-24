@@ -4,17 +4,11 @@ const routes=require("./router/routes")
 const cors=require("cors")
 const compression =require("compression")
 const initPassport =require( './config/passport.js');
+const connection=require( './db/DataBase');
+
 const passport =require('passport');
-const  mongoose=require("mongoose")
-const server = express();
 require("dotenv").config()
-
-
-mongoose.connect(process.env.mongodblink).then(
-    ()=>{console.log("connectit")
-        })
-
-
+ connection.Connection()
 app.use(cors());
 app.use(express.json());
 
