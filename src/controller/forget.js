@@ -32,8 +32,9 @@ exports.forget=(req, res) => {
         if (!process.env.SECRET) {
             throw new Error('SECRET not provided');
         }
-        console.log(process.env.EMAIL)
-        console.log(process.env.PASSWORD)
+
+
+
 
         let transporter = nodemailer.createTransport({
               hos:req.hostname,
@@ -45,14 +46,19 @@ exports.forget=(req, res) => {
                 pass: process.env.PASSWORD
             }
         })
+
         await transporter.sendMail({
             from:process.env.EMAIL,
+
             to:req.body.email,
+
             subject:"Restauration du mot de passe",
-            text:"<h1>bonjour</h1><br><h3>un personne a esseyer de reainstaller votre mot de passe si c'est vous vous devez</h3> <br><h3> entrer cet code 5888887</h3>"
+            html:`<h1>bonjour</h1><br>
+                <h3>un personne a esseyer de reainstaller votre mot de passe si c est vous vous devez</h3> <br>
+                <h3> votre${process.env.url}h lien est   <a href="http://localhost:3000/forget">lin is here</a></h3>  `
 
         })
-
+console.log(process.env.url)
         return res.json({
             success: false,
             msg: `le compte exciste`,
