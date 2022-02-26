@@ -1,5 +1,3 @@
-
-
 const activeSession =require ('../model/activeSession');
 
 exports.checkToken = (req, res, next) => {

@@ -6,7 +6,7 @@ const edituser =require( '../controller/edituser');
 const getall =require( '../controller/gelall');
 const registre =require( '../controller/registre');
 const forget =require( '../controller/forget');
-
+const getUser=require('../controller/getUser');
 const logout =require( '../controller/logout');
 const router = express.Router();
 
@@ -18,10 +18,11 @@ router.post('/forget', forget.forget);
 
 router.post('/logout', checkToken,logout.logout );
 
-router.post('/all', checkToken, getall.getall);
+router.post('/all',checkToken, getall.getall);
 
 router.post('/edit', checkToken,edituser.edituser);
 
+router.post('/Profile',checkToken,getUser.getUser);
 
 
 module.exports= router;
