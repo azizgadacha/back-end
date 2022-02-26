@@ -1,12 +1,18 @@
 const bcrypt=require('bcrypt');
 const User =require( '../model/user');
-const verificationuser =require( '../model/verificationuser');
+const Joi = require("joi");
 
 
 exports.registre=async (req, res) => {
 
+    const userSchema = Joi.object().keys({
 
-    const result = verificationuser.userSchema.validate(req.body);
+        email: Joi.string().email().required(),
+        username: Joi.string().alphanum().allow(" ") .min(4).max(15)
+            .optional().required(),
+        password: Joi.string().required(),
+    });
+    const result = userSchema.validate(req.body);
     if (result.error) {
         res.status(422).json({
             success: false,

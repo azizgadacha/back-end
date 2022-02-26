@@ -2,11 +2,19 @@ const bcrypt=require('bcrypt');
 const jwt =require( 'jsonwebtoken');
 const User =require( '../model/user');
 const activeSession =require( '../model/activeSession');
-const verificationuser =require( '../model/verificationuser');
+const Joi = require("joi");
 
 exports.login=(req, res) => {
+
+
     // Joy Validation
-    const result = verificationuser.userSchema.validate(req.body);
+    const userSchema = Joi.object().keys({
+
+        email: Joi.string().email().required(),
+
+        password: Joi.string().required(),
+    });
+    const result = userSchema.validate(req.body);
     if (result.error) {
         res.status(422).json({
             success: false,
@@ -40,6 +48,7 @@ exports.login=(req, res) => {
                 }, process.env.SECRET, {
                     expiresIn: 86400, // 1 week
                 });
+
 
                 const query = {userId: user.id, token};
 

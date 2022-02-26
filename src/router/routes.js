@@ -1,26 +1,33 @@
 
 const express=require('express');
 const { checkToken } =require( '../config/safeRoutes');
-const login =require( '../controller/login');
-const edituser =require( '../controller/edituser');
-const getall =require( '../controller/gelall');
-const registre =require( '../controller/registre');
-const forget =require( '../controller/forget');
+const {login} =require( '../controller/login');
+const {edituser} =require( '../controller/edituser');
+const {getall} =require( '../controller/gelall');
+const {registre} =require( '../controller/registre');
+const {forget} =require( '../controller/forget');
+const {change} =require( '../controller/change');
+const {checkValidity} =require( '../config/verifvalidation');
 
-const logout =require( '../controller/logout');
+const {logout} =require( '../controller/logout');
+
 const router = express.Router();
 
 
-router.post('/register',registre.registre );
+router.post('/register',registre);
 
-router.post('/login', login.login);
-router.post('/forget', forget.forget);
+router.post('/login', login);
+router.post('/forget', forget);
 
-router.post('/logout', checkToken,logout.logout );
+router.post('/logout', checkToken,logout );
 
-router.post('/all', checkToken, getall.getall);
+router.post('/all', checkToken, getall);
 
-router.post('/edit', checkToken,edituser.edituser);
+router.post('/edit', checkToken,edituser);
+router.post('/change',checkValidity,change);
+router.post('/checkValidity',checkValidity);
+
+
 
 
 

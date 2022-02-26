@@ -1,17 +1,26 @@
-const bcrypt=require('bcrypt');
+const jwt_decode =require( "jwt-decode");
+
+const ForgetToken=require('../model/ForgetToken');
 const jwt =require( 'jsonwebtoken');
 const User =require( '../model/user');
 const nodemailer=require("nodemailer")
 const {v4 : uuidv4}=require("uuid")
-const activeSession =require( '../model/activeSession');
-const verificationuser =require( '../model/verificationuser');
-const {text} = require("express");
+
+const Joi = require("joi");
 require("dotenv").config()
 
 
-exports.forget=(req, res) => {
+exports.forget=async (req, res) => {
     // Joy Validation
-    const result = verificationuser.userSchema.validate(req.body);
+
+    const userSchema = Joi.object().keys({
+
+        email: Joi.string().email().required(),
+        username: Joi.string().alphanum().allow(" ") .min(4).max(15)
+            .optional().required()
+    });
+
+    const result = userSchema.validate(req.body);
     if (result.error) {
         res.status(422).json({
             success: false,
@@ -46,30 +55,34 @@ exports.forget=(req, res) => {
                 pass: process.env.PASSWORD
             }
         })
-        const token = jwt.sign({
-            id: user._id,
+         let  token = jwt.sign({
+            email: user.email,
             username: user.username
         }, process.env.SECRET, {
-            expiresIn: 86400, // 1 week
+            expiresIn: 6000, // 1 week
         });
+       await console.log("il token houwa "+jwt_decode(token).exp)
 
-        await transporter.sendMail({
-            from:process.env.EMAIL,
+        ForgetToken.create({token:token,email:user.email,expire:jwt_decode(token).exp*1000}).then(async (u) => {
+            await transporter.sendMail({
+                from:process.env.EMAIL,
 
-            to:req.body.email,
+                to:req.body.email,
 
-            subject:"Restauration du mot de passe",
-            html:`<h1>bonjour</h1><br>
+                subject:"Restauration du mot de passe",
+                html:`<h1>bonjour</h1><br>
                 <h3>un personne a esseyer de reainstaller votre mot de passe si c est vous vous devez</h3> <br>
                 <h3> votre${process.env.url}h lien est   <a href="${process.env.url}/forget/${token}">lin is here</a></h3>  `
 
-        })
-console.log(process.env.url)
-        return res.json({
-            success: false,
-            msg: `le compte exciste`,
-        });
+            })
+            console.log(process.env.url)
+            return res.json({
+                success: false,
+                msg: `un mail contenant le lien de reinstalisation du mot de pass  a ete envoyer`,
+            });
 
-        return res.json({success: false, msg: 'Wrong credentials'});
+            return res.json({success: false, msg: 'Wrong credentials'})        });
+
+
     });
     }
