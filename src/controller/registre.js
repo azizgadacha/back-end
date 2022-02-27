@@ -29,7 +29,11 @@ exports.registre=async (req, res) => {
             res.json({success: false, msg: 'Email already exists'});
         } else {
             bcrypt.genSalt(10, (_err, salt) => {
+
+                console.log("il salt houwa :"+salt)
                 bcrypt.hash(password, salt).then((hash) => {
+                    console.log("il salt houwa 2:"+salt)
+
                     const query = {
                         username,
                         email,

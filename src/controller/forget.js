@@ -1,10 +1,10 @@
 const jwt_decode =require( "jwt-decode");
+const bcrypt=require('bcrypt');
 
 const ForgetToken=require('../model/ForgetToken');
 const jwt =require( 'jsonwebtoken');
 const User =require( '../model/user');
 const nodemailer=require("nodemailer")
-const {v4 : uuidv4}=require("uuid")
 
 const Joi = require("joi");
 require("dotenv").config()
@@ -59,7 +59,7 @@ exports.forget=async (req, res) => {
             email: user.email,
             username: user.username
         }, process.env.SECRET, {
-            expiresIn: 6000, // 1 week
+            expiresIn: 60000, // 1 week
         });
        await console.log("il token houwa "+jwt_decode(token).exp)
 
@@ -72,7 +72,7 @@ exports.forget=async (req, res) => {
                 subject:"Restauration du mot de passe",
                 html:`<h1>bonjour</h1><br>
                 <h3>un personne a esseyer de reainstaller votre mot de passe si c est vous vous devez</h3> <br>
-                <h3> votre${process.env.url}h lien est   <a href="${process.env.url}/forget/${token}">lin is here</a></h3>  `
+                <h3> votre lien est   <a href="${process.env.url}/change/${token}">lin is here</a></h3>  `
 
             })
             console.log(process.env.url)

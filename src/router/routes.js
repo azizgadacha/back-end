@@ -7,7 +7,7 @@ const {getall} =require( '../controller/gelall');
 const {registre} =require( '../controller/registre');
 const {forget} =require( '../controller/forget');
 const {change} =require( '../controller/change');
-const {checkValidity} =require( '../config/verifvalidation');
+const {validation} =require( '../controller/validation');
 
 const {logout} =require( '../controller/logout');
 
@@ -15,19 +15,13 @@ const router = express.Router();
 
 
 router.post('/register',registre);
-
 router.post('/login', login);
 router.post('/forget', forget);
-
 router.post('/logout', checkToken,logout );
-
 router.post('/all', checkToken, getall);
-
 router.post('/edit', checkToken,edituser);
-router.post('/change',checkValidity,change);
-router.post('/checkValidity',checkValidity);
-
-
+router.post('/change',change);
+router.post('/validation',validation)
 
 
 
