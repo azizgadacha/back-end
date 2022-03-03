@@ -11,6 +11,7 @@ exports.registre=async (req, res) => {
         username: Joi.string().alphanum().allow(" ") .min(4).max(15)
             .optional().required(),
         password: Joi.string().required(),
+        role:Joi.string().required()
     });
     const result = userSchema.validate(req.body);
     if (result.error) {
@@ -21,7 +22,7 @@ exports.registre=async (req, res) => {
         return;
     }
 
-    const {username, email, password} = req.body;
+    const {username, email, password,role} = req.body;
 
 
     User.findOne({email}).then((user) => {
@@ -38,6 +39,7 @@ exports.registre=async (req, res) => {
                         username,
                         email,
                         password: hash,
+                        role
                     };
 
                     User.create(query).then((u) => {
