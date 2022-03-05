@@ -4,7 +4,6 @@ const Joi = require("joi");
 
 
 exports.registre=async (req, res) => {
-
     const userSchema = Joi.object().keys({
 
         email: Joi.string().email().required(),
@@ -42,7 +41,13 @@ exports.registre=async (req, res) => {
                         role
                     };
 
+
+
                     User.create(query).then((u) => {
+
+
+
+
                         res.json({success: true, userID: u._id, msg: 'The user was successfully registered'});
                     });
                 });

@@ -12,6 +12,7 @@ password: String,
 date:{type:Date,
     default: new Date()
 },
+    role:String
 
 },)
 
