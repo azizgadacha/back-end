@@ -4,13 +4,13 @@ const Joi = require("joi");
 
 
 exports.registre=async (req, res) => {
-
     const userSchema = Joi.object().keys({
 
         email: Joi.string().email().required(),
         username: Joi.string().alphanum().allow(" ") .min(4).max(15)
             .optional().required(),
         password: Joi.string().required(),
+        role:Joi.string().required()
     });
     const result = userSchema.validate(req.body);
     if (result.error) {
@@ -21,7 +21,7 @@ exports.registre=async (req, res) => {
         return;
     }
 
-    const {username, email, password} = req.body;
+    const {username, email, password,role} = req.body;
 
 
     User.findOne({email}).then((user) => {
@@ -38,9 +38,16 @@ exports.registre=async (req, res) => {
                         username,
                         email,
                         password: hash,
+                        role
                     };
 
+
+
                     User.create(query).then((u) => {
+
+
+
+
                         res.json({success: true, userID: u._id, msg: 'The user was successfully registered'});
                     });
                 });
