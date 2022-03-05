@@ -8,8 +8,10 @@ const {registre} =require( '../controller/registre');
 const {forget} =require( '../controller/forget');
 const {change} =require( '../controller/change');
 const {validation} =require( '../controller/validation');
+const {addworkspace}=require('../controller/addworkspace')
 
 const {logout} =require( '../controller/logout');
+const {getworkspace} = require("../controller/getworkspace");
 
 const router = express.Router();
 
@@ -22,7 +24,9 @@ router.post('/logout', checkToken,logout );
 router.post('/all', checkToken, getall);
 router.post('/edit', checkToken,edituser);
 router.post('/change',change);
-router.post('/validation',validation)
+router.post('/validation',validation);
+router.post('/addworkspace',addworkspace);
+router.post('/getworkspace',getworkspace);
 
 
 
