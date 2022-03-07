@@ -18,10 +18,24 @@ exports.addworkspace=async (req,res)=>{
                       WorkspaceName,
                       description
                   };
-                  Workspace.create(query).then((w)=>{
-                      res.json({success:true,WorkspaceID:w._id,msg:'The Workspace was successfully created'});
+                  Workspace.findOne({WorkspaceName,user_id}).then((w1)=> {
+                      if (w1) {
+                          res.json({success: false, msg: 'Workspace already exists'});
+                      } else {
+                          Workspace.create(query).then((w) => {
+
+
+                              res.json({
+                                  success: true,
+                                  WorkspaceID: w._id,
+                                  msg: 'The Workspace was successfully created'
+                              });
+                          })
+                              .catch(() => {
+                                  res.json({success: false, msg: 'The workspace not created'})
+                              })
+                      }
                   })
-                      .catch(()=>{res.json({success:false,msg:'The workspace not created'})})
                 })
                 .catch(() => res.json({ success: false }));
         })
