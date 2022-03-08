@@ -6,14 +6,15 @@ exports.getworkspace= (req, res,next) => {
         .then((session)=>{
             let id= session[0].userId
             workspace.find({user_id:id})
-                .then((workspace)=>{
-                     let workspaceitems =[];
+                .then((workspaceitems)=>{
+                    /*let workspaceitems =[];
                     let workspaceitem={};
                     for(let i=0;i<workspace.length;i++) {
                         workspaceitem.WorkspaceName =workspace[i].WorkspaceName;
                         workspaceitem.description=workspace[i].description;
                         workspaceitems.push({...workspaceitem});
- } res.json({success: true, workspaceitems});
+                        */
+  res.json({success: true, workspaceitems});
 
 
                     /*
