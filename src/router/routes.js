@@ -12,6 +12,7 @@ const {addworkspace}=require('../controller/addworkspace')
 
 const {logout} =require( '../controller/logout');
 const {getworkspace} = require("../controller/getworkspace");
+const {deleteworkspace}=require('../controller/deleteworkspace');
 
 const router = express.Router();
 
@@ -27,6 +28,7 @@ router.post('/change',change);
 router.post('/validation',validation);
 router.post('/addworkspace',addworkspace);
 router.post('/getworkspace',getworkspace);
+router.post('/deleteworkspace',deleteworkspace)
 
 
 
