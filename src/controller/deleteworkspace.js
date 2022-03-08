@@ -14,6 +14,7 @@ exports.deleteworkspace= (req, res,next) => {
                     workspaceitem.WorkspaceName = workspace.WorkspaceName;
                     workspaceitem.description = workspace.description;
                     workspaceitems.push({...workspaceitem});
+
                     res.json({success: true, workspaceitems});
                 })
         })
