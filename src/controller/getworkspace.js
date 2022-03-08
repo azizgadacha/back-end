@@ -2,14 +2,21 @@ const workspace =require('../model/workspace')
 const activeSession =require('../model/activeSession')
 exports.getworkspace= (req, res,next) => {
     const token = String(req.body.token);
+    console.log(token)
+
     activeSession.find({token})
         .then((session)=>{
             let id= session[0].userId
+            
+            console.log(id)
             workspace.find({user_id:id})
 
                 .then((workspace)=>{
                      let workspaceitems =[];
                     let workspaceitem={};
+                    console.log("hani fama2")
+                    console.log(workspaceitems)
+
                     for(let i=0;i<workspace.length;i++) {
                         workspaceitem.WorkspaceName =workspace[i].WorkspaceName;
                         workspaceitem.description=workspace[i].description;
