@@ -5,6 +5,23 @@ const activeSession =require('../model/activeSession')
 
 
 exports.addworkspace=async (req,res)=>{
+
+    const userSchema = Joi.object().keys({
+       WorkspaceName: Joi.string().alphanum().allow(" ") .min(4).max(13)
+            .optional().required(),
+        description: Joi.string().alphanum().allow(" ") .min(4).max(25)
+            .optional().required(),
+        token:Joi.string().required(),
+        user_id:Joi.string().required()
+    });
+    const result = userSchema.validate(req.body);
+    if (result.error) {
+        res.status(422).json({
+            success: false,
+            msg: `Validation err: ${result.error.details[0].message}`,
+        });
+        return;
+    }
     const {user_id,WorkspaceName,description} = req.body;
     const token = String(req.body.token);
     activeSession.find({token})
