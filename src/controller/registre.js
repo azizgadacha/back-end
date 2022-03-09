@@ -1,18 +1,23 @@
 const bcrypt=require('bcrypt');
 const User =require( '../model/user');
 const Joi = require("joi");
+const {valid} = require("joi");
 
 
 exports.registre=async (req, res) => {
+ let   valid={email:req.body.email,username:req.body.username,password:req.body.password,phone:req.body.phone,role:req.body.role}
+
     const userSchema = Joi.object().keys({
 
         email: Joi.string().email().required(),
-        username: Joi.string().alphanum().allow(" ") .min(4).max(15)
+        username: Joi.string().allow(" ") .min(4).max(15)
             .optional().required(),
         password: Joi.string().required(),
+        phone: Joi.number().required(),
+
         role:Joi.string().required()
     });
-    const result = userSchema.validate(req.body);
+    const result = userSchema.validate(valid);
     if (result.error) {
         res.status(422).json({
             success: false,
@@ -21,7 +26,7 @@ exports.registre=async (req, res) => {
         return;
     }
 
-    const {username, email, password,role} = req.body;
+    const {username, email, password,phone,role} = req.body;
 
 
     User.findOne({email}).then((user) => {
@@ -30,15 +35,15 @@ exports.registre=async (req, res) => {
         } else {
             bcrypt.genSalt(10, (_err, salt) => {
 
-                console.log("il salt houwa :"+salt)
                 bcrypt.hash(password, salt).then((hash) => {
-                    console.log("il salt houwa 2:"+salt)
 
                     const query = {
                         username,
                         email,
                         password: hash,
+                        phone,
                         role
+
                     };
 
 
