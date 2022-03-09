@@ -2,7 +2,7 @@
 const User =require( '../model/user');
 
 
-exports.getall=(req, res) =>(_req, res) => {
+exports.getall=(req, res) => {
 
     User.find({}).then((users) => {
         users = users.map((item) => {
