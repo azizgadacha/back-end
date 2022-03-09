@@ -10,9 +10,8 @@ exports.getworkspace= (req, res,next) => {
             
             console.log(id)
             workspace.find({user_id:id})
-
-                .then((workspace)=>{
-                     let workspaceitems =[];
+                .then((workspaceitems)=>{
+                    /*let workspaceitems =[];
                     let workspaceitem={};
                     console.log("hani fama2")
                     console.log(workspaceitems)
@@ -21,7 +20,8 @@ exports.getworkspace= (req, res,next) => {
                         workspaceitem.WorkspaceName =workspace[i].WorkspaceName;
                         workspaceitem.description=workspace[i].description;
                         workspaceitems.push({...workspaceitem});
- } res.json({success: true, workspaceitems});
+                        */
+  res.json({success: true, workspaceitems});
 
 
                     /*
