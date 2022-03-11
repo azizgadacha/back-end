@@ -77,8 +77,8 @@ exports.forget=async (req, res) => {
             })
             console.log(process.env.url)
             return res.json({
-                success: false,
-                msg: `un mail contenant le lien de reinstalisation du mot de pass  a ete envoyer`,
+                success: true,
+                msg: `an email containing the password reset link has been sent`,
             });
 
             return res.json({success: false, msg: 'Wrong credentials'})        });
