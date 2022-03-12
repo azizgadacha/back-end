@@ -7,9 +7,9 @@ const activeSession =require('../model/activeSession')
 exports.addworkspace=async (req,res)=>{
 
     const userSchema = Joi.object().keys({
-       WorkspaceName: Joi.string().alphanum().allow(" ") .min(4).max(13)
+       WorkspaceName: Joi.string().allow(" ") .min(4).max(13)
             .optional().required(),
-        description: Joi.string().alphanum().allow(" ") .min(4).max(25)
+        description: Joi.string().allow(" ") .min(4).max(25)
             .optional().required(),
         token:Joi.string().required(),
         id:Joi.string().required()

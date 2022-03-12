@@ -9,8 +9,8 @@ exports.deleteworkspace= (req, res,next) => {
 
             workspace.findOneAndDelete({WorkspaceName,user_id:id})
                 .then((workspace)=>{
-                    console.klog(workspace)
-                    let worspaceitems =[];
+                    console.log(workspace)
+                    let workspaceitems =[];
                     let workspaceitem={};
                     workspaceitem.WorkspaceName = workspace.WorkspaceName;
                     workspaceitem.description = workspace.description;
