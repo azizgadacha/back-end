@@ -12,7 +12,7 @@ exports.addworkspace=async (req,res)=>{
         description: Joi.string().alphanum().allow(" ") .min(4).max(25)
             .optional().required(),
         token:Joi.string().required(),
-        user_id:Joi.string().required()
+        id:Joi.string().required()
     });
     const result = userSchema.validate(req.body);
     if (result.error) {
@@ -22,20 +22,17 @@ exports.addworkspace=async (req,res)=>{
         });
         return;
     }
-    const {user_id,WorkspaceName,description} = req.body;
-    const token = String(req.body.token);
-    activeSession.find({token})
-        .then((session)=>{
-            let id= session[0].userId
+    const {id,WorkspaceName,description} = req.body;
+
             console.log(id)
             User.find({_id:id})
                 .then((users)=>{
                   const query={
-                      user_id,
+                      user_id:id,
                       WorkspaceName,
                       description
                   };
-                  Workspace.findOne({WorkspaceName,user_id}).then((w1)=> {
+                  Workspace.findOne({WorkspaceName,user_id:id}).then((w1)=> {
                       if (w1) {
                           res.json({success: false, msg: 'Workspace already exists'});
                       } else {
@@ -55,10 +52,9 @@ exports.addworkspace=async (req,res)=>{
                   })
                 })
                 .catch(() => res.json({ success: false }));
-        })
-        .catch(()=>res.json({success:false}))
+        }
 
-}
+
 
 
 

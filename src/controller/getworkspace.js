@@ -1,14 +1,8 @@
 const workspace =require('../model/workspace')
 const activeSession =require('../model/activeSession')
 exports.getworkspace= (req, res,next) => {
-    const token = String(req.body.token);
-    console.log(token)
+    const id= String(req.body.id);
 
-    activeSession.find({token})
-        .then((session)=>{
-            let id= session[0].userId
-            
-            console.log(id)
             workspace.find({user_id:id})
                 .then((workspaceitems)=>{
                     /*let workspaceitems =[];
@@ -39,10 +33,6 @@ exports.getworkspace= (req, res,next) => {
 
                 })
                 .catch(() => res.json({ success: false }));
-        })
-        .catch(()=>res.json({success:false}))
+        }
 
 
-
-
-}
