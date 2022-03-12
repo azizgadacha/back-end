@@ -5,8 +5,6 @@ exports.deleteworkspace= (req, res,next) => {
 
     const id = req.body.id;
     const WorkspaceName=String(req.body.WorkspaceName);
-
-
             workspace.findOneAndDelete({WorkspaceName,user_id:id})
                 .then((workspace)=>{
                     console.log(workspace)
