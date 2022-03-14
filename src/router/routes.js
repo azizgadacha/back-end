@@ -9,7 +9,7 @@ const {forget} =require( '../controller/forget');
 const {change} =require( '../controller/change');
 const {validation} =require( '../controller/validation');
 const {addworkspace}=require('../controller/addworkspace')
-
+const {getinsideworkspace}=require('../controller/getinsideworkspace')
 const {logout} =require( '../controller/logout');
 const {getworkspace} = require("../controller/getworkspace");
 const {deleteworkspace}=require('../controller/deleteworkspace');
@@ -26,7 +26,7 @@ router.post('/logout', checkToken,logout );
 router.post('/all', checkToken, getall);
 router.post('/edit', checkToken,edituser);
 router.post('/deleteUser', checkToken,DeleteUser);
-
+router.post('/getinsideworkspace',checkToken,getinsideworkspace);
 router.post('/change',checkToken,change);
 router.post('/validation',checkToken,validation);
 router.post('/addworkspace',checkToken,addworkspace);
