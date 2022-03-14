@@ -5,16 +5,22 @@ const User =require( '../model/user');
 exports.DeleteUser=async (req, res) => {
 
 
-    const id = req.body.user.user_id;
+    let id = req.body.user_id;
+console.log(id)
 
+    User.findOneAndDelete({_id:id}).then((user) => {
+        console.log(user)
 
-    User.findOne({_ic:id}).then((user) => {
         if (user) {
-            res.json({success: false, msg: "User dosn't excite" });
+            user.password = undefined;
+
+            let usertable = user
+            res.json({success: true, msg: "User has been deleted ", user: usertable});
+            console.log("tfasa5t thannit")
+
         } else {
-           User.findOneAndRemove({}).then((u) => {
-                        res.json({success: true, msg:"User deleted"});
-                    });
-                };
-            });
-        };
+            res.json({success: false, msg: "error  user dosn't excite "});
+            console.log("mechni mfasa5")
+        }
+
+    })}
