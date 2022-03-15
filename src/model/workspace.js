@@ -8,6 +8,8 @@ const workspace = new mongoose.Schema({
 
     description: String,
 
+    WorkspaceList:Array,
+
     date:{type:Date,
         default: new Date()
     },

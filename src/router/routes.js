@@ -14,6 +14,7 @@ const {logout} =require( '../controller/logout');
 const {getworkspace} = require("../controller/getworkspace");
 const {deleteworkspace}=require('../controller/deleteworkspace');
 const {DeleteUser} = require("../controller/DeleteUser");
+const {addinsideworkspace} = require("../controller/addinsideworkspace");
 
 const router = express.Router();
 
@@ -32,6 +33,8 @@ router.post('/validation',checkToken,validation);
 router.post('/addworkspace',checkToken,addworkspace);
 router.post('/getworkspace',checkToken,getworkspace);
 router.post('/deleteworkspace',checkToken,deleteworkspace)
+router.post('/addinsideworkspace',checkToken,addinsideworkspace)
+
 
 
 
