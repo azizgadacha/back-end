@@ -24,19 +24,18 @@ exports.addinsideworkspace=async (req,res)=>{
     }
 
    */
-    const {id,superior_id,WorkspaceName,description} = req.body;
+    const {superior_id,WorkspaceName,description} = req.body;
 
-    console.log(id)
-    Workspace.find({_id:id})
+    Workspace.find({_id:superior_id})
         .then((W2)=>{
             console.log(W2)
             const query={
-                superior_id:id,
+                superior_id:superior_id,
                 WorkspaceName,
                 description,
 
             };
-            Workspace.findOne({WorkspaceName,superior_id:id}).then((w1)=> {
+            Workspace.findOne({WorkspaceName,superior_id:superior_id}).then((w1)=> {
                 if (w1) {
                     res.json({success: false, msg: 'Workspace already exists'});
                 } else {
