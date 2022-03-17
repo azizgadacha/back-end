@@ -3,9 +3,9 @@ const activeSession =require('../model/activeSession')
 exports.deleteworkspace= (req, res,next) => {
 
 
-    const  id = req.body.user_id;
+    const  id = req.body.superior_id;
     const WorkspaceName=String(req.body.WorkspaceName);
-            workspace.findOneAndDelete({WorkspaceName,user_id:id})
+            workspace.findOneAndDelete({WorkspaceName,superior_id:id})
                 .then((workspace)=>{
                     console.log(workspace)
                     let workspaceitems =[];

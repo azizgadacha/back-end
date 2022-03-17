@@ -3,7 +3,7 @@ const activeSession =require('../model/activeSession')
 exports.getworkspace= (req, res,next) => {
     const id= String(req.body.id);
 
-            workspace.find({user_id:id})
+            workspace.find({superior_id:id})
                 .then((workspaceitems)=>{
                     /*let workspaceitems =[];
                     let workspaceitem={};

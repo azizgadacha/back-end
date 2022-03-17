@@ -24,19 +24,34 @@ exports.addinsideworkspace=async (req,res)=>{
     }
 
    */
-    const {id,user_id,WorkspaceName,description} = req.body;
+    const {id,superior_id,WorkspaceName,description} = req.body;
 
     console.log(id)
     Workspace.find({_id:id})
         .then((W2)=>{
             console.log(W2)
             const query={
-                user_id:user_id,
+                superior_id:id,
                 WorkspaceName,
                 description,
 
             };
-            res.json({success:true,msg:W2})
+            Workspace.findOne({WorkspaceName,superior_id:id}).then((w1)=> {
+                if (w1) {
+                    res.json({success: false, msg: 'Workspace already exists'});
+                } else {
+                    Workspace.create(query).then((w) => {
+                        res.json({
+                            success: true,
+                            WorkspaceID: w._id,
+                            msg: 'The Workspace was successfully created'
+                        });
+                    })
+                        .catch(() => {
+                            res.json({success: false, msg: 'The workspace not created'})
+                        })
+                }
+            })
 
         })
         .catch(() => res.json({ success: false }));
