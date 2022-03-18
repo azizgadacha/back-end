@@ -1,11 +1,18 @@
 const bcrypt=require('bcrypt');
 const User =require( '../model/user');
 const Joi = require("joi");
-const {valid} = require("joi");
-
+const multer=require('multer')
 
 exports.registre=async (req, res) => {
- let   valid={email:req.body.email,username:req.body.username,password:req.body.password,phone:req.body.phone,role:req.body.role}
+
+
+     console.log(" il obj")
+    console.log(req.body)
+    console.log(" il obj")
+
+    console.log(req.body.photo)
+
+    let   valid={email:req.body.email,username:req.body.username,password:req.body.password,phone:req.body.phone,role:req.body.role}
 
     const userSchema = Joi.object().keys({
 
