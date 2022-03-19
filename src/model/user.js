@@ -9,7 +9,10 @@ email: String,
 phone:Number,
 
 password: String,
-photo:String,
+photo:{
+    data:Buffer,
+    contentType:String
+},
 date:{type:Date,
     default: new Date()
 },

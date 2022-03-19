@@ -14,12 +14,25 @@ const {logout} =require( '../controller/logout');
 const {getworkspace} = require("../controller/getworkspace");
 const {deleteworkspace}=require('../controller/deleteworkspace');
 const {DeleteUser} = require("../controller/DeleteUser");
+const multer=require('multer')
 
+const fileStorage=multer.diskStorage(
+    {
+        destination:(req,file,cb)=>{
+            cb(null,'./upload')
+        },
+        filename:(req,file,cb)=>{
+            cb(null,Date.now()+'--'+file.originalname.replace(/\s+/g,'-'))
+        }
+    }
+)
+
+const upload=multer({storage:fileStorage});
 const router = express.Router();
 
 
 
-router.post('/register',checkToken,registre);
+router.post('/register',upload.single('file'),registre);
 router.post('/login', login);
 router.post('/forget', forget);
 router.post('/logout', checkToken,logout );

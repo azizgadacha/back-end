@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(compression());
 
 app.use(express.urlencoded({extended:true}))
-
+app.use(express.static('upload'))
 app.use(express.json())
 // Passport Config
 initPassport(passport);

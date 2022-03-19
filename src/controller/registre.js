@@ -1,16 +1,15 @@
 const bcrypt=require('bcrypt');
 const User =require( '../model/user');
 const Joi = require("joi");
-const multer=require('multer')
 
-exports.registre=async (req, res) => {
-
+exports.registre=async (req,res) => {
 
      console.log(" il obj")
     console.log(req.body)
     console.log(" il obj")
 
-    console.log(req.body.photo)
+    console.log(req.file)
+
 
     let   valid={email:req.body.email,username:req.body.username,password:req.body.password,phone:req.body.phone,role:req.body.role}
 
