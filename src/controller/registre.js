@@ -1,14 +1,10 @@
 const bcrypt=require('bcrypt');
-const User =require( '../model/user');
 const Joi = require("joi");
+const User =require("../model/user")
+
+
 
 exports.registre=async (req,res) => {
-
-     console.log(" il obj")
-    console.log(req.body)
-    console.log(" il obj")
-
-
 
     let   valid={email:req.body.email,username:req.body.username,password:req.body.password,phone:req.body.phone,role:req.body.role}
 
@@ -33,22 +29,32 @@ exports.registre=async (req,res) => {
 
     const {username, email, password,phone,role} = req.body;
 
+    let  file=null
+    if (req.body.sendtphoto)
+    {
+       file=req.file.filename
+    }else{
+        file="avatar_1.jpg"
+
+    }
 
     User.findOne({ $or: [{ email }, { username }]}).then((user) => {
         if (user) {
             res.json({success: false, msg: 'User already excite already exists'});
         } else {
+          //  if(!file)
+          //  {
+              // file:"avatar_1.jpg"
+          // }
             bcrypt.genSalt(10, (_err, salt) => {
-
                 bcrypt.hash(password, salt).then((hash) => {
-
                     const query = {
                         username,
                         email,
                         password: hash,
                         phone,
                         role,
-                        photo:req.file.filename
+                        photo:file
 
                     };
 

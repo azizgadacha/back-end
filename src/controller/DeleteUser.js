@@ -15,6 +15,7 @@ console.log(id)
             user.password = undefined;
 
             let usertable = user
+            if(user.photo)
             fs.unlinkSync("./upload/"+user.photo)
 
 
