@@ -1,9 +1,9 @@
 const bcrypt=require('bcrypt');
 const User =require( '../model/user');
+const fs = require("fs");
 
 
 exports.DeleteUser=async (req, res) => {
-
 
     let id = req.body.user_id;
 console.log(id)
@@ -15,12 +15,13 @@ console.log(id)
             user.password = undefined;
 
             let usertable = user
+            fs.unlinkSync("./upload/"+user.photo)
+
+
             res.json({success: true, msg: "User has been deleted ", user: usertable});
-            console.log("tfasa5t thannit")
 
         } else {
             res.json({success: false, msg: "error  user dosn't excite "});
-            console.log("mechni mfasa5")
         }
 
     })}

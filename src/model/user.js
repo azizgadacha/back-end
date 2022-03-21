@@ -1,3 +1,4 @@
+
 const  mongoose=require("mongoose")
 
 
@@ -9,10 +10,7 @@ email: String,
 phone:Number,
 
 password: String,
-photo:{
-    data:Buffer,
-    contentType:String
-},
+photo:String,
 date:{type:Date,
     default: new Date()
 },

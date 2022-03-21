@@ -8,7 +8,6 @@ exports.registre=async (req,res) => {
     console.log(req.body)
     console.log(" il obj")
 
-    console.log(req.file)
 
 
     let   valid={email:req.body.email,username:req.body.username,password:req.body.password,phone:req.body.phone,role:req.body.role}
@@ -35,9 +34,9 @@ exports.registre=async (req,res) => {
     const {username, email, password,phone,role} = req.body;
 
 
-    User.findOne({email}).then((user) => {
+    User.findOne({ $or: [{ email }, { username }]}).then((user) => {
         if (user) {
-            res.json({success: false, msg: 'Email already exists'});
+            res.json({success: false, msg: 'User already excite already exists'});
         } else {
             bcrypt.genSalt(10, (_err, salt) => {
 
@@ -48,7 +47,8 @@ exports.registre=async (req,res) => {
                         email,
                         password: hash,
                         phone,
-                        role
+                        role,
+                        photo:req.file.filename
 
                     };
 

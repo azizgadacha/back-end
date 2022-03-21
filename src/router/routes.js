@@ -22,7 +22,7 @@ const fileStorage=multer.diskStorage(
             cb(null,'./upload')
         },
         filename:(req,file,cb)=>{
-            cb(null,Date.now()+'--'+file.originalname.replace(/\s+/g,'-'))
+            cb(null,Date.now()+'--'+Math.floor(Math.random()*1000)+file.originalname.replace(/\s+/g,'-'))
         }
     }
 )
