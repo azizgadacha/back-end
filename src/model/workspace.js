@@ -2,7 +2,7 @@ const  mongoose=require("mongoose")
 
 const workspace = new mongoose.Schema({
 
-    superior_id:String,
+    superior_id:{ type: String, ref: 'workspace' },
 
     WorkspaceName: String,
 

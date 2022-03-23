@@ -6,7 +6,7 @@ exports.getinsideworkspace= (req, res,next) => {
     workspace.find({superior_id:superior_id})
 
         .then((workspaceitems)=>{
-            console.log(superior_id)
+
             res.json({success: true, workspaceitems});
         })
         .catch(() => res.json({ success: false }));
