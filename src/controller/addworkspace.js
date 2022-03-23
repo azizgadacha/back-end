@@ -28,11 +28,11 @@ exports.addworkspace=async (req,res)=>{
             User.find({_id:id})
                 .then((users)=>{
                   const query={
-                      user_id:id,
+                      superior_id:id,
                       WorkspaceName,
                       description
                   };
-                  Workspace.findOne({WorkspaceName,user_id:id}).then((w1)=> {
+                  Workspace.findOne({WorkspaceName,superior_id:id}).then((w1)=> {
                       if (w1) {
                           res.json({success: false, msg: 'Workspace already exists'});
                       } else {
