@@ -32,7 +32,7 @@ const router = express.Router();
 
 
 
-router.post('/register',upload.single('file'),registre);
+router.post('/register',upload.single('file'),registre,);
 router.post('/login', login);
 router.post('/forget', forget);
 router.post('/logout', checkToken,logout );

@@ -5,7 +5,7 @@ const User =require("../model/user")
 
 
 exports.registre=async (req,res) => {
-
+   console.log( req.body.sendtphoto)
     let   valid={email:req.body.email,username:req.body.username,password:req.body.password,phone:req.body.phone,role:req.body.role}
 
     const userSchema = Joi.object().keys({
@@ -30,17 +30,22 @@ exports.registre=async (req,res) => {
     const {username, email, password,phone,role} = req.body;
 
     let  file=null
-    if (req.body.sendtphoto)
-    {
+    console.log(  req.body.sendtphoto)
+    console.log('fdfsdfd')
+    console.log(typeof (req.body.sendtphoto))
+
+    if (req.body.sendtphoto==='true')
+    {console.log("helllo")
        file=req.file.filename
     }else{
+        console.log("sahbi")
         file="avatar_1.jpg"
 
     }
 
     User.findOne({ $or: [{ email }, { username }]}).then((user) => {
         if (user) {
-            res.json({success: false, msg: 'User already excite already exists'});
+            res.json({success: false, msg: 'User already excite'});
         } else {
           //  if(!file)
           //  {
@@ -65,7 +70,9 @@ exports.registre=async (req,res) => {
 
 
 
-                        res.json({success: true, userID: u._id, msg: 'The user was successfully registered'});
+                        res.json({success: true, user:u, msg: 'The user was successfully registered'});
+
+
                     });
                 });
             });
