@@ -20,15 +20,22 @@ console.log(process.env.SECRET)
 if (!isJwtExpired(token)) {
     console.log("il token houwa    "+token)
     ForgetToken.findOne({token}).then(async (forgettoken) => {
-
+        console.log("il token houwa ")
             if (forgettoken) {
+                console.log("iffffffffl token houwa ")
+
                 let now = new Date()
+                console.log("sff ")
+
                 if (now < forgettoken.expire) {
                     await ForgetToken.findOneAndRemove(forgettoken)
+                    console.log("sffert ")
+
                     return res.json({success: true})
 
                 }
                 await ForgetToken.findOneAndRemove(forgettoken)
+                console.log("sffsdqdsdddzert ")
 
                 return res.json({success: false})
 
@@ -37,6 +44,9 @@ if (!isJwtExpired(token)) {
             return res.json({success: false})
         }
     ).catch((error)=>{
+        console.log("sffedqccccccccrt ")
+
+
         return res.json({success: false})
 
     })

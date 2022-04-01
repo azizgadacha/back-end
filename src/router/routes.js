@@ -36,7 +36,7 @@ const router = express.Router();
 
 
 
-router.post('/register',upload.single('file'),registre,);
+router.post('/register',checkToken,upload.single('file'),registre,);
 router.post('/login', login);
 router.post('/forget', forget);
 router.post('/logout', checkToken,logout );
@@ -44,8 +44,9 @@ router.post('/all', checkToken, getall);
 router.post('/edit', checkToken,edituser);
 router.post('/deleteUser', checkToken,DeleteUser);
 router.post('/getinsideworkspace',checkToken,getinsideworkspace);
-router.post('/change',checkToken,change);
-router.post('/validation',checkToken,validation);
+router.post('/change',change);
+router.post('/validation',validation);
+
 router.post('/addworkspace',checkToken,addworkspace);
 router.post('/getworkspace',checkToken,getworkspace);
 router.post('/deleteworkspace',checkToken,deleteworkspace)
