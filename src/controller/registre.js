@@ -5,6 +5,8 @@ const User =require("../model/user")
 
 
 exports.registre=async (req,res) => {
+
+    console.log("salah")
    console.log( req.body.sendtphoto)
     let   valid={email:req.body.email,username:req.body.username,password:req.body.password,phone:req.body.phone,role:req.body.role}
 
@@ -39,7 +41,7 @@ exports.registre=async (req,res) => {
        file=req.file.filename
     }else{
         console.log("sahbi")
-        file="avatar_1.jpg"
+        file="avatar_1.png"
 
     }
 
@@ -49,7 +51,6 @@ exports.registre=async (req,res) => {
         } else {
           //  if(!file)
           //  {
-              // file:"avatar_1.jpg"
           // }
             bcrypt.genSalt(10, (_err, salt) => {
                 bcrypt.hash(password, salt).then((hash) => {
