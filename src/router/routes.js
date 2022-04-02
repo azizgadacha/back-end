@@ -3,6 +3,8 @@ const express=require('express');
 const { checkToken } =require( '../config/safeRoutes');
 const {login} =require( '../controller/login');
 const {edituser} =require( '../controller/edituser');
+const {editPass} =require( '../controller/editPass');
+
 const {getall} =require( '../controller/gelall');
 const {registre} =require( '../controller/registre');
 const {forget} =require( '../controller/forget');
@@ -42,6 +44,8 @@ router.post('/forget', forget);
 router.post('/logout', checkToken,logout );
 router.post('/all', checkToken, getall);
 router.post('/edit', checkToken,edituser);
+router.post('/editPass', checkToken,editPass);
+
 router.post('/deleteUser', checkToken,DeleteUser);
 router.post('/getinsideworkspace',checkToken,getinsideworkspace);
 router.post('/change',change);

@@ -16,7 +16,7 @@ exports.forget=async (req, res) => {
     const userSchema = Joi.object().keys({
 
         email: Joi.string().email().required(),
-        username: Joi.string().allow(" ") .min(4).max(15)
+        username: Joi.string().allow(" ") .min(6).max(15)
             .optional().required()
     });
 
