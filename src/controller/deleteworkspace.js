@@ -1,11 +1,35 @@
 const workspace =require('../model/workspace')
 const activeSession =require('../model/activeSession')
-exports.deleteworkspace= (req, res,next) => {
-    workspace.find({}).then((w)=>{
+//const {raw} = require("express");
+exports.deleteworkspace=  async (req, res,next) => {
+    var  id = req.body.superior_id;
+    var descendants=[]
+    var stack=[];
+    var item =await workspace.findOne({_id:id});
+    console.log(item)
+    stack.push(item);
+    while (stack.length>0){
+        var currentnode = stack.pop();
+        var children = await workspace.find({superior_id:currentnode._id});
+        console.log(children)
+        children.forEach(function(child) {
+            descendants.push(child._id);
+            stack.push(child);
+        });
+    }
+    descendants.push(id)
+    descendants.join(",")
+    for(item of descendants){
+        console.log(item.toString())
+       await workspace.findByIdAndRemove(item.toString())
+    }
+
+    console.log(descendants)
+    /*workspace.find({}).then((w)=>{
         var deleted =[]
-        var  id = req.body.superior_id;
+
+
         var WorkspaceName=String(req.body.WorkspaceName);
-        deleted.push(WorkspaceName)
         for(item of w){
             if(item.superior_id===id){
                 for(item1 of w){
@@ -21,6 +45,10 @@ exports.deleteworkspace= (req, res,next) => {
 
         res.json({success: true, w})
     })
+
+
+
+     */
 
 
 
@@ -73,7 +101,7 @@ exports.deleteworkspace= (req, res,next) => {
 
 
 
-    /*
+/*
               const id = req.body.superior_id;
               const WorkspaceName=String(req.body.WorkspaceName);
               workspace.findOneAndDelete({WorkspaceName,superior_id:id})
@@ -90,7 +118,9 @@ exports.deleteworkspace= (req, res,next) => {
 
 
 
-     */
+ */
+
+
 
 
 
