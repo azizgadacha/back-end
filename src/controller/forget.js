@@ -70,9 +70,9 @@ exports.forget=async (req, res) => {
                 to:req.body.email,
 
                 subject:"Restauration du mot de passe",
-                html:`<h1>bonjour</h1><br>
-                <h3>un personne a esseyer de reainstaller votre mot de passe si c est vous vous devez</h3> <br>
-                <h3> votre lien est   <a href="${process.env.url}/change/${token}">lin is here</a></h3>  `
+                html:`<h1>Hello</h1><br>
+                <h3>it seems that you tried to change your password of PERSOSPACE account to change it please click bellow</h3> <br>
+                   <a href="${process.env.url}/change/${token}">link is here</a>  `
 
             })
             console.log(process.env.url)

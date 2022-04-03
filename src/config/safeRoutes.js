@@ -1,7 +1,7 @@
 const activeSession =require ('../model/activeSession');
 
 exports.checkToken = (req, res, next) => {
-    console.log("il token houwa" +req.body)
+    console.log("il token houwa" +req.body.token)
     console.log(req.body)
 
     console.log("ye hemil3")
