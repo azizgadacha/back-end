@@ -89,7 +89,7 @@ exports.registre=async (req,res) => {
 
                         subject: "Account creation in PERSOSPACE",
                         html: `<h1>Hello</h1><br>
-                <h3>hello welcome to our family</h3> <br>
+                <h3>Welcome to our family</h3> <br>
                                 <h3>An account with your email has ben created to connect there is your information </h3> <br>
                                 <h3>Email : ${email} </h3> <br>
                                 <h3>Password : ${password} </h3> <br>
