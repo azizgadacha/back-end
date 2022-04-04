@@ -25,7 +25,8 @@ exports.addinsideworkspace=async (req,res)=>{
 
    */
     const {superior_id,WorkspaceName,description} = req.body;
-
+console.log("rani lena bb")
+    console.log(req.body)
     Workspace.find({_id:superior_id})
         .then((W2)=>{
             console.log(W2)
