@@ -1,6 +1,5 @@
 const workspace =require('../model/workspace')
 const activeSession =require('../model/activeSession')
-//const {raw} = require("express");
 exports.deleteworkspace=  async (req, res,next) => {
     var  id = req.body.superior_id;
     var descendants=[]
@@ -12,9 +11,7 @@ exports.deleteworkspace=  async (req, res,next) => {
     console.log(item)
     stack.push(item);
     workspaceitems.push(item)
-
     while (stack.length>0){
-
         var currentnode = stack.pop();
         var children = await workspace.find({superior_id:currentnode._id});
         console.log(children)
@@ -23,19 +20,19 @@ exports.deleteworkspace=  async (req, res,next) => {
             workspaceitems.push(child)
             stack.push(child);
         });
-
     }
-
     descendants.join(",")
     for(item of descendants){
         console.log(item.toString())
        await workspace.findByIdAndRemove(item.toString())
 
     }
-
-
     console.log(workspaceitems)
     res.json({success: true, workspaceitems})
+
+
+
+
     /*workspace.find({}).then((w)=>{
         var deleted =[]
 
