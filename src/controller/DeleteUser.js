@@ -8,7 +8,7 @@ exports.DeleteUser=async (req, res) => {
 
     let id = req.body.user_id;
 console.log(id)
-    if(User.findOne({_id:id}))
+    /*if(User.findOne({_id:id}))
     {
         var descendants = []
         var workspaceitems = []
@@ -39,7 +39,10 @@ console.log(id)
         }
     }
     console.log(workspaceitems)
+*/
     User.findOneAndDelete({_id:id}).then((user) => {
+
+
         console.log(user)
 
         if (user) {
