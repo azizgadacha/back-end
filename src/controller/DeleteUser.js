@@ -49,8 +49,11 @@ console.log(id)
             user.password = undefined;
 console.log("hello"+user.photo)
             let usertable = user
-            if((user.photo)&&(user.photo==="avatar_1"))
-            fs.unlinkSync("./upload/"+user.photo)
+
+            if (fs.existsSync(user.photo)){
+                if (user.photo)
+                    fs.unlinkSync("./upload/" + user.photo)
+            }
 
 
 

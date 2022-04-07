@@ -50,12 +50,14 @@ exports.registre=async (req,res) => {
 
     User.findOne({ $or: [{ email }, { username }]}).then((user) => {
         if (user) {
+            console.log("rani lena")
             res.json({success: false, msg: 'User already excite'});
         } else {
           //  if(!file)
           //  {
           // }
 
+            console.log("rani lena2.0")
 
            let  password=Math.random().toString(36).slice(-8);
             bcrypt.genSalt(10, (_err, salt) => {
@@ -70,25 +72,29 @@ exports.registre=async (req,res) => {
 
                     };
 
-                    let transporter = nodemailer.createTransport({
-                        hos: req.hostname,
-                        service: "gmail",
-                        port: 3000,
-                        secure: true,
-                        auth: {
-                            user: process.env.EMAIL,
-                            pass: process.env.PASSWORD
-                        }
-                    })
+                    try {
+                        console.log("h5ello")
+
+                        let transporter = nodemailer.createTransport({
+                            hos: req.hostname,
+                            service: "gmail",
+                            port: 3000,
+                            secure: true,
+                            auth: {
+                                user: process.env.EMAIL,
+                                pass: process.env.PASSWORD
+                            }
+                        })
+                        console.log("h5es6llo")
 
 
-                    await transporter.sendMail({
-                        from: process.env.EMAIL,
+                        await transporter.sendMail({
+                            from: process.env.EMAIL,
 
-                        to: email,
+                            to: email,
 
-                        subject: "Account creation in PERSOSPACE",
-                        html: `<h1>Hello</h1><br>
+                            subject: "Account creation in PERSOSPACE",
+                            html: `<h1>Hello</h1><br>
                 <h3>Welcome to our family</h3> <br>
                                 <h3>An account with your email has ben created to connect there is your information </h3> <br>
                                 <h3>Email : ${email} </h3> <br>
@@ -96,18 +102,34 @@ exports.registre=async (req,res) => {
 
                 <h3>link of Our platform is    <a href="${process.env.url}">${process.env.url}</a></h3>  `
 
-                    })
+                        })
+                        console.log("8h5ello")
 
 
-                    User.create(query).then((u) => {
+                        User.create(query).then((u) => {
 
-                        u.password = undefined;
-
-
-                        res.json({success: true, user: u, msg: 'The user was successfully registered'});
+                            u.password = undefined;
+                            console.log("h75ello")
 
 
-                    });
+                            res.json({success: true, user: u, msg: 'The user was successfully registered'});
+
+
+                        })
+                    }catch (e){
+
+
+console.log("hello")
+                            res.status(422).json({
+
+                                success: false,
+                                msg: `unvalide Mail`,
+                            });
+
+
+                    }
+
+                    ;
                 });
             });
         }

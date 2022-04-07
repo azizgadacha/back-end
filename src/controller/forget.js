@@ -61,7 +61,6 @@ exports.forget=async (req, res) => {
         }, process.env.SECRET, {
             expiresIn: 60000, // 1 week
         });
-       await console.log("il token houwa "+jwt_decode(token).exp)
 
         ForgetToken.create({token:token,email:user.email,expire:jwt_decode(token).exp*1000}).then(async (u) => {
             await transporter.sendMail({
@@ -75,7 +74,6 @@ exports.forget=async (req, res) => {
                    <a href="${process.env.url}/change/${token}">link is here</a>  `
 
             })
-            console.log(process.env.url)
             return res.json({
                 success: true,
                 msg: `an email containing the password reset link has been sent`,

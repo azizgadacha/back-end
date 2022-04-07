@@ -36,7 +36,7 @@ let payload= jwt_decode(token)
         bcrypt.hash(password, salt).then((hash) => {
 
 
-            User.findOneAndUpdate({email:payload.email},{password:hash}).then((user)=>{
+
                     User.findOneAndUpdate({email:payload.email},{password:hash}).then((user)=>{
 
                         ForgetToken.findOneAndRemove({token:token}).then(()=>{
@@ -48,7 +48,7 @@ let payload= jwt_decode(token)
 
 
 
-            })
+
 
 
 }
