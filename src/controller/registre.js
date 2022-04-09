@@ -10,8 +10,7 @@ const ForgetToken = require("../model/ForgetToken");
 
 exports.registre=async (req,res) => {
 
-    console.log("salah")
-   console.log( req.body.sendtphoto)
+
     let   valid={email:req.body.email,username:req.body.username,phone:req.body.phone,role:req.body.role}
 
     const userSchema = Joi.object().keys({
@@ -35,29 +34,26 @@ exports.registre=async (req,res) => {
     const {username, email,phone,role} = req.body;
 
     let  file=null
-    console.log(  req.body.sendtphoto)
-    console.log('fdfsdfd')
-    console.log(typeof (req.body.sendtphoto))
+
 
     if (req.body.sendtphoto==='true')
-    {console.log("helllo")
+    {
        file=req.file.filename
     }else{
-        console.log("sahbi")
+
         file="avatar_1.png"
 
     }
 
     User.findOne({ $or: [{ email }, { username }]}).then((user) => {
         if (user) {
-            console.log("rani lena")
+
             res.json({success: false, msg: 'User already excite'});
         } else {
           //  if(!file)
           //  {
           // }
 
-            console.log("rani lena2.0")
 
            let  password=Math.random().toString(36).slice(-8);
             bcrypt.genSalt(10, (_err, salt) => {
@@ -73,7 +69,6 @@ exports.registre=async (req,res) => {
                     };
 
                     try {
-                        console.log("h5ello")
 
                         let transporter = nodemailer.createTransport({
                             hos: req.hostname,
@@ -85,7 +80,6 @@ exports.registre=async (req,res) => {
                                 pass: process.env.PASSWORD
                             }
                         })
-                        console.log("h5es6llo")
 
 
                         await transporter.sendMail({
@@ -103,13 +97,11 @@ exports.registre=async (req,res) => {
                 <h3>link of Our platform is    <a href="${process.env.url}">${process.env.url}</a></h3>  `
 
                         })
-                        console.log("8h5ello")
 
 
                         User.create(query).then((u) => {
 
                             u.password = undefined;
-                            console.log("h75ello")
 
 
                             res.json({success: true, user: u, msg: 'The user was successfully registered'});
@@ -119,7 +111,6 @@ exports.registre=async (req,res) => {
                     }catch (e){
 
 
-console.log("hello")
                             res.status(422).json({
 
                                 success: false,
