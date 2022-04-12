@@ -24,7 +24,6 @@ exports.addworkspace=async (req,res)=>{
     }
     const {id,WorkspaceName,description} = req.body;
 
-            console.log(id)
             User.find({_id:id})
                 .then((users)=>{
                   const query={
