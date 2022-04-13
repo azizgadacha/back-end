@@ -5,21 +5,16 @@ const bcrypt = require("bcrypt");
 
 exports.editPass=(req, res) => {
     const { userID,newPassword,oldPassword } = req.body;
-console.log("daq")
-    console.log(oldPassword)
 
     User.findOne({ _id: userID }).then((user) => {
         if (user) {
 
-            console.log(user)
             const query = { _id: user._id };
 
-            console.log(user.password)
 
 
             bcrypt.compare(oldPassword, user.password, async (_err2, isMatch) => {
 
-                console.log(isMatch)
 
 
                 if (isMatch) {
@@ -39,7 +34,6 @@ console.log("daq")
 
                                 }
                             ).catch(() => {
-                                console.log("halloo7")
 
                                 return  res.json({ success: false, passprob:false, msg: 'There was an error. Please contract the administrator' });
                             });
@@ -60,7 +54,6 @@ console.log("daq")
 
 
                 }else {
-                    console.log("halloo8")
 
                     return res.json({success: false, passprob: true, msg: 'Wrong credentials'});
                 }}
@@ -71,7 +64,6 @@ console.log("daq")
 
 
         } else {
-            console.log("halloo9")
 
             return  res.json({ success: false,passprob:false, msg: "User didn't excite" });
         }

@@ -10,15 +10,12 @@ const bcrypt = require("bcrypt");
 exports.change=async (req, res) => {
     const { password } = req.body;
 
-    console.log(("il password hya "+password))
     const { token } = req.body;
     // Joy Validation
     const passwordSchema = Joi.object().keys({
         password: Joi.string().required(),
     });
-    const result = passwordSchema.validate({password});
-    console.log(result)
-    if (result.error) {
+    const result = passwordSchema.validate({password});if (result.error) {
        return  res.status(422).json({
             success: false,
             msg: `erreur  ${result.error.details[0].message}`,
@@ -31,12 +28,11 @@ let payload= jwt_decode(token)
 
     bcrypt.genSalt(10, (_err, salt) => {
 
-        console.log("il salt houwa3 :"+salt)
 
         bcrypt.hash(password, salt).then((hash) => {
 
 
-            User.findOneAndUpdate({email:payload.email},{password:hash}).then((user)=>{
+
                     User.findOneAndUpdate({email:payload.email},{password:hash}).then((user)=>{
 
                         ForgetToken.findOneAndRemove({token:token}).then(()=>{
@@ -48,7 +44,7 @@ let payload= jwt_decode(token)
 
 
 
-            })
+
 
 
 }

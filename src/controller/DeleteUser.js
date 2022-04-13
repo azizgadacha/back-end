@@ -7,7 +7,7 @@ const workspace = require("../model/workspace");
 exports.DeleteUser=async (req, res) => {
 
     let id = req.body.user_id;
-    console.log(id)
+
     if (User.findOne({_id: id})) {
         var descendants = []
         var workspaceitems = []
@@ -51,14 +51,17 @@ exports.DeleteUser=async (req, res) => {
 
 
     User.findOneAndDelete({_id:id}).then((user) => {
-        console.log(user)
+
+
 
         if (user) {
             user.password = undefined;
-console.log("hello"+user.photo)
             let usertable = user
-            if((user.photo)&&(user.photo==="avatar_1"))
-            fs.unlinkSync("./upload/"+user.photo)
+
+            if (fs.existsSync(user.photo)){
+                if (user.photo)
+                    fs.unlinkSync("./upload/" + user.photo)
+            }
 
 
 
