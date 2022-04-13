@@ -21,6 +21,7 @@ const {DeleteUser} = require("../controller/DeleteUser");
 const multer=require('multer')
 
 const {addinsideworkspace} = require("../controller/addinsideworkspace");
+const {getwWidget} = require("../controller/getWidget");
 
 
 const fileStorage=multer.diskStorage(
@@ -55,6 +56,8 @@ router.post('/validation',validation);
 
 router.post('/addworkspace',checkToken,addworkspace);
 router.post('/getworkspace',checkToken,getworkspace);
+router.post('/getWidget',checkToken,getwWidget);
+
 router.post('/deleteworkspace',checkToken,deleteworkspace)
 router.post('/addinsideworkspace',checkToken,addinsideworkspace)
 
