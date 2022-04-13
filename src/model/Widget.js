@@ -1,14 +1,11 @@
 const  mongoose=require("mongoose")
 
-const workspace = new mongoose.Schema({
+const Widget = new mongoose.Schema({
 
-    superior_id:{ type: String  },
-
+    superior_id:String,
     widgetName: String,
-
-    description: String,
-    type:String,
-    header:Array,
+    type: String,
+    label:Array,
     data:Array,
     date:{type:Date,
         default: new Date()
@@ -17,4 +14,4 @@ const workspace = new mongoose.Schema({
 
 },)
 
-module.exports=mongoose.model("workspace",workspace)
+module.exports=mongoose.model("widget",Widget)
