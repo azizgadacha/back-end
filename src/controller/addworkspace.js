@@ -6,15 +6,19 @@ const activeSession =require('../model/activeSession')
 
 exports.addworkspace=async (req,res)=>{
 
+
+
+    verif={WorkspaceName:req.body.WorkspaceName,description: req.body.description,token:req.body.token}
     const userSchema = Joi.object().keys({
        WorkspaceName: Joi.string().allow(" ") .min(4).max(13)
             .optional().required(),
         description: Joi.string().allow(" ") .min(4).max(25)
             .optional().required(),
         token:Joi.string().required(),
-        id:Joi.string().required()
     });
-    const result = userSchema.validate(req.body);
+    const result = userSchema.validate(verif);
+    console.log("salah1")
+
     if (result.error) {
         res.status(422).json({
             success: false,
@@ -22,20 +26,29 @@ exports.addworkspace=async (req,res)=>{
         });
         return;
     }
-    const {id,WorkspaceName,description} = req.body;
+    console.log("salah1")
+    const {superior_id,WorkspaceName,description} = req.body;
 
-            User.find({_id:id})
+            User.find({_id:superior_id})
                 .then((users)=>{
                   const query={
-                      superior_id:id,
+                      superior_id:superior_id,
                       WorkspaceName,
                       description
                   };
-                  Workspace.findOne({WorkspaceName,superior_id:id}).then((w1)=> {
-                      if (w1) {
-                          res.json({success: false, msg: 'Workspace already exists'});
+                    console.log("salah2")
+
+                    Workspace.findOne({WorkspaceName,superior_id:superior_id}).then((w1)=> {
+                        console.log("salah3")
+
+                        if (w1) {
+                            console.log("salah4")
+
+                            res.json({success: false, msg: 'Workspace already exists'});
                       } else {
-                          Workspace.create(query).then((w) => {
+                            console.log("salah5")
+
+                            Workspace.create(query).then((w) => {
 
 
                               res.json({
