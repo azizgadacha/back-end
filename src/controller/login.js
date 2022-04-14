@@ -26,7 +26,7 @@ exports.login=(req, res) => {
     const { email } = req.body;
     const { password } = req.body;
 
-    User.findOne({ email }).then((user) => {
+    User.findOne({ email }            ).then((user) => {
         if (!user) {
             return res.json({ success: false, msg: 'Wrong credentials' });
         }
