@@ -22,6 +22,7 @@ const multer=require('multer')
 
 const {addinsideworkspace} = require("../controller/addinsideworkspace");
 const {getwWidget} = require("../controller/getWidget");
+const {shareWorkspace} = require("../controller/shareWorkspace");
 
 
 const fileStorage=multer.diskStorage(
@@ -60,6 +61,8 @@ router.post('/getWidget',checkToken,getwWidget);
 
 router.post('/deleteworkspace',checkToken,deleteworkspace)
 router.post('/addinsideworkspace',checkToken,addinsideworkspace)
+router.post('/shareWorkspace',checkToken,shareWorkspace)
+
 
 
 
