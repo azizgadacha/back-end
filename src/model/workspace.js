@@ -2,12 +2,12 @@ const  mongoose=require("mongoose")
 
 const workspace = new mongoose.Schema({
 
-    superior_id:{ type: String, ref: 'workspace' },
+    superior_id: String,
 
     WorkspaceName: String,
 
     description: String,
-    Share:[String],
+    Share:Array,
     date:{type:Date,
         default: new Date()
 
