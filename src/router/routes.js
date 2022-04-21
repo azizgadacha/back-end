@@ -24,6 +24,7 @@ const {addinsideworkspace} = require("../controller/addinsideworkspace");
 const {getwWidget} = require("../controller/getWidget");
 const {shareWorkspace} = require("../controller/shareWorkspace");
 const {getSharedWorkspace} = require("../controller/getSharedWorkspaces");
+const {editworkspace} = require("../controller/editworkspace");
 
 
 const fileStorage=multer.diskStorage(
@@ -57,6 +58,8 @@ router.post('/change',change);
 router.post('/validation',validation);
 
 router.post('/addworkspace',checkToken,addworkspace);
+router.post('/editworkspace',checkToken,editworkspace);
+
 router.post('/getworkspace',checkToken,getworkspace);
 router.post('/getWidget',checkToken,getwWidget);
 
