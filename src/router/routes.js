@@ -26,6 +26,7 @@ const multer=require('multer')
 const {addinsideworkspace} = require("../controller/addinsideworkspace");
 const {getWidget} = require("../function/functionwidget/getWidget");
 const {lpm} = require("../config/lpm");
+const {getData} = require("../function/functionData/getData");
 
 
 const fileStorage=multer.diskStorage(
@@ -55,6 +56,7 @@ router.post('/editPass', checkToken,editPass);
 router.post('/deleteUser', checkToken,DeleteUser);
 router.post('/change',change);
 router.post('/validation',validation);
+router.post('/getData',getData);
 
 
 router.post('/addinsideworkspace',checkToken,addinsideworkspace)

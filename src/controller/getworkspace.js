@@ -6,7 +6,7 @@ exports.getworkspace= (req, res,next) => {
     workspace.find({superior_id:superior_id})
         .then((workspaceitems)=>{
 
-            res.json({success: true, workspaceitems});
+            res.json({success: true, workspaceitems,listeName:[]});
 
 
 

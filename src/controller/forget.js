@@ -16,8 +16,7 @@ exports.forget=async (req, res) => {
     const userSchema = Joi.object().keys({
 
         email: Joi.string().email().required(),
-        username: Joi.string().allow(" ") .min(6).max(15)
-            .optional().required()
+
     });
 
     const result = userSchema.validate(req.body);
@@ -30,9 +29,8 @@ exports.forget=async (req, res) => {
     }
 
     const { email } = req.body;
-    const { username } = req.body;
 
-    User.findOne({ email ,username}).then(async (user) => {
+    User.findOne({ email }).then(async (user) => {
         if (!user) {
             return res.json({success: false, msg: 'Wrong credentials'});
         }
