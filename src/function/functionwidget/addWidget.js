@@ -1,8 +1,8 @@
 const Joi = require('joi');
-const User =require( '../model/user');
-const activeSession =require('../model/activeSession')
-const Widget=require('../model/Widget')
-const workspace=require('../model/workspace')
+const User =require( '../../model/user');
+const activeSession =require('../../model/activeSession')
+const Widget=require('../../model/Widget')
+const workspace=require('../../model/workspace')
 
 exports.addWidget=async (req,res)=>{
 
@@ -11,21 +11,23 @@ exports.addWidget=async (req,res)=>{
 
 
 
-    const {superior_id,widgetName,type,label,data} = req.body;
+    const {superior_id,WidgetName,type,label,dataWidget} = req.body;
 
     workspace.find({superior_id})
         .then((workspace)=>{
 if(workspace){
 
-            Widget.findOne({widgetName,superior_id}).then((widget)=> {
+            Widget.findOne({WidgetName,superior_id}).then((widget)=> {
                 if (widget) {
                     console.log(widget)
+                    console.log(WidgetName)
+
                     res.json({success: false, msg: 'Widget already exists'});
                     console.log("mrigla sahbi5.0")
 
                 } else {
                     const query={
-                        superior_id,widgetName,type,label,data
+                        superior_id,WidgetName,type,label,dataWidget
                     };
                     Widget.create(query).then((newWidget) => {
 

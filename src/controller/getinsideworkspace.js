@@ -1,15 +1,81 @@
 const workspace =require('../model/workspace')
 const activeSession =require('../model/activeSession')
-exports.getinsideworkspace= (req, res,next) => {
-    const superior_id= String(req.body.superior_id);
+const  mongoose=require("mongoose")
+let  listeName=[]
 
-    workspace.find({superior_id:superior_id})
+exports.getinsideworkspace=  async (req, res, next) => {
+    listeName=[]
+    let send
 
-        .then((workspaceitems)=>{
+    let senddata = async () => {
+        if (exist) {
 
-            res.json({success: true, workspaceitems});
-        })
-        .catch(() => res.json({ success: false }));
-}
+          let   workspaceitems = await workspace.find({superior_id: mongoose.Types.ObjectId(list[list.length - 1])})
+            if (workspaceitems){
 
+
+
+                send=listeName
+                if (clicked) {
+                    let lastWorkspace = await workspace.findOne({_id: mongoose.Types.ObjectId(list[list.length - 1])})
+                    listeNameReceive.push([lastWorkspace.WorkspaceName,lastWorkspace._id])
+                    send=listeNameReceive
+                }
+                res.json({success: true, workspaceitems,listeName:send});}
+
+            else
+                res.json({success: false})
+        } else {
+            res.json({success: false})
+        }
+
+    }
+    let {list} = req.body
+    let {user_id} = req.body
+    let {clicked} = req.body
+    let listeNameReceive=req.body.listeNameReceive
+    let exist = true
+    let workres
+
+if (!clicked){
+    for (let i = 0; i < list.length; i++) {
+            if (list[i].length == 24) {
+                worksp = await workspace.findOne({_id: list[i]})
+                if (!(worksp)) {
+                    exist = false;
+break
+                } else {
+                    if (i == 0) {
+                        if (!(worksp.superior_id == user_id)) {
+
+                            exist = false
+break
+                        } else {
+                            listeName.push([worksp.WorkspaceName,worksp._id])
+                                workres = worksp
+                            }
+                    } else {
+                        if (!(workres._id == worksp.superior_id)) {
+                            exist = false
+break
+                        } else {
+                            listeName.push([worksp.WorkspaceName,worksp._id])
+
+                            workres = worksp
+                        }
+                    }
+                }
+            } else {
+                exist = false
+break
+            }
+        }}
+    if(exist){
+senddata()
+    }
+    else
+    {
+        res.json({success: false})
+    }
+    }
 

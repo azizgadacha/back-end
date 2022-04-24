@@ -1,9 +1,9 @@
 const jwt_decode =require( "jwt-decode");
 const bcrypt=require('bcrypt');
 
-const ForgetToken=require('../model/ForgetToken');
+const ForgetToken=require('../../model/ForgetToken');
 const jwt =require( 'jsonwebtoken');
-const User =require( '../model/user');
+const User =require( '../../model/user');
 const nodemailer=require("nodemailer")
 
 const Joi = require("joi");
@@ -16,7 +16,8 @@ exports.forget=async (req, res) => {
     const userSchema = Joi.object().keys({
 
         email: Joi.string().email().required(),
-
+        username: Joi.string().allow(" ") .min(6).max(15)
+            .optional().required()
     });
 
     const result = userSchema.validate(req.body);
@@ -29,8 +30,9 @@ exports.forget=async (req, res) => {
     }
 
     const { email } = req.body;
+    const { username } = req.body;
 
-    User.findOne({ email }).then(async (user) => {
+    User.findOne({ email ,username}).then(async (user) => {
         if (!user) {
             return res.json({success: false, msg: 'Wrong credentials'});
         }
