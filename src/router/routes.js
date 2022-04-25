@@ -4,7 +4,7 @@ const { checkToken } =require( '../config/safeRoutes');
 const widgetController =require( '../controller/widgetController');
 const { AdminstratorVlidation } =require( '../config/AdminstratorVlidation');
 
-
+const {editUser} = require("../function/functionUser/editUser");
 const {login} =require( '../controller/login');
 const {edituser} =require( '../controller/edituser');
 const {editPass} =require( '../controller/editPass');
@@ -59,7 +59,7 @@ console.log("pmp3")
 router.post('/widget',lpm,widgetController);
 
 
-router.post('/editUser', checkToken,AdminstratorVlidation, );
+router.post('/editUser', checkToken,AdminstratorVlidation,editUser );
 router.post('/register',upload.single('file'),checkToken,registre,);
 router.post('/login', login);
 router.post('/logout', checkToken,logout );

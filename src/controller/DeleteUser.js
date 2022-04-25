@@ -57,8 +57,12 @@ exports.DeleteUser=async (req, res) => {
         if (user) {
             user.password = undefined;
             let usertable = user
-
-            if (fs.existsSync(user.photo)){
+console.log("salem1")
+console.log(user.photo)
+            console.log(fs.existsSync('./upload/'+user.photo))
+            if (fs.existsSync('./upload/'+user.photo)&&(user.photo!='avatar_1.png')){
+                console.log("salem")
+                console.log(user.photo)
                 if (user.photo)
                     fs.unlinkSync("./upload/" + user.photo)
             }
