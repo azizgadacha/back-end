@@ -2,13 +2,12 @@
 const data =require('../../model/data')
 
 exports.deleteLinkWidget= (req, res,next) => {
-    const {superior_id}= req.body;
-    const {idData}= req.body;
+    const {superior_id,idData,type,WidgetName}= req.body;
 console.log('mrl')
     console.log(superior_id)
     console.log(idData)
 
-    data.updateOne({_id:idData},{$pull:{usedIn:superior_id}})
+    data.updateOne({_id:idData},{$pull:{usedIn:{superior_id,type,WidgetName}}})
         .then((dataSend)=>{
 
             if(dataSend.modifiedCount==1) {
