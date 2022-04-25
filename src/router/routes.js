@@ -78,7 +78,6 @@ router.post('/addworkspace',checkToken,addworkspace);
 router.post('/editworkspace',checkToken,editworkspace);
 
 router.post('/getworkspace',checkToken,getworkspace);
-router.post('/getWidget',checkToken,getwWidget);
 
 router.post('/shareData',ShareDataToWidget);
 
