@@ -2,16 +2,16 @@
 const Widget =require( '../../model/Widget');
 
 
-exports.editUser=(req, res) => {
-    const { userID,role } = req.body;
+exports.editWidgets=(req, res) => {
+    const { idWidget,newName } = req.body;
     console.log("ddddd")
 
-    console.log(role)
-    Widget.findOneAndUpdate({ _id: userID },{role}).then((user) => {
-        if (user){
-            console.log("ddddd")
+    console.log(newName)
+    Widget.findOneAndUpdate({ _id: idWidget },{WidgetName:newName}).then((widget) => {
+        if (widget){
 
-            res.json({ success: true,user })}
+
+            res.json({ success: true,widget })}
         else
             res.json({ success: false, })
 
