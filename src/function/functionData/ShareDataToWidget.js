@@ -42,7 +42,7 @@ else{
 
                     if(dataupdated)
 
-                        res.json({ success: true ,widget:{idData:idData,title:WidgetName,type:type,label:dataupdated.label,data:dataupdated.data},WidgetExisite:false})
+                        res.json({ success: true ,widget:{idData:idData,WidgetName:WidgetName,sourceDB:true,type:type,label:dataupdated.label,data:dataupdated.data},WidgetExisite:false})
                     else
                     {            console.log('1meigk')
 
