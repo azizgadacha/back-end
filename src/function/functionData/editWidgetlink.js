@@ -4,15 +4,12 @@ const data =require( '../../model/data');
 
 
 exports.editWidgetlink=(req, res) => {
-    const { idWidget,newName,superiorID,type,WidgetName } = req.body;
-    console.log("ddddd")
+    const { idData,newName,superiorID,type,WidgetName } = req.body;
 
-    console.log(newName)
-    data.findOneAndUpdate({ _id: idWidget ,usedIn:{superiorID,type,WidgetName}},{usedIn:{superiorID,type,newName}}).then((widget) => {
-        if (widget){
-
-
-            res.json({ success: true,wiget })}
+    data.findOneAndUpdate({ _id: idData ,usedIn:{superiorID,type,WidgetName}},{usedIn:{superiorID,type,WidgetName:newName}}).then((dataUpdated) => {
+        if (dataUpdated){
+         let widgetupd={idData:idData,WidgetName:newName,oldName:WidgetName,type,label:dataUpdated.label,data:dataUpdated.data}
+            res.json({ success: true,widget:widgetupd})}
         else
             res.json({ success: false, })
 

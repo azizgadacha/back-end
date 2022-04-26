@@ -26,7 +26,6 @@ initPassport(passport);
 app.use(passport.initialize());
 app.use("/ap2/PersoSpace",lpm,route2)
 app.use("/api/users",lpm,routes)
-console.log('pzi')
 
 
 
