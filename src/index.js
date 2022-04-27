@@ -11,9 +11,16 @@ const connection=require( './db/DataBase');
 
 const passport =require('passport');
 const {lpm} = require("./config/lpm");
+const {Server}=require('socket.io')
+app.use(cors());
+/*const io=new Server(app,{
+ cors:{
+  origin:'http://localhost:300'
+ }
+
+})*/
 require("dotenv").config()
  connection.Connection()
-app.use(cors());
 app.use(express.json());
 
 app.use(compression());
@@ -26,7 +33,6 @@ initPassport(passport);
 app.use(passport.initialize());
 app.use("/ap2/PersoSpace",lpm,route2)
 app.use("/api/users",lpm,routes)
-console.log('pzi')
 
 
 

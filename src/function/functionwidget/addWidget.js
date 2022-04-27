@@ -6,7 +6,6 @@ const workspace=require('../../model/workspace')
 
 exports.addWidget=async (req,res)=>{
 
-    console.log("mrigla sahbi1.0")
 
 
 
@@ -19,11 +18,8 @@ if(workspace){
 
             Widget.findOne({WidgetName,superior_id}).then((widget)=> {
                 if (widget) {
-                    console.log(widget)
-                    console.log(WidgetName)
 
                     res.json({success: false, msg: 'Widget already exists'});
-                    console.log("mrigla sahbi5.0")
 
                 } else {
                     const query={
@@ -31,7 +27,6 @@ if(workspace){
                     };
                     Widget.create(query).then((newWidget) => {
 
-console.log("mrigla sahbi")
                         res.json({
                             success: true,
                             widget:newWidget,
@@ -40,7 +35,6 @@ console.log("mrigla sahbi")
                     })
                         .catch(() => {
                             res.json({success: false, msg: 'The Widget not created'})
-                            console.log("mrigla sahbi3.0")
 
                         })
                 }
@@ -48,7 +42,6 @@ console.log("mrigla sahbi")
 
 else{
     res.json({success: false, msg: "The workspace didn't excite "})
-    console.log("mrigla sahbi3.0")
 
 
 

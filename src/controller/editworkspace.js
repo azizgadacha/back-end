@@ -17,7 +17,6 @@ exports.editworkspace=async (req,res)=>{
         token:Joi.string().required(),
     });
     const result = userSchema.validate(verif);
-    console.log("salah1")
 
     if (result.error) {
         res.status(422).json({
@@ -26,13 +25,11 @@ exports.editworkspace=async (req,res)=>{
         });
         return;
     }
-    console.log("salah1")
     const cardId= String(req.body.card_id);
     const workspaceName= String(req.body.WorkspaceName);
     const Description=String(req.body.description);
     Workspace.findOneAndUpdate({_id:cardId},{WorkspaceName:workspaceName,description:Description})
         .then((workspaceitems)=>{
-            console.log("alam")
             workspace.findOne({_id:cardId}).then((w)=>{
                 res.json({success:true,w})
             })

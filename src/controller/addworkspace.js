@@ -17,7 +17,6 @@ exports.addworkspace=async (req,res)=>{
         token:Joi.string().required(),
     });
     const result = userSchema.validate(verif);
-    console.log("salah1")
 
     if (result.error) {
         res.status(422).json({
@@ -26,7 +25,6 @@ exports.addworkspace=async (req,res)=>{
         });
         return;
     }
-    console.log("salah1")
     const {superior_id,WorkspaceName,description} = req.body;
 
             User.find({_id:superior_id})
@@ -36,17 +34,13 @@ exports.addworkspace=async (req,res)=>{
                       WorkspaceName,
                       description
                   };
-                    console.log("salah2")
 
                     Workspace.findOne({WorkspaceName,superior_id:superior_id}).then((w1)=> {
-                        console.log("salah3")
 
                         if (w1) {
-                            console.log("salah4")
 
                             res.json({success: false, msg: 'Workspace already exists'});
                       } else {
-                            console.log("salah5")
 
                             Workspace.create(query).then((w) => {
 

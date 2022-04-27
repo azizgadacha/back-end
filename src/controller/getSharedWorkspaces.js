@@ -15,6 +15,5 @@ exports.getSharedWorkspace=  async (req, res,next) => {
             }
         }
     }
-    console.log(workspaceitems)
     res.json({success: true, workspaceitems})
 }
