@@ -12,7 +12,6 @@ exports.getWidget= (req, res,next) => {
             data.find({"usedIn.superiorID":superior_id}).then((widgetFromData,)=>{
                     console.log("mriglas")
 console.log(widgetFromData)
-                    console.log(widgetFromData[0].usedIn)
 
                     for (let item of widgetFromData) {
                  for(let item2 of item.usedIn){
