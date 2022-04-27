@@ -75,19 +75,3 @@ exports.addworkspace=async (req,res)=>{
 
 
 
-/*const workspaceSchema=Joi.object().keys({
-     WorkspaceName:Joi.string().alphanum().allow(" ") .min(4).max(15)
-         .optional().required(),
-     description:Joi.string().alphanum().allow(" ") .min(4).max(15)
-         .optional().required(),
- });
- const result = workspaceSchema.validate(req.body);
- if (result.error) {
-     res.status(422).json({
-         success: false,
-         msg: `Validation err: ${result.error.details[0].message}`,
-     });
-     return;
- }
-
-   */

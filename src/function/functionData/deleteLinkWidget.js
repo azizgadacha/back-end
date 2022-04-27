@@ -7,6 +7,10 @@ exports.deleteLinkWidget= (req, res,next) => {
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> edituw
 
     data.updateOne({_id:idData},{$pull:{usedIn:{superiorID,type,WidgetName}}})
         .then((dataSend)=>{
@@ -21,6 +25,10 @@ exports.deleteLinkWidget= (req, res,next) => {
 
         })
         .catch((e) =>{
+<<<<<<< HEAD
+=======
+
+>>>>>>> edituw
 
             res.json({ success: false });
 })}

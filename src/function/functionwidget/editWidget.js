@@ -7,7 +7,7 @@ exports.editWidgets=(req, res) => {
 
     Widget.findOneAndUpdate({ _id: idWidget },{WidgetName:newName}).then((widget) => {
         if (widget){
-
+widget.WidgetName=newName
 
             res.json({ success: true,widget })}
         else
