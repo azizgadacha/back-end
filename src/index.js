@@ -11,11 +11,11 @@ const connection=require( './db/DataBase');
 
 const passport =require('passport');
 const {lpm} = require("./config/lpm");
-const {Server}=require('socket.io')
+//const {Server}=require('socket.io')
 app.use(cors());
-/*const io=new Server(app,{
+/*àconst io=new Server(app,{
  cors:{
-  origin:'http://localhost:300'
+  origin:"*"
  }
 
 })*/

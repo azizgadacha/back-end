@@ -7,11 +7,9 @@ exports.editUser=(req, res) => {
 
     user.findOneAndUpdate({ _id: userID },{role}).then((userUpdated) => {
         if (userUpdated){
-<<<<<<< HEAD
-=======
+
 
             userUpdated.password=undefined
->>>>>>> edituw
 userUpdated.role=role
         res.json({ success: true,user:userUpdated })}
 else

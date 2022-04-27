@@ -2,15 +2,8 @@
 const data =require('../../model/data')
 
 exports.deleteLinkWidget= (req, res,next) => {
+    console.log("nemchis")
     const {superiorID,idData,type,WidgetName}= req.body;
-
-
-
-
-<<<<<<< HEAD
-=======
-
->>>>>>> edituw
 
     data.updateOne({_id:idData},{$pull:{usedIn:{superiorID,type,WidgetName}}})
         .then((dataSend)=>{
@@ -25,10 +18,7 @@ exports.deleteLinkWidget= (req, res,next) => {
 
         })
         .catch((e) =>{
-<<<<<<< HEAD
-=======
 
->>>>>>> edituw
 
             res.json({ success: false });
 })}
