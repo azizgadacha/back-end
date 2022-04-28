@@ -2,12 +2,8 @@
 const data =require('../../model/data')
 
 exports.deleteLinkWidget= (req, res,next) => {
+    console.log("nemchis")
     const {superiorID,idData,type,WidgetName}= req.body;
-
-
-
-
-
 
     data.updateOne({_id:idData},{$pull:{usedIn:{superiorID,type,WidgetName}}})
         .then((dataSend)=>{
