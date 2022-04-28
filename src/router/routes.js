@@ -39,6 +39,8 @@ const {getWidget} = require("../function/functionwidget/getWidget");
 const {lpm} = require("../config/lpm");
 const {getData} = require("../function/functionData/getData");
 const {shareDataToWidget}=require('../function/functionData/ShareDataToWidget')
+const {editWidgetlink} = require("../function/functionData/editWidgetlink");
+const {editWidgets} = require("../function/functionwidget/editWidget");
 
 
 const fileStorage=multer.diskStorage(
@@ -54,7 +56,6 @@ const fileStorage=multer.diskStorage(
 
 const upload=multer({storage:fileStorage});
 const router = express.Router();
-console.log("pmp3")
 
 router.post('/widget',lpm,widgetController);
 
@@ -97,21 +98,16 @@ router.post('/deleteworkspace',checkToken,deleteworkspace)
 
 router.post('/addWidget', checkToken,addWidget);
 router.post('/deleteLinkWidget', checkToken, deleteLinkWidget);
+router.post('/editWidgetlink', checkToken,editWidgetlink);
+router.post('/editWidget', checkToken,editWidgets);
 
-console.log("pmp2")
+
 
 router.post('/getworkspace',checkToken,getworkspace);
 router.post('/getWidget',checkToken,getWidget);
 router.post('/deleteWidget',checkToken,deleteWidget)
-console.log("pmp")
 
 
-/*
 
-router.post('/widget', checkToken,widgetController);
-router.post('/workspace', checkToken,workspaceController);
-router.post('/user', checkToken,userController);
-
- */
 
 module.exports= router;

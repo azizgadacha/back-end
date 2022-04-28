@@ -17,7 +17,6 @@ const router = express.Router();
 
 router.post('/addWidget', checkToken,addWidget);
 
-console.log("rani lena")
 router.post('/getWidget',checkToken,getWidget);
 router.post('/delete_Widget',checkToken,deleteWidget)
 

@@ -12,7 +12,6 @@ const router = express.Router();
 
 
 
-console.log("m2")
 
 
 
@@ -20,7 +19,6 @@ router.post('/widget',lpm,widgetController);
 router.post('/workspace',lpm,workspaceController);
 router.post('/user',lpm, userController);
 
-console.log("m2")
 
 
 module.exports= router;

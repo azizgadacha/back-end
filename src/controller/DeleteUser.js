@@ -14,18 +14,15 @@ exports.DeleteUser=async (req, res) => {
 
         //descendants.push(id)
         var items = await workspace.find({superior_id: id})
-        console.log(items)
         for (let item of items) {
             descendants.push(item._id)
-            console.log('111111111111111')
-            console.log(item)
+
             var stack = [];
             stack.push(item);
             workspaceitems.push(item)
             while (stack.length > 0) {
                 var currentnode = stack.pop();
                 var children = await workspace.find({superior_id: currentnode._id});
-                console.log(children)
                 children.forEach(function (child) {
                     descendants.push(child._id);
                     workspaceitems.push(child)
@@ -34,7 +31,6 @@ exports.DeleteUser=async (req, res) => {
             }
             descendants.join(",")
             for(item of descendants){
-                console.log(item.toString())
                 await workspace.findByIdAndRemove(item.toString())
 
             }
@@ -44,7 +40,6 @@ exports.DeleteUser=async (req, res) => {
 
 
         }
-        console.log(workspaceitems)
 
     }
 
@@ -57,12 +52,9 @@ exports.DeleteUser=async (req, res) => {
         if (user) {
             user.password = undefined;
             let usertable = user
-console.log("salem1")
-console.log(user.photo)
-            console.log(fs.existsSync('./upload/'+user.photo))
+
             if (fs.existsSync('./upload/'+user.photo)&&(user.photo!='avatar_1.png')){
-                console.log("salem")
-                console.log(user.photo)
+
                 if (user.photo)
                     fs.unlinkSync("./upload/" + user.photo)
             }
