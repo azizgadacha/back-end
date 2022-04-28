@@ -3,6 +3,7 @@ const User =require( '../../model/user');
 const activeSession =require('../../model/activeSession')
 const Widget=require('../../model/Widget')
 const workspace=require('../../model/workspace')
+const data = require("../../model/data");
 
 exports.addWidget=async (req,res)=>{
 
@@ -22,23 +23,35 @@ if(workspace){
                     res.json({success: false, msg: 'Widget already exists'});
 
                 } else {
-                    const query={
-                        superior_id,WidgetName,type,label,dataWidget
-                    };
-                    Widget.create(query).then((newWidget) => {
 
-                        res.json({
-                            success: true,
-                            widget:newWidget,
-                            msg: 'The Widget was successfully created'
-                        });
-                    })
-                        .catch(() => {
-                            res.json({success: false, msg: 'The Widget not created'})
 
+                    data.find({"usedIn.superiorID":superiorID,"usedIn.WidgetName":WidgetName }).then((datwidget)=> {
+                        if (datwidget.length > 0) {
+
+                            res.json({
+                                success: false,
+                                msg: "widget with the same name already exist",
+                                WidgetExisite: true
+                            })
+                        }
+
+                        const query = {
+                            superior_id, WidgetName, type, label, dataWidget
+                        };
+                        Widget.create(query).then((newWidget) => {
+
+                            res.json({
+                                success: true,
+                                widget: newWidget,
+                                msg: 'The Widget was successfully created'
+                            });
                         })
-                }
-            })}
+                            .catch(() => {
+                                res.json({success: false, msg: 'The Widget not created'})
+
+                            })
+                    }  ) }}
+            )}
 
 else{
     res.json({success: false, msg: "The workspace didn't excite "})
