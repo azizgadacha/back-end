@@ -25,7 +25,7 @@ if(workspace){
                 } else {
 
 
-                    data.find({"usedIn.superiorID":superiorID,"usedIn.WidgetName":WidgetName }).then((datwidget)=> {
+                    data.find({"usedIn.superiorID":superior_id,"usedIn.WidgetName":WidgetName }).then((datwidget)=> {
                         if (datwidget.length > 0) {
 
                             res.json({
