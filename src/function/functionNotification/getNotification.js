@@ -1,10 +1,9 @@
 const notification =require('../../model/notification')
 exports.getNotification= (req, res,next) => {
-    const {id}= req.body;
-
+    let {id}= req.body
     notification.find({receiver:id})
-        .then((notif)=>{
-            res.json({success: true, notif});
+        .then((notifFound)=>{
+            res.json({success: true, notifFound});
         })
         .catch(() => res.json({ success: false }));
 }

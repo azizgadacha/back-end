@@ -25,7 +25,7 @@ if(workspace){
                 } else {
 
 
-                    data.find({"usedIn.superiorID":superiorID,"usedIn.WidgetName":WidgetName }).then((datwidget)=> {
+                    data.find({"usedIn.superiorID":superior_id,"usedIn.WidgetName":WidgetName }).then((datwidget)=> {
                         if (datwidget.length > 0) {
 
                             res.json({
@@ -34,6 +34,7 @@ if(workspace){
                                 WidgetExisite: true
                             })
                         }
+                        else{
 
                         const query = {
                             superior_id, WidgetName, type, label, dataWidget
@@ -50,7 +51,7 @@ if(workspace){
                                 res.json({success: false, msg: 'The Widget not created'})
 
                             })
-                    }  ) }}
+                    }}  ) }}
             )}
 
 else{

@@ -1,4 +1,4 @@
-const express=require("express")
+/*const express=require("express")
 const app=express()
 const routes=require("./router/routes")
 const route2=require("./router/route2")
@@ -43,8 +43,8 @@ const io=require('socket.io')(server,{
 io.on('connection',(socket)=>{
  console.log('connected to server')
 })
+*/
 
-/*
 const express=require("express")
 const app=express()
 const routes=require("./router/routes")
@@ -58,14 +58,7 @@ const connection=require( './db/DataBase');
 
 const passport =require('passport');
 const {lpm} = require("./config/lpm");
-const io=require('socket.io')(5000,{
- cors:{
-  origin:'*'
- }
-})
-io.on('connection',(socket)=>{
- console.log('a user connected')
-})
+
 
 app.use(cors());
 
@@ -87,9 +80,9 @@ app.use("/api/users",lpm,routes)
 
 
 app.listen(5000,()=>{
- console
+ console.log('3aselma')
 })
-*/
+
 
 
 
