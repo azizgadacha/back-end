@@ -1,4 +1,6 @@
 const activeSession =require ('../model/activeSession');
+const { isJwtExpired } =require( 'jwt-check-expiration')
+
 
 exports.checkToken = (req, res, next) => {
 
@@ -9,8 +11,10 @@ exports.checkToken = (req, res, next) => {
 
 
         if (session.length === 1) {
+
+            if (!isJwtExpired(token)) {
             return next();
-        }
-        return res.json({ success: false, msg: 'User is not logged on' });
+        }}
+        return res.json({ success: false, notConnected:true,msg: 'User is not logged on' });
     });
 };

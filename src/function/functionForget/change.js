@@ -37,19 +37,9 @@ let payload= jwt_decode(token)
 
                         ForgetToken.findOneAndRemove({token:token}).then(()=>{
                             return   res.json({ success: true,msg: `la mot de passe a ete changer`});
-
-
                         }
                         )  })
-
-
-
-
-
-
 }
-
-
 ).catch(()=>{return   res.json({ success: false,
             msg: `erreur raisayer lus tart`});
 

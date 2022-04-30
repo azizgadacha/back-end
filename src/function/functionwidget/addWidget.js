@@ -12,6 +12,17 @@ exports.addWidget=async (req,res)=>{
 
 
     const {superior_id,WidgetName,type,label,dataWidget} = req.body;
+    let dataWidgetFinal=[]
+for(let data of dataWidget){
+    if(data==null)
+    {
+        dataWidgetFinal.push(0)
+
+    }
+    else
+    dataWidgetFinal.push(data)
+
+}
 
     workspace.find({superior_id})
         .then((workspace)=>{
@@ -37,7 +48,7 @@ if(workspace){
                         else{
 
                         const query = {
-                            superior_id, WidgetName, type, label, dataWidget
+                            superior_id, WidgetName, type, label, dataWidget:dataWidgetFinal
                         };
                         Widget.create(query).then((newWidget) => {
 
