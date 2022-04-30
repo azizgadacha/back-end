@@ -6,11 +6,14 @@ exports.visualizationOfWorkspaces=  async (req, res,next) => {
     var workspaceitems=[]
     console.log(ListUsers)
     for(let item of ListUsers){
-       let items=await workspace.find({superior_id:item._id})
-        console.log("aeaeae")
-        console.log(items)
-        for(let x of items) {
-            workspaceitems.push(x)
+        if(item._id!=superior_id) {
+            let items = await workspace.find({superior_id: item._id})
+            if(items!=null) {
+                for (let x of items) {
+                    console.log(x)
+                    workspaceitems.push(x)
+                }
+            }
         }
     }
     res.json({success: true, workspaceitems,listeName:[]})
