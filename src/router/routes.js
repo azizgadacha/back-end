@@ -30,6 +30,7 @@ const multer=require('multer')
 
 const {addinsideworkspace} = require("../controller/addinsideworkspace");
 
+
 const {shareWorkspace} = require("../controller/shareWorkspace");
 const {getSharedWorkspace} = require("../controller/getSharedWorkspaces");
 const {editworkspace} = require("../controller/editworkspace");
@@ -41,6 +42,7 @@ const {getData} = require("../function/functionData/getData");
 const {shareDataToWidget}=require('../function/functionData/ShareDataToWidget')
 const {editWidgetlink} = require("../function/functionData/editWidgetlink");
 const {editWidgets} = require("../function/functionwidget/editWidget");
+const {visualizationOfWorkspaces} = require("../controller/visualizationOfWorkspaces");
 
 
 const fileStorage=multer.diskStorage(
@@ -86,7 +88,7 @@ router.post('/shareData',ShareDataToWidget);
 router.post('/addinsideworkspace',checkToken,addinsideworkspace)
 router.post('/shareWorkspace',checkToken,shareWorkspace)
 router.post('/getsharedWorkspace',checkToken,getSharedWorkspace)
-
+router.post('/visualizationOfWorkspaces',checkToken,visualizationOfWorkspaces)
 
 
 router.post('/getinsideworkspace',checkToken,getinsideworkspace);
