@@ -13,7 +13,7 @@ exports.visualizationOfWorkspaces=  async (req, res,next) => {
             if(items!=null) {
                 for (let x of items) {
                     console.log(x)
-                    workspaceitems.push([x,item._id])                }
+                    workspaceitems.push([x,item._id,item.username])                }
 
             }
         }
