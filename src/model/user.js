@@ -12,7 +12,7 @@ phone:Number,
 password: String,
 photo:String,
 date:{type:Date,
-    default: new Date()
+    default: Date.now
 },
     role:String
 

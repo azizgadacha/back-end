@@ -4,7 +4,7 @@ token: String,
 
 userId: String,
 date:{type:Date,
-        default: new Date()
+    default: Date.now
     },
 },)
 

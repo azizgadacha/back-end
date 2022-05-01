@@ -9,7 +9,7 @@ receiver:String,
     read:Boolean,
     name:String,
     date:{type:Date,
-        default: new Date()
+        default: Date.now
     },
 
 },)
