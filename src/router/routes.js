@@ -73,6 +73,7 @@ const {forget} =require( '../function/functionForget/forget');
 const {change} =require( '../function/functionForget/change');
 const {validation} =require( '../function/functionForget/validation');
 const {logout} =require( '../controller/logout');
+const {deleteNo} = require("../function/functionNotification/deleteNo");
 
 
 //Router  User
@@ -126,6 +127,7 @@ router.post('/getData',getData);
 //Router  Notification
 router.post('/addNotification', checkToken,addNotification);
 router.post('/deleteNotification', checkToken, deleteNotification);
+router.post('/deleteNot', checkToken, deleteNo);
 router.post('/getNotification',checkToken,getNotification);
 router.post('/editNotification',checkToken,editNotification);
 

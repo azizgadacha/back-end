@@ -6,15 +6,12 @@ exports.addNotification=async (req,res)=>{
 
 
 
-    let { receiver, sender, type, read,name}=req.body
-    let salah={ receiver, sender, type, read,name}
-
-console.log("dddddd")
-console.log(salah)
+    let { receiver, sender, type, read,text}=req.body
 
 
-    notification.create({receiver, sender, type, read,name}).then((notification)=>{
 
+    notification.create({receiver, sender, type, read,text}).then((notification)=>{
+        res.json({ success: true, notification})
         })
         .catch(() => res.json({ success: false }));
 }
