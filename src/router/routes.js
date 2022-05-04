@@ -1,8 +1,14 @@
-
 const express=require('express');
 const widgetController =require( '../controller/widgetController');
 
 const multer=require('multer')
+
+
+
+
+const {visualizationOfWorkspaces} = require("../controller/visualizationOfWorkspaces");
+const {removeShare} = require("../controller/removeShare");
+
 
 const fileStorage=multer.diskStorage(
     {
@@ -83,6 +89,35 @@ router.post('/all', checkToken, getall);
 router.post('/edit', checkToken,edituser);
 router.post('/editPass', checkToken,editPass);
 router.post('/deleteUser', checkToken,DeleteUser);
+
+router.post('/change',change);
+router.post('/validation',validation);
+router.post('/getData',getData);
+
+
+
+router.post('/addworkspace',checkToken,addworkspace);
+router.post('/editworkspace',checkToken,editworkspace);
+
+router.post('/getworkspace',checkToken,getworkspace);
+
+router.post('/shareData',ShareDataToWidget);
+
+
+router.post('/addinsideworkspace',checkToken,addinsideworkspace)
+router.post('/shareWorkspace',checkToken,shareWorkspace)
+router.post('/removeShare',checkToken,removeShare)
+
+router.post('/getsharedWorkspace',checkToken,getSharedWorkspace)
+router.post('/visualizationOfWorkspaces',checkToken,visualizationOfWorkspaces)
+
+
+router.post('/getinsideworkspace',checkToken,getinsideworkspace);
+router.post('/addworkspace',checkToken,addworkspace);
+router.post('/deleteworkspace',checkToken,deleteworkspace)
+
+
+
 
 //Router  Widget
 router.post('/addWidget', checkToken,addWidget);

@@ -5,6 +5,7 @@ const data =require( '../../model/data');
 
 exports.editWidgetlink=(req, res) => {
 
+
     const { idData,newName,superiorID,type,WidgetName } = req.body;
     let  mg={ idData,newName,superiorID,type,WidgetName }
 

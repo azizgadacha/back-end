@@ -31,7 +31,7 @@ exports.getinsideworkspace=  async (req, res, next) => {
 
     }
     let {list} = req.body
-    let {user_id} = req.body
+    let {user_id,locVis} = req.body
     let {clicked} = req.body
     let listeNameReceive=req.body.listeNameReceive
     let exist = true
@@ -45,7 +45,16 @@ if (!clicked){
                     exist = false;
 break
                 } else {
+
+
                     if (i == 0) {
+                    if(locVis)   {
+                        console.log("rani lina bb")
+                        console.log([worksp.WorkspaceName,worksp._id])
+                        listeName.push([worksp.WorkspaceName,worksp._id])
+                        workres = worksp
+                    } else {
+
                         if (!(worksp.superior_id == user_id)) {
 
                             exist = false
@@ -53,7 +62,7 @@ break
                         } else {
                             listeName.push([worksp.WorkspaceName,worksp._id])
                                 workres = worksp
-                            }
+                            }}
                     } else {
                         if (!(workres._id == worksp.superior_id)) {
                             exist = false

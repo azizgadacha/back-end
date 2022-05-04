@@ -10,6 +10,7 @@ exports.editUser=(req, res) => {
 
 
             userUpdated.password=undefined
+
 userUpdated.role=role
         res.json({ success: true,user:userUpdated })}
 else
