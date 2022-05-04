@@ -8,7 +8,7 @@ const Widget = new mongoose.Schema({
     label:Array,
     dataWidget:Array,
     date:{type:Date,
-        default: new Date()
+        default: Date.now
 
     },
 

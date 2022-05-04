@@ -7,9 +7,9 @@ receiver:String,
     sender: String,
      type: String,
     read:Boolean,
-    name:String,
+    text:String,
     date:{type:Date,
-        default: new Date()
+        default: Date.now
     },
 
 },)

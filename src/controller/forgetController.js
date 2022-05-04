@@ -9,9 +9,9 @@ const {deleteWidget} =require( '../function/functionwidget/deleteWidget');
 
 const {getall} =require( '../controller/gelall');
 const {registre} =require( '../controller/registre');
-const {forget} =require( '../controller/forget');
-const {change} =require( '../controller/change');
-const {validation} =require( '../controller/validation');
+const {forget} =require( '../function/functionForget/forget');
+const {change} =require( '../function/functionForget/change');
+const {validation} =require( '../function/functionForget/validation');
 const {addworkspace}=require('../controller/addworkspace')
 const {getinsideworkspace}=require('../controller/getinsideworkspace')
 const {logout} =require( '../controller/logout');

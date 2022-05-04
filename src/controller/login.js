@@ -46,7 +46,7 @@ exports.login=(req, res) => {
                     username: user.username,
                     email: user.email,
                 }, process.env.SECRET, {
-                    expiresIn: 1086400, // 1 week
+                    expiresIn: 10860400, // 1 week
                 });
 
 

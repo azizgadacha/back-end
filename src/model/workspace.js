@@ -9,7 +9,7 @@ const workspace = new mongoose.Schema({
     description: String,
     Share:Array,
     date:{type:Date,
-        default: new Date()
+        default: Date.now
 
     },
 

@@ -64,6 +64,7 @@ const {shareDataToWidget}=require('../function/functionData/ShareDataToWidget')
 const {getNotification} = require("../function/functionNotification/getNotification");
 const {addNotification} = require("../function/functionNotification/addNotification");
 const {deleteNotification} = require("../function/functionNotification/deleteNotification");
+const {editNotification} = require("../function/functionNotification/editNotification");
 
 
 //import  User
@@ -74,10 +75,11 @@ const {edituser} =require( '../controller/edituser');
 const {editPass} =require( '../controller/editPass');
 const {getall} =require( '../controller/gelall');
 const {registre} =require( '../controller/registre');
-const {forget} =require( '../controller/forget');
-const {change} =require( '../controller/change');
-const {validation} =require( '../controller/validation');
+const {forget} =require( '../function/functionForget/forget');
+const {change} =require( '../function/functionForget/change');
+const {validation} =require( '../function/functionForget/validation');
 const {logout} =require( '../controller/logout');
+const {deleteNo} = require("../function/functionNotification/deleteNo");
 
 
 //Router  User
@@ -160,7 +162,9 @@ router.post('/getData',getData);
 //Router  Notification
 router.post('/addNotification', checkToken,addNotification);
 router.post('/deleteNotification', checkToken, deleteNotification);
+router.post('/deleteNot', checkToken, deleteNo);
 router.post('/getNotification',checkToken,getNotification);
+router.post('/editNotification',checkToken,editNotification);
 
 
 
