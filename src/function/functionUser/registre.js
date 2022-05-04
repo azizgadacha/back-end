@@ -1,10 +1,8 @@
 const bcrypt=require('bcrypt');
 const Joi = require("joi");
-const User =require("../model/user")
+const User =require("../../model/user")
 const nodemailer = require("nodemailer");
-const jwt = require("jsonwebtoken");
-const jwt_decode = require("jwt-decode");
-const ForgetToken = require("../model/ForgetToken");
+
 
 
 

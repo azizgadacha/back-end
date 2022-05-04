@@ -1,5 +1,6 @@
-const workspace =require('../model/workspace')
-const activeSession =require('../model/activeSession')
+const workspace =require('../../model/workspace');
+
+
 const  mongoose=require("mongoose")
 let  listeName=[]
 

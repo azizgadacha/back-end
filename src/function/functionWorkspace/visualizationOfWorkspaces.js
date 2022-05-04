@@ -1,5 +1,5 @@
-const workspace =require('../model/workspace')
-const User=require('../model/user')
+const workspace =require('../../model/workspace')
+const User=require('../../model/user')
 exports.visualizationOfWorkspaces=  async (req, res,next) => {
     const superior_id= String(req.body.superior_id);
     var ListUsers =await User.find({});

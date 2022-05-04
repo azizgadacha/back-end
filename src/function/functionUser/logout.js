@@ -1,5 +1,5 @@
 
-const activeSession =require( '../model/activeSession');
+const activeSession =require( '../../model/activeSession');
 
 exports.logout=(req, res) => {
     const { token } = req.body;

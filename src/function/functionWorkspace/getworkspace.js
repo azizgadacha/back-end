@@ -1,5 +1,9 @@
-const workspace =require('../model/workspace')
-const activeSession =require('../model/activeSession')
+
+const workspace =require('../../model/workspace');
+const Joi = require('joi');
+const User =require( '../../model/user');
+const activeSession =require('../../model/activeSession')
+
 exports.getworkspace= (req, res,next) => {
     const superior_id= String(req.body.superior_id);
 

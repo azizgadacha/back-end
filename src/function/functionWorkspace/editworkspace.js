@@ -1,6 +1,5 @@
-const Workspace =require('../model/workspace');
 const Joi = require('joi');
-const workspace = require("../model/workspace");
+const Workspace =require('../../model/workspace');
 
 
 

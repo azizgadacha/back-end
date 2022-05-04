@@ -1,10 +1,6 @@
 
-const User =require( '../model/user');
-const Joi = require("joi");
+const User =require( '../../model/user');
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const activeSession = require("../model/activeSession");
-
 exports.edituser=(req, res) => {
     const { userID,username, email,password,role,phone } = req.body;
 

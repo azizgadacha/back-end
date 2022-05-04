@@ -1,5 +1,8 @@
-const workspace =require('../model/workspace')
-const activeSession =require('../model/activeSession')
+const workspace =require('../../model/workspace');
+const Joi = require('joi');
+const User =require( '../../model/user');
+const activeSession =require('../../model/activeSession')
+
 exports.deleteworkspace=  async (req, res,next) => {
     var  id = req.body.superior_id;
     var descendants=[]

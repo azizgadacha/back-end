@@ -1,7 +1,7 @@
 const bcrypt=require('bcrypt');
-const User =require( '../model/user');
+const User =require( '../../model/user');
 const fs = require("fs");
-const workspace = require("../model/workspace");
+const workspace = require("../../model/workspace");
 
 
 exports.DeleteUser=async (req, res) => {

@@ -1,7 +1,6 @@
 const bcrypt=require('bcrypt');
-const jwt =require( 'jsonwebtoken');
-const User =require( '../model/user');
-const activeSession =require( '../model/activeSession');
+const User =require( '../../model/user');
+const activeSession =require( '../../model/activeSession');
 const Joi = require("joi");
 
 exports.login=(req, res) => {

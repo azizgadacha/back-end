@@ -1,5 +1,9 @@
-const workspace =require('../model/workspace')
-const User=require('../model/user')
+
+const workspace =require('../../model/workspace');
+const Joi = require('joi');
+const User =require( '../../model/user');
+const activeSession =require('../../model/activeSession')
+
 exports.getSharedWorkspace=  async (req, res,next) => {
     var  id = req.body.user_id;
     var workspaceitems=[]

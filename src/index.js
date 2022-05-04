@@ -1,7 +1,6 @@
 const express=require("express")
 const app=express()
 const routes=require("./router/routes")
-const route2=require("./router/route2")
 
 
 const cors=require("cors")
@@ -27,7 +26,6 @@ app.use(express.json())
 // Passport Config
 initPassport(passport);
 app.use(passport.initialize());
-app.use("/ap2/PersoSpace",lpm,route2)
 app.use("/api/users",lpm,routes)
 
 

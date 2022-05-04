@@ -1,7 +1,7 @@
-const Workspace =require('../model/workspace');
+const Workspace =require('../../model/workspace');
 const Joi = require('joi');
-const User =require( '../model/user');
-const activeSession =require('../model/activeSession')
+const User =require( '../../model/user');
+const activeSession =require('../../model/activeSession')
 
 
 exports.addinsideworkspace=async (req,res)=>{

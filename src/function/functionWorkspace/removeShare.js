@@ -1,4 +1,4 @@
-const workspace =require('../model/workspace')
+const workspace =require('../../model/workspace')
 exports.removeShare= async (req, res,next) => {
     const cardId = String(req.body.card_id);
     const userId = String(req.body.user_id);
