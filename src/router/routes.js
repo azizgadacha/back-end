@@ -59,7 +59,6 @@ const {addWidget} =require( '../function/functionwidget/addWidget');
 const {deleteWidget} =require( '../function/functionwidget/deleteWidget');
 const {ShareDataToWidget} =require( '../function/functionData/ShareDataToWidget');
 const {deleteLinkWidget}=require('../function/functionData/deleteLinkWidget');
-const {shareDataToWidget}=require('../function/functionData/ShareDataToWidget')
 //import  Notification
 const {getNotification} = require("../function/functionNotification/getNotification");
 const {addNotification} = require("../function/functionNotification/addNotification");
@@ -92,33 +91,6 @@ router.post('/edit', checkToken,edituser);
 router.post('/editPass', checkToken,editPass);
 router.post('/deleteUser', checkToken,DeleteUser);
 
-router.post('/change',change);
-router.post('/validation',validation);
-router.post('/getData',getData);
-
-
-
-router.post('/addworkspace',checkToken,addworkspace);
-router.post('/editworkspace',checkToken,editworkspace);
-
-router.post('/getworkspace',checkToken,getworkspace);
-
-router.post('/shareData',ShareDataToWidget);
-
-
-router.post('/addinsideworkspace',checkToken,addinsideworkspace)
-router.post('/shareWorkspace',checkToken,shareWorkspace)
-router.post('/removeShare',checkToken,removeShare)
-
-router.post('/getsharedWorkspace',checkToken,getSharedWorkspace)
-router.post('/visualizationOfWorkspaces',checkToken,visualizationOfWorkspaces)
-
-
-router.post('/getinsideworkspace',checkToken,getinsideworkspace);
-router.post('/addworkspace',checkToken,addworkspace);
-router.post('/deleteworkspace',checkToken,deleteworkspace)
-
-
 
 
 //Router  Widget
@@ -129,23 +101,20 @@ router.post('/editWidget', checkToken,editWidgets);
 router.post('/getWidget',checkToken,getWidget);
 router.post('/deleteWidget',checkToken,deleteWidget)
 router.post('/widget',lpm,widgetController);
+router.post('/shareData',ShareDataToWidget);
 
 
 //Router  Workspace
-router.post('/addworkspace',checkToken,addworkspace);
+router.post('/shareWorkspace',checkToken,shareWorkspace)
+router.post('/removeShare',checkToken,removeShare)
+router.post('/visualizationOfWorkspaces',checkToken,visualizationOfWorkspaces)
 router.post('/editworkspace',checkToken,editworkspace);
-router.post('/addworkspace',checkToken,addworkspace);
-router.post('/editworkspace',checkToken,editworkspace);
-router.post('/getworkspace',checkToken,getworkspace);
-router.post('/shareData',ShareDataToWidget);
 router.post('/getworkspace',checkToken,getworkspace);
 router.post('/addinsideworkspace',checkToken,addinsideworkspace)
-router.post('/shareWorkspace',checkToken,shareWorkspace)
 router.post('/getsharedWorkspace',checkToken,getSharedWorkspace)
 router.post('/getinsideworkspace',checkToken,getinsideworkspace);
 router.post('/addworkspace',checkToken,addworkspace);
 router.post('/deleteworkspace',checkToken,deleteworkspace)
-router.post('/getworkspace',checkToken,getworkspace);
 
 
 
