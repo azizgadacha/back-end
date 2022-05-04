@@ -6,7 +6,7 @@ const {edituser} =require( '../controller/edituser');
 const {editPass} =require( '../controller/editPass');
 
 
-const {getall} =require( '../controller/gelall');
+const {getall} =require( '../function/functionUser/gelall');
 const {registre} =require( '../controller/registre');
 
 const {logout} =require( '../controller/logout');

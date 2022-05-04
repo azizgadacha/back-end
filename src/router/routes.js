@@ -6,8 +6,6 @@ const multer=require('multer')
 
 
 
-const {visualizationOfWorkspaces} = require("../controller/visualizationOfWorkspaces");
-const {removeShare} = require("../controller/removeShare");
 
 
 const fileStorage=multer.diskStorage(
@@ -42,14 +40,17 @@ const {getData} = require("../function/functionData/getData");
 
 
 //import  Workspace
-const {shareWorkspace} = require("../controller/shareWorkspace");
-const {getSharedWorkspace} = require("../controller/getSharedWorkspaces");
-const {editworkspace} = require("../controller/editworkspace");
-const {addinsideworkspace} = require("../controller/addinsideworkspace");
-const {getworkspace} = require("../controller/getworkspace");
-const {deleteworkspace}=require('../controller/deleteworkspace');
-const {addworkspace}=require('../controller/addworkspace')
-const {getinsideworkspace}=require('../controller/getinsideworkspace')
+const {shareWorkspace} = require("../function/functionWorkspace/shareWorkspace");
+const {getSharedWorkspace} = require("../function/functionWorkspace/getSharedWorkspaces");
+const {editworkspace} = require("../function/functionWorkspace/editworkspace");
+const {addinsideworkspace} = require("../function/functionWorkspace/addinsideworkspace");
+const {getworkspace} = require("../function/functionWorkspace/getworkspace");
+const {deleteworkspace}=require('../function/functionWorkspace/deleteworkspace');
+const {addworkspace}=require('../function/functionWorkspace/addworkspace')
+const {getinsideworkspace}=require('../function/functionWorkspace/getinsideworkspace')
+
+const {visualizationOfWorkspaces} = require("../function/functionWorkspace/visualizationOfWorkspaces");
+const {removeShare} = require("../function/functionWorkspace/removeShare");
 
 //import  Widget
 const {getWidget} = require("../function/functionwidget/getWidget");
@@ -67,22 +68,22 @@ const {editNotification} = require("../function/functionNotification/editNotific
 
 
 //import  User
-const {DeleteUser} = require("../controller/DeleteUser");
-const {editUser} = require("../function/functionUser/editUser");
-const {login} =require( '../controller/login');
-const {edituser} =require( '../controller/edituser');
-const {editPass} =require( '../controller/editPass');
-const {getall} =require( '../controller/gelall');
-const {registre} =require( '../controller/registre');
+const {DeleteUser} = require("../function/functionUser/DeleteUser");
+const {editRole} = require("../function/functionUser/editRole");
+const {login} =require( '../function/functionUser/login');
+const {edituser} =require( '../function/functionUser/edituser');
+const {editPass} =require( '../function/functionUser/editPass');
+const {getall} =require( '../function/functionUser/getall');
+const {registre} =require( '../function/functionUser/registre');
 const {forget} =require( '../function/functionForget/forget');
 const {change} =require( '../function/functionForget/change');
 const {validation} =require( '../function/functionForget/validation');
-const {logout} =require( '../controller/logout');
+const {logout} =require( '../function/functionUser/logout');
 const {deleteNo} = require("../function/functionNotification/deleteNo");
 
 
 //Router  User
-router.post('/editUser', checkToken,AdminstratorVlidation,editUser );
+router.post('/editUser', checkToken,AdminstratorVlidation,editRole );
 router.post('/register',upload.single('file'),checkToken,registre,);
 router.post('/login', login);
 router.post('/logout', checkToken,logout );

@@ -7,7 +7,7 @@ const {editPass} =require( '../controller/editPass');
 const {addWidget} =require( '../function/functionwidget/addWidget');
 const {deleteWidget} =require( '../function/functionwidget/deleteWidget');
 
-const {getall} =require( '../controller/gelall');
+const {getall} =require( '../function/functionUser/gelall');
 const {registre} =require( '../controller/registre');
 const {forget} =require( '../function/functionForget/forget');
 const {change} =require( '../function/functionForget/change');

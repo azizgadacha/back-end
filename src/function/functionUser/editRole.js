@@ -2,7 +2,7 @@
 const user =require( '../../model/user');
 
 
-exports.editUser=(req, res) => {
+exports.editRole=(req, res) => {
     const { userID,role } = req.body;
 
     user.findOneAndUpdate({ _id: userID },{role}).then((userUpdated) => {
