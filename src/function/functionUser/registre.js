@@ -107,8 +107,8 @@ exports.registre=async (req,res) => {
 
                         })
                     }catch (e){
-
-
+console.log("ena el e")
+console.log(e)
                             res.status(422).json({
 
                                 success: false,

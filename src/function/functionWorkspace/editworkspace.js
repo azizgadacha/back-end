@@ -29,14 +29,16 @@ exports.editworkspace=async (req,res)=>{
     const Description=String(req.body.description);
     Workspace.findOneAndUpdate({_id:cardId},{WorkspaceName:workspaceName,description:Description})
         .then((workspaceitems)=>{
-            workspace.findOne({_id:cardId}).then((w)=>{
-                res.json({success:true,w})
-            })
-        })
-        .catch(()=>{
-            res.json({success: true, msg: 'The Workspace not successfully Edited'});
-        })
+            if(workspaceitems!=null) {
+                Workspace.findOne({_id: cardId}).then((w) => {
+                    res.json({success: true, w})
+                    console.log("eZEBIIIII")
+                })
+            }
+            else
+                res.json({success:false, msg: 'The Workspace not successfully Edited'});
 
+        })
 
 }
 
