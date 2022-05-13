@@ -6,8 +6,8 @@ const jwt=require("jsonwebtoken")
 
 exports.login=(req, res) => {
 
-
     // Joy Validation
+    console.log("7chaytouh bb")
     const userSchema = Joi.object().keys({
 
         email: Joi.string().email().required(),
