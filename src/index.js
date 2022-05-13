@@ -11,6 +11,7 @@ const connection=require( './db/DataBase');
 const passport =require('passport');
 const {lpm} = require("./config/lpm");
 
+console.log("salut sava")
 
 app.use(cors());
 
