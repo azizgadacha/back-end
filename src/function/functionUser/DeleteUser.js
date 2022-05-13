@@ -2,7 +2,7 @@ const bcrypt=require('bcrypt');
 const User =require( '../../model/user');
 const fs = require("fs");
 const workspace = require("../../model/workspace");
-
+const activeSession=require('../../model/activeSession')
 
 exports.DeleteUser=async (req, res) => {
 
@@ -30,35 +30,37 @@ exports.DeleteUser=async (req, res) => {
                 });
             }
             descendants.join(",")
-            for(item of descendants){
+            for (item of descendants) {
                 await workspace.findByIdAndRemove(item.toString())
 
             }
 
 
-
-
-
         }
+        activeSession.deleteMany({userId:id})
+            .then((AS)=>{
+            console.log("ActiveSession deleted Succesufully")
+                console.log(AS)
+            })
+
+
+
 
     }
 
 
-
-    User.findOneAndDelete({_id:id}).then((user) => {
-
+    User.findOneAndDelete({_id: id}).then((user) => {
 
 
         if (user) {
             user.password = undefined;
             let usertable = user
 
-            if (fs.existsSync('./upload/'+user.photo)&&(user.photo!='avatar_1.png')){
+            if (fs.existsSync('./upload/' + user.photo) && (user.photo != 'avatar_1.png')) {
 
                 if (user.photo)
                     fs.unlinkSync("./upload/" + user.photo)
             }
-
 
 
             res.json({success: true, msg: "User has been deleted ", user: usertable});
@@ -68,8 +70,9 @@ exports.DeleteUser=async (req, res) => {
         }
 
 
+    })
+}
 
-    })}
 
 
 
