@@ -2,6 +2,7 @@ const workspace =require('../../model/workspace');
 const Joi = require('joi');
 const User =require( '../../model/user');
 const activeSession =require('../../model/activeSession')
+const notification=require('../../model/notification')
 
 exports.deleteworkspace=  async (req, res,next) => {
     var  id = req.body.superior_id;
@@ -25,6 +26,11 @@ if(item!=null) {
     descendants.join(",")
     for (item of descendants) {
         await workspace.findByIdAndRemove(item.toString())
+
+       let ListNotification = await notification.find({idNotified:item._id})
+       for(let notif of ListNotification){
+           await notification.deleteOne({idNotified:notif.idNotified})
+       }
 
     }
     res.json({success: true, workspaceitems})

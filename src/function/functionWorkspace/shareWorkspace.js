@@ -13,11 +13,9 @@ exports.shareWorkspace= async (req, res,next) => {
     console.log(list)
     if (list.includes(userId) ) {
         res.json({success: false})
-        console.log("here")
     } else {
         workspace.findOneAndUpdate({_id: cardId}, {$addToSet: {Share: ch}})
             .then((workspaceitems) => {
-                console.log("not here")
 
                 workspace.findOne({_id: cardId}).then((w) => {
                     res.json({success: true, w})

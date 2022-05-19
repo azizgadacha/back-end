@@ -8,6 +8,7 @@ receiver:String,
      type: String,
     read:Boolean,
     text:String,
+    idNotified:String,
     date:{type:Date,
         default: Date.now
     },
