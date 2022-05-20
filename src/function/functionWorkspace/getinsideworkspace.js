@@ -7,26 +7,35 @@ let  listeName=[]
 exports.getinsideworkspace=  async (req, res, next) => {
     listeName=[]
     let send
-
+console.log("ena eli ne5dem")
     let senddata = async () => {
         if (exist) {
-
-          let   workspaceitems = await workspace.find({superior_id: mongoose.Types.ObjectId(list[list.length - 1])})
-            if (workspaceitems){
-
+            let space = await workspace.find({_id: mongoose.Types.ObjectId(list[list.length - 1])})
+            if (space.length!=0) {
 
 
-                send=listeName
-                if (clicked) {
-                    let lastWorkspace = await workspace.findOne({_id: mongoose.Types.ObjectId(list[list.length - 1])})
-                    listeNameReceive.push([lastWorkspace.WorkspaceName,lastWorkspace._id])
-                    send=listeNameReceive
-                }
-                res.json({success: true, workspaceitems,listeName:send});}
+                let workspaceitems = await workspace.find({superior_id: mongoose.Types.ObjectId(list[list.length - 1])})
+                if (workspaceitems) {
+                    console.log("ena eli mened5olub")
 
+                    console.log(workspaceitems)
+                    send = listeName
+                    if (clicked) {
+                        let lastWorkspace = await workspace.findOne({_id: mongoose.Types.ObjectId(list[list.length - 1])})
+                        listeNameReceive.push([lastWorkspace.WorkspaceName, lastWorkspace._id])
+                        send = listeNameReceive
+                    }
+                    res.json({success: true, workspaceitems, listeName: send});
+                } else
+                    res.json({success: false})
+            }
             else
                 res.json({success: false})
-        } else {
+        }
+
+
+
+        else {
             res.json({success: false})
         }
 
