@@ -5,21 +5,35 @@ exports.removeShare= async (req, res,next) => {
 
     // let ch=[userId,UserName]
     var alam=[]
-    workspace.findOne({_id:cardId})
+    var test=[]
+   await workspace.findOne({_id:cardId})
         .then((workspaceitems)=>{
          for(let item of workspaceitems.Share){
              if(item[0]!=userId){
                  alam.push(item)
              }
+             test.push(item[0])
+
          }
-           workspace.findOneAndUpdate({_id:cardId},{Share:alam})
-               .then((work)=>{
-                   workspace.findOne({_id:cardId}).then((w)=>{
-                       res.json({success:true,w})
-                   })
-               })
-               .catch(() => res.json({ success: false }));
+        console.log(workspaceitems.Share[0])
+
         })
+
+    console.log("alam")
+    console.log(test)
+    if(test.includes(userId)) {
+        workspace.findOneAndUpdate({_id: cardId}, {Share: alam})
+            .then((work) => {
+                workspace.findOne({_id: cardId}).then((w) => {
+                    res.json({success: true, w})
+                })
+            })
+            .catch(() => res.json({success: false}));
+    }
+    else {
+        res.json({success:false})
+
+    }
 
 
 
