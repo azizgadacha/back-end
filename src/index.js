@@ -11,6 +11,7 @@ const connection=require( './db/DataBase');
 const passport =require('passport');
 const {lpm} = require("./config/lpm");
 
+console.log("salut sava")
 
 app.use(cors());
 
@@ -28,9 +29,9 @@ initPassport(passport);
 app.use(passport.initialize());
 app.use("/api/users",lpm,routes)
 
+let port=process.env.PORT||5000
 
-
-const server=app.listen(5000,()=>{
+const server=app.listen(port,()=>{
  console.log("im working")
 })
 

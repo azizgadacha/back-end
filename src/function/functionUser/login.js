@@ -2,12 +2,13 @@ const bcrypt=require('bcrypt');
 const User =require( '../../model/user');
 const activeSession =require( '../../model/activeSession');
 const Joi = require("joi");
+
 const jwt=require("jsonwebtoken")
 
 exports.login=(req, res) => {
 
     // Joy Validation
-    console.log("7chaytouh bb")
+
     const userSchema = Joi.object().keys({
 
         email: Joi.string().email().required(),

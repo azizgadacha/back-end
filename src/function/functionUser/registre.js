@@ -7,7 +7,7 @@ const nodemailer = require("nodemailer");
 
 
 exports.registre=async (req,res) => {
-
+console.log("sahbiiiiiiiiiiiiiii")
 
     let   valid={email:req.body.email,username:req.body.username,phone:req.body.phone,role:req.body.role}
 
@@ -101,14 +101,16 @@ exports.registre=async (req,res) => {
 
                             u.password = undefined;
 
-
+                            console.log('sahbi manidrouch2.0')
                             res.json({success: true, user: u, msg: 'The user was successfully registered'});
 
 
                         })
                     }catch (e){
-console.log("ena el e")
+                        console.log("ena el e")
+                        console.log("ena el e")
 console.log(e)
+
                             res.status(422).json({
 
                                 success: false,
