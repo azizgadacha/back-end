@@ -3,20 +3,22 @@ const User =require( '../../model/user');
 const bcrypt = require("bcrypt");
 const fs = require("fs");
 exports.edituser=(req, res) => {
-    const { userID,username, email,password,role,phone } = req.body;
+    const { id,username, email,password,role,phone } = req.body;
 
+   console.log("3asfour")
+    console.log(req.body)
+    console.log(req.file)
 
-
-    User.findOne({ _id: userID }).then((user) => {
+    User.findOne({ _id: id }).then((user) => {
         if (user) {
-
+console.log('rojla')
             const query = { _id: user._id };
 
             bcrypt.compare(password, user.password, async (_err2, isMatch) => {
                 let newvalues ;
 
                 if (isMatch) {
-                    if (req.body.sendphoto==='true')
+                    if (req.body.sendPhoto==='true')
                     {
                         if (fs.existsSync('./upload/' + user.photo) && (user.photo != 'avatar_1.png')) {
 
@@ -50,7 +52,7 @@ exports.edituser=(req, res) => {
 
                         }
                     ).catch(() => {
-
+                  console.log("kkkkkkkkkkkkkkkk")
                        return  res.json({ success: false, passprob:false, msg: 'There was an error. Please contact the administrator' });
                     });
 
