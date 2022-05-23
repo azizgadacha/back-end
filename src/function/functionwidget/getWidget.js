@@ -17,7 +17,7 @@ console.log(widgetFromData)
 
                     for (let item of widgetFromData) {
                  for(let item2 of item.usedIn){
-
+if(item2.superiorID==superior_id)
                      Widgetitems.push({idData:item._id, WidgetName:item2.WidgetName,type:item2.type,sourceDB:true,label:item.label,data:item.data})
                  }
                 }
