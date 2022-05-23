@@ -11,7 +11,7 @@ console.log("ena eli ne5dem")
     let senddata = async () => {
         if (exist) {
             let space = await workspace.find({_id: mongoose.Types.ObjectId(list[list.length - 1])})
-            if (space.length!=0) {
+            if (space.length!==0) {
 
 
                 let workspaceitems = await workspace.find({superior_id: mongoose.Types.ObjectId(list[list.length - 1])})
