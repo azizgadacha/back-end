@@ -114,7 +114,7 @@ console.log(e)
                             res.status(422).json({
 
                                 success: false,
-                                msg: `unvalide Mail`,
+                                msg: "salut "+e,
                             });
 
 
