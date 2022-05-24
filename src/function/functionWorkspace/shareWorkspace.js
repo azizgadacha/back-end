@@ -18,6 +18,8 @@ exports.shareWorkspace= async (req, res,next) => {
             .then((workspaceitems) => {
 
                 workspace.findOne({_id: cardId}).then((w) => {
+                    console.log("wa les amis")
+                    console.log(w)
                     res.json({success: true, w})
                 })
             })

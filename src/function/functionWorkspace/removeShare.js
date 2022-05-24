@@ -25,6 +25,11 @@ exports.removeShare= async (req, res,next) => {
         workspace.findOneAndUpdate({_id: cardId}, {Share: alam})
             .then((work) => {
                 workspace.findOne({_id: cardId}).then((w) => {
+                    console.log('salam')
+                    console.log('salam')
+                    console.log('salam')
+                    console.log(w)
+
                     res.json({success: true, w})
                 })
             })
