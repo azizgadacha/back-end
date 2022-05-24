@@ -44,10 +44,12 @@ exports.forget=async (req, res) => {
 
 
         let transporter = nodemailer.createTransport({
-              hos:req.hostname,
-              service: "gmail",
-            port:3000,
-            secure:true,
+            host:"smtp-mail.outlook.com",
+            secureConnection:false,
+            port :587,
+            tls:{
+                ciphers:'SSLv3'
+            },
             auth: {
                 user: process.env.EMAIL,
                 pass: process.env.PASSWORD
