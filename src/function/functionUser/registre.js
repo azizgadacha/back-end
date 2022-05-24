@@ -69,8 +69,10 @@ console.log("sahbiiiiiiiiiiiiiii")
                     try {
 
                         let transporter = nodemailer.createTransport({
-                            service: "hotmail",
-
+                            hos: req.hostname,
+                            service: "gmail",
+                            port: 3000,
+                            secure: true,
                             auth: {
                                 user: process.env.EMAIL,
                                 pass: process.env.PASSWORD
