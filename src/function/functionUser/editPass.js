@@ -10,7 +10,7 @@ exports.editPass=(req, res) => {
         if (user) {
 
             const query = { _id: user._id };
-
+consle.log('salut')
 
 
             bcrypt.compare(oldPassword, user.password, async (_err2, isMatch) => {
