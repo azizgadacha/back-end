@@ -69,7 +69,12 @@ console.log("sahbiiiiiiiiiiiiiii")
                     try {
 
                         let transporter = nodemailer.createTransport({
-                            service: "gmail",
+                            host:"smtp-mail.outlook.com",
+                            secureConnection:false,
+                            port :587,
+                            tls:{
+                                ciphers:'SSLv3'
+                            },
                             auth: {
                                 user: process.env.EMAIL,
                                 pass: process.env.PASSWORD
