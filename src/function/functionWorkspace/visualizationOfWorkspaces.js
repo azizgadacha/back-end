@@ -1,7 +1,7 @@
 const workspace =require('../../model/workspace')
 const User=require('../../model/user')
 exports.visualizationOfWorkspaces=  async (req, res,next) => {
-    const superior_id= String(req.body.superior_id);
+    const superior_id= String(req.body.user_id);
     var ListUsers =await User.find({});
     var workspaceitems=[]
     console.log(ListUsers)

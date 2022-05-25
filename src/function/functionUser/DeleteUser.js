@@ -43,7 +43,7 @@ exports.DeleteUser=async (req, res) => {
                     console.log("ActiveSession deleted Succesufully")
                     console.log(AS)
                 })
-            workspace.deleteMany({userId: id})
+            workspace.updateMany ({},{$pull:{share:{sharedWith:id}} })
                 .then((AS) => {
                     console.log("ActiveSession deleted Succesufully")
                     console.log(AS)

@@ -21,7 +21,7 @@ const fileStorage=multer.diskStorage(
 const upload=multer({storage:fileStorage});
 
 //import  Validation
-const { AdminstratorVlidation } =require( '../config/AdminstratorVlidation');
+const { AdminstratorVlidation } =require( '../config/AdminstratorValidation');
 const { checkToken } =require( '../config/safeRoutes');
 
 
@@ -90,7 +90,7 @@ router.post('/logout', checkToken,logout );
 router.post('/all', checkToken, getall);
 router.post('/edit', upload.single('file'),checkToken,edituser);
 router.post('/editPass', checkToken,editPass);
-router.post('/deleteUser', checkToken,DeleteUser);
+router.post('/deleteUser', checkToken,AdminstratorVlidation,DeleteUser);
 
 
 
@@ -108,7 +108,7 @@ router.post('/shareData',ShareDataToWidget);
 //Router  Workspace
 router.post('/shareWorkspace',checkToken,shareWorkspace)
 router.post('/removeShare',checkToken,removeShare)
-router.post('/visualizationOfWorkspaces',checkToken,visualizationOfWorkspaces)
+router.post('/visualizationOfWorkspaces',checkToken,AdminstratorVlidation,visualizationOfWorkspaces)
 router.post('/editworkspace',checkToken,editworkspace);
 router.post('/getworkspace',checkToken,getworkspace);
 router.post('/addinsideworkspace',checkToken,addinsideworkspace)

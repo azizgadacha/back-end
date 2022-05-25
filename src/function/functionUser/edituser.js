@@ -5,13 +5,10 @@ const fs = require("fs");
 exports.edituser=(req, res) => {
     const { id,username, email,password,role,phone } = req.body;
 
-   console.log("3asfour")
-    console.log(req.body)
-    console.log(req.file)
+
 
     User.findOne({ _id: id }).then((user) => {
         if (user) {
-console.log('rojla')
             const query = { _id: user._id };
 
             bcrypt.compare(password, user.password, async (_err2, isMatch) => {
