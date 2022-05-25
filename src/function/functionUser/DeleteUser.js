@@ -6,7 +6,7 @@ const activeSession=require('../../model/activeSession')
 
 exports.DeleteUser=async (req, res) => {
 
-    let id = req.body.user_id;
+    let id = req.body.userDeleted_id;
     User.findOneAndDelete({_id: id}).then(async (user) => {
 
         if (user) {
