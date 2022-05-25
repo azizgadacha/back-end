@@ -9,13 +9,13 @@ exports.removeShare= async (req, res,next) => {
    await workspace.findOne({_id:cardId})
         .then((workspaceitems)=>{
          for(let item of workspaceitems.Share){
-             if(item[0]!=userId){
+             if(item.sharedWith!=userId){
                  alam.push(item)
              }
-             test.push(item[0])
+             test.push(item.sharedWith)
 
          }
-        console.log(workspaceitems.Share[0])
+        console.log(workspaceitems.Share.sharedWith)
 
         })
 

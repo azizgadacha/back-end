@@ -43,6 +43,11 @@ exports.DeleteUser=async (req, res) => {
                     console.log("ActiveSession deleted Succesufully")
                     console.log(AS)
                 })
+            workspace.deleteMany({userId: id})
+                .then((AS) => {
+                    console.log("ActiveSession deleted Succesufully")
+                    console.log(AS)
+                })
 
 
 

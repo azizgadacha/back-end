@@ -4,11 +4,11 @@ exports.shareWorkspace= async (req, res,next) => {
     const userId = String(req.body.user_id);
     const UserName = String(req.body.user_username);
 
-    let ch = [userId, UserName]
+    let ch = {sharedWith:userId,sharedPerson:UserName}
     var item = await workspace.findOne({_id:cardId});
     var list=[];
     for(i of item.Share){
-        list.push(i[0])
+        list.push(i.sharedWith)
     }
     console.log(list)
     if (list.includes(userId) ) {

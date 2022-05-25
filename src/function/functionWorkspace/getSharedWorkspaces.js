@@ -10,8 +10,8 @@ exports.getSharedWorkspace=  async (req, res,next) => {
     var item =await workspace.find({});
     for(let item1 of item){
         for(let i of item1.Share) {
-            if (id === i[0]) {
-                await User.findOne({_id:i[1]})
+            if (id === i.sharedWith) {
+                await User.findOne({_id:isharedPerson})
                     .then((user)=>{
                         workspaceitems.push([item1,user.username])
                     })
