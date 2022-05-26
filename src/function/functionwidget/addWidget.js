@@ -24,8 +24,10 @@ for(let data of dataWidget){
 
 }
 
-    workspace.find({superior_id})
+    workspace.findOne({_id:superior_id})
         .then((workspace)=>{
+            console.log("eazeaea")
+            console.log(workspace)
 if(workspace){
 
             Widget.findOne({WidgetName,superior_id}).then((widget)=> {

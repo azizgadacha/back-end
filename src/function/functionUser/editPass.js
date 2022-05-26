@@ -5,12 +5,14 @@ const bcrypt = require("bcrypt");
 
 exports.editPass=(req, res) => {
     const { userID,newPassword,oldPassword } = req.body;
-
+console.log("aeaea")
+console.log(req.body)
     User.findOne({ _id: userID }).then((user) => {
         if (user) {
-
+console.log(user)
+console.log("user")
             const query = { _id: user._id };
-consle.log('salut')
+console.log('salut')
 
 
             bcrypt.compare(oldPassword, user.password, async (_err2, isMatch) => {

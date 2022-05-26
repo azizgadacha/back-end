@@ -5,21 +5,29 @@ const workspace=require("../../model/workspace")
 
 exports.deleteWidget=async (req, res) => {
 
-    let {superior_id,WidgetName} = req.body;
+    let {superiorID,WidgetName} = req.body;
+workspace.findOne({_id:superiorID})
+    .then((work)=>{
+        if(work) {
+            Widget.findOneAndDelete({WidgetName, superiorID})
+                .then((widget) => {
 
-    Widget.findOneAndDelete({WidgetName,superior_id})
-        .then((widget)=>{
+                    if (widget)
+                        res.json({success: true, widget});
+                    else
+                        res.json({success: false, msg: "Widget didn't existe"});
 
-if (widget)
-            res.json({success: true, widget});
-else
-    res.json({success: false,msg:"Widget didn't existe"});
+                }).catch(() => {
 
-        }).catch(()=>{
+                res.json({success: false, msg: "Widget Already deleted"});
 
-        res.json({success: false,msg:"Widget Already deleted"});
+            })
+        }
+        else
+            res.json({success: false, msg: "Widget No Longer Exist"});
 
     })
+
 }
 
 
