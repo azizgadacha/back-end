@@ -30,7 +30,7 @@ workspace.findOne({_id:superior_id})
                                         })
                                 }
                             }
-                            res.json({success: true, Widgetitems: Widgetitems});
+                            res.json({success: true, Widgetitems: Widgetitems,workspace:{_id:work._id,WorkspaceName:work.WorkspaceName}});
                         }
                     )
                 })
