@@ -22,6 +22,8 @@ const upload=multer({storage:fileStorage});
 
 //import  Validation
 const { AdminstratorVlidation } =require( '../config/AdminstratorValidation');
+const { SimpleEmployerValidation } =require( '../config/SimpleEmployerValidation');
+
 const { checkToken } =require( '../config/safeRoutes');
 
 
@@ -112,7 +114,7 @@ router.post('/visualizationOfWorkspaces',checkToken,AdminstratorVlidation,visual
 router.post('/editworkspace',checkToken,editworkspace);
 router.post('/getworkspace',checkToken,getworkspace);
 router.post('/addinsideworkspace',checkToken,addinsideworkspace)
-router.post('/getsharedWorkspace',checkToken,getSharedWorkspace)
+router.post('/getsharedWorkspace',checkToken,SimpleEmployerValidation,getSharedWorkspace)
 router.post('/getinsideworkspace',checkToken,getinsideworkspace);
 router.post('/addworkspace',checkToken,addworkspace);
 router.post('/deleteworkspace',checkToken,deleteworkspace)
