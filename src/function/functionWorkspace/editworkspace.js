@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const Workspace =require('../../model/workspace');
+const user =require('../../model/user');
 
 
 
@@ -24,9 +25,20 @@ exports.editworkspace=async (req,res)=>{
         });
         return;
     }
+
+    console.log(req.body)
     const cardId= String(req.body.card_id);
     const workspaceName= String(req.body.WorkspaceName);
     const Description=String(req.body.description);
+    const visualisation=req.body.visualise;
+    const user_id=req.body.user_id
+    let validation=true
+user.findOne({_id:user_id}).then((user)=>{
+    if((visualisation===true)&&(user.role!="administrateur"))
+        validation=false
+
+
+    if(validation){
     Workspace.findOneAndUpdate({_id:cardId},{WorkspaceName:workspaceName,description:Description})
         .then((workspaceitems)=>{
             if(workspaceitems!=null) {
@@ -38,7 +50,20 @@ exports.editworkspace=async (req,res)=>{
             else
                 res.json({success:false, msg: 'The Workspace not successfully Edited'});
 
-        })
+        })}
+    else
+        {
+            user.password=undefined
+
+            res.json({success:false,user,adminstratorProblem:true ,msg: 'you are no longer an administrator'});
+
+
+        }
+
+
+
+
+})
 
 }
 
