@@ -12,6 +12,6 @@ exports.SimpleEmployerValidation = (req, res, next) => {
             return next();
         }
 
-        return res.json({ success: false, administratorProblem: true ,user});
+        return res.json({ success: false, SimpleEmployerProblem: true ,user});
     });
 };
