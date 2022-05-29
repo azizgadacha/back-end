@@ -12,9 +12,11 @@ exports.shareWorkspace= async (req, res,next) => {
         list.push(i.sharedWith)
     }
     console.log(list)
-    if (list.includes(userId) ) {
+    if (list.includes(withShared) ) {
+        console.log("rani lina les amis ")
         res.json({success: false})
     } else {
+        console.log("rani lina les amis2.0 ")
 
 
         workspace.findOneAndUpdate({_id: cardId}, {$addToSet: {Share: NewChare}})
