@@ -6,7 +6,6 @@ const activeSession =require('../../model/activeSession')
 
 exports.getworkspace= (req, res,next) => {
     const superior_id= String(req.body.superior_id);
-console.log("wje3a")
     workspace.find({superior_id:superior_id})
         .then((workspaceitems)=>{
 
