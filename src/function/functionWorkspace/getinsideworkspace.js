@@ -2,10 +2,11 @@ const workspace =require('../../model/workspace');
 
 
 const  mongoose=require("mongoose")
-let  listeName=[]
 
 exports.getinsideworkspace=  async (req, res, next) => {
-    listeName=[]
+    let {clicked} = req.body
+
+   let listeName=[]
     let send
 console.log("ena eli ne5dem")
     let senddata = async () => {
@@ -27,8 +28,13 @@ console.log("ena eli ne5dem")
                     }
                     res.json({success: true, workspaceitems, listeName: send});
                 } else
+                {if(clicked==true){
                     res.json({success: false})
-            }
+
+                }else
+
+                    res.json({success: false,invalidLink:true})
+            }}
             else
                 res.json({success: false})
         }
@@ -42,12 +48,11 @@ console.log("ena eli ne5dem")
     }
     let {list} = req.body
     let {user_id,locVis} = req.body
-    let {clicked} = req.body
     let listeNameReceive=req.body.listeNameReceive
     let exist = true
     let workres
 
-if (!clicked){
+if (clicked===false){
     for (let i = 0; i < list.length; i++) {
             if (list[i].length == 24) {
                 worksp = await workspace.findOne({_id: list[i]})
@@ -94,7 +99,7 @@ senddata()
     }
     else
     {
-        res.json({success: false})
+        res.json({success: false,invalidLink:true})
     }
     }
 

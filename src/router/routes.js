@@ -64,7 +64,6 @@ const {ShareDataToWidget} =require( '../function/functionData/ShareDataToWidget'
 const {deleteLinkWidget}=require('../function/functionData/deleteLinkWidget');
 //import  Notification
 const {getNotification} = require("../function/functionNotification/getNotification");
-const {addNotification} = require("../function/functionNotification/addNotification");
 const {deleteNotification} = require("../function/functionNotification/deleteNotification");
 const {editNotification} = require("../function/functionNotification/editNotification");
 
@@ -132,7 +131,6 @@ router.post('/getData',getData);
 
 
 //Router  Notification
-router.post('/addNotification', checkToken,addNotification);
 router.post('/deleteNotification', checkToken, deleteNotification);
 router.post('/deleteNot', checkToken, deleteNo);
 router.post('/getNotification',checkToken,getNotification);

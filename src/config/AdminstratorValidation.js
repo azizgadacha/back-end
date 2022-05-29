@@ -11,7 +11,7 @@ exports.AdminstratorVlidation = (req, res, next) => {
 
             return next();
         }
-
+user.password=undefined
         return res.json({ success: false, administratorProblem: true ,user});
     });
 };
