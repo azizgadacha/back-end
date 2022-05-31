@@ -1,6 +1,7 @@
 const express=require("express")
 const app=express()
 const routes=require("./router/routes")
+const WorkspaceRoutes=require("./router/WorkspaceRoutes")
 
 
 const cors=require("cors")
@@ -28,6 +29,7 @@ app.use(express.json())
 initPassport(passport);
 app.use(passport.initialize());
 app.use("/api/users",lpm,routes)
+app.use("/api/workspace",lpm,WorkspaceRoutes)
 
 let port=process.env.PORT||5000
 

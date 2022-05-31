@@ -3,7 +3,7 @@ const User =require( '../../model/user');
 const bcrypt = require("bcrypt");
 const fs = require("fs");
 exports.edituser=(req, res) => {
-    const { id,username, email,password,role,phone } = req.body;
+    const { id,username, email,password,phone } = req.body;
 
 
 
@@ -24,11 +24,11 @@ exports.edituser=(req, res) => {
                         }
                         var  file=req.file.filename
 
-                        newvalues = { username, email,role,phone,photo:file }
+                        newvalues = { username, email,phone,photo:file }
 
                     }
                     else
-                        newvalues = { username, email,role,phone}
+                        newvalues = { username, email,phone}
 
 
 

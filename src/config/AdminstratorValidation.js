@@ -3,11 +3,10 @@ const user =require ('../model/user');
 exports.AdminstratorVlidation = (req, res, next) => {
 
     const _id =  req.body.user_id;
-
     user.findOne({ _id:_id }).then((user) => {
 
 
-        if (user.role === "administrateur") {
+        if ((user.role === "administrateur")) {
 
             return next();
         }
