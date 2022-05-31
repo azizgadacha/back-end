@@ -3,7 +3,7 @@ const User =require( '../../model/user');
 
 
 exports.getall=(req, res) => {
-   let  {id}=req.body
+   let  id=req.body. user_id
     let filter
 
     if(req.body.email){

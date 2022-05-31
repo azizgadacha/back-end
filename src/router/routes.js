@@ -89,6 +89,7 @@ router.post('/register',upload.single('file'),checkToken,registre,);
 router.post('/login', login);
 router.post('/logout', checkToken,logout );
 router.post('/all', checkToken, getall);
+router.post('/getAll',AdminstratorVlidation, checkToken, getall);
 router.post('/edit', upload.single('file'),checkToken,edituser);
 router.post('/editPass', checkToken,editPass);
 router.post('/deleteUser', checkToken,AdminstratorVlidation,DeleteUser);
