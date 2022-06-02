@@ -9,12 +9,18 @@ exports.deleteWidget=async (req, res) => {
 workspace.findOne({_id:superiorID})
     .then((work)=>{
         if(work) {
+            console.log("salut")
+            console.log("salut")
             Widget.findOneAndDelete({WidgetName, superiorID})
                 .then((widget) => {
+                    console.log("salut")
 
-                    if (widget)
+                    if (widget) {
+                    console.log('ssssssszezaeazeazezaezee')
                         res.json({success: true, widget});
-                    else
+
+
+                    }else
                         res.json({success: false, msg: "Widget didn't existe"});
 
                 }).catch(() => {
