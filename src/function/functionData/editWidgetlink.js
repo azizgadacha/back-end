@@ -7,7 +7,6 @@ exports.editWidgetlink=(req, res) => {
 
 
     const { idData,newName,superiorID,type,WidgetName } = req.body;
-    let  mg={ idData,newName,superiorID,type,WidgetName }
 
 workspace.findOne({_id:superiorID})
     .then((work)=>{

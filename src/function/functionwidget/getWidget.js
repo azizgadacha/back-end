@@ -91,7 +91,9 @@ exports.getWidget= async (req, res, next) => {
     let listeNameReceive = req.body.listeNameReceive
     let exist = true
     let previousWorkspace=null
+    console.log("salu2ssssssssssssssssssssss.0")
 
+    console.log(listeNameReceive)
     if (clicked==false) {
         for (let i = 0; i < list.length; i++) {
             if (list[i].length == 24) {

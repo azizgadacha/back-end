@@ -13,10 +13,10 @@ workspace.findOne({_id:superiorID})
             Widget.findOne({superior_id: superiorID, WidgetName}).then((widgetGetit) => {
                 if (widgetGetit) {
 
-                    res.json({success: false, msg: "widget with the same name already exist", WidgetExisite: true})
+                    res.json({success: false, msg: "widget already exist", WidgetExisite: true})
 
                 } else {
-                    data.find({"usedIn.superiorID": superiorID, "usedIn.WidgetName": WidgetName}).then((datwidget) => {
+                    data.find({usedIn:{ $elemMatch : { superiorID:superiorID,WidgetName:WidgetName, type:{$in:["Rate", "Donuts","Bar"]}} }}).then((datwidget)=> {
                             if (datwidget.length > 0) {
 
                                 res.json({

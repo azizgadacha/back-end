@@ -33,14 +33,17 @@ if(workspace){
             Widget.findOne({WidgetName,superior_id}).then((widget)=> {
                 if (widget) {
 
-                    res.json({success: false, msg: 'Widget already exists'});
+                    res.json({success: false,WidgetExisite:true, msg: 'Widget already exists'});
 
                 } else {
 
 
-                    data.find({"usedIn.superiorID":superior_id,"usedIn.WidgetName":WidgetName }).then((datwidget)=> {
+                    data.find({usedIn:{ $elemMatch : { superiorID:superior_id,WidgetName:WidgetName, type:{$in:["Rate", "Donuts","Bar"]}} }}).then((datwidget)=> {
                         if (datwidget.length > 0) {
-
+console.log("salemmm")
+console.log("rani lenaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+console.log(datwidget[0].usedIn)
+console.log(datwidget)
                             res.json({
                                 success: false,
                                 msg: "widget with the same name already exist",
