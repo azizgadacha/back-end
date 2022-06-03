@@ -2,6 +2,11 @@ const express=require("express")
 const app=express()
 const routes=require("./router/routes")
 const WorkspaceRoutes=require("./router/WorkspaceRoutes")
+const WidgetRoutes=require("./router/WidgetRoutes")
+const UserRoutes=require("./router/UserRoutes")
+const ForgetRoutes=require("./router/ForgetRoutes")
+const DataRoutes=require("./router/DataRoutes")
+const NotificationRoutes=require("./router/NotificationRoutes")
 
 
 const cors=require("cors")
@@ -29,7 +34,12 @@ app.use(express.json())
 initPassport(passport);
 app.use(passport.initialize());
 app.use("/api/users",lpm,routes)
-app.use("/api/workspace",lpm,WorkspaceRoutes)
+app.use("/api/Workspace",lpm,WorkspaceRoutes)
+app.use("/api/Forget",lpm,ForgetRoutes)
+app.use("/api/Notifcatin",lpm,NotificationRoutes)
+app.use("/api/Widget",lpm,WidgetRoutes)
+app.use("/api/Data",lpm,DataRoutes)
+app.use("/api/User",lpm,UserRoutes)
 
 let port=process.env.PORT||5000
 

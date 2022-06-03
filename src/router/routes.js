@@ -1,5 +1,4 @@
 const express=require('express');
-const widgetController =require( '../controller/widgetController');
 
 const multer=require('multer')
 
@@ -103,7 +102,6 @@ router.post('/editWidgetlink', checkToken,editWidgetlink);
 router.post('/editWidget', checkToken,editWidgets);
 router.post('/getWidget',checkToken,getWidget);
 router.post('/deleteWidget',checkToken,deleteWidget)
-router.post('/widget',lpm,widgetController);
 router.post('/shareData',ShareDataToWidget);
 
 
