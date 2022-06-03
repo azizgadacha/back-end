@@ -1,6 +1,5 @@
 const express=require("express")
 const app=express()
-const routes=require("./router/routes")
 const WorkspaceRoutes=require("./router/WorkspaceRoutes")
 const WidgetRoutes=require("./router/WidgetRoutes")
 const UserRoutes=require("./router/UserRoutes")
@@ -33,7 +32,6 @@ app.use(express.json())
 // Passport Config
 initPassport(passport);
 app.use(passport.initialize());
-app.use("/api/users",lpm,routes)
 app.use("/api/Workspace",lpm,WorkspaceRoutes)
 app.use("/api/Forget",lpm,ForgetRoutes)
 app.use("/api/Notifcatin",lpm,NotificationRoutes)
