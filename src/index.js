@@ -34,7 +34,7 @@ initPassport(passport);
 app.use(passport.initialize());
 app.use("/api/Workspace",lpm,WorkspaceRoutes)
 app.use("/api/Forget",lpm,ForgetRoutes)
-app.use("/api/Notifcatin",lpm,NotificationRoutes)
+app.use("/api/Notification",lpm,NotificationRoutes)
 app.use("/api/Widget",lpm,WidgetRoutes)
 app.use("/api/Data",lpm,DataRoutes)
 app.use("/api/User",lpm,UserRoutes)
