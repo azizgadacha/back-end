@@ -63,11 +63,12 @@ console.log('one user is connected '+socket.id)
  })
 
  socket.on("send_Notification",(data)=>{
-console.log("dlopm")
+console.log("dlqsdsdqsdqqsdsdopm")
+console.log(find(data.UserId,"send notif",UserConnected))
   let{exist,index}= find(data.UserId,"send notif",UserConnected)
 console.log("lena1")
 console.log(index)
-console.log(exist)
+console.log(index)
 if(exist) {
  console.log("lena2")
 

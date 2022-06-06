@@ -1,7 +1,6 @@
-find=async (UserId,string,UserConnected)=> {
+find= (UserId,string,UserConnected)=> {
     let exist=false
     let index=0
-    console.log("sadik bil3id")
 
     for (let item of UserConnected){
         if (item.UserId==UserId)
@@ -12,9 +11,7 @@ find=async (UserId,string,UserConnected)=> {
         }else{
             index++
         }}
-    console.log("sadik bil3id2")
-console.log(exist)
-console.log(index)
+   
         return{ exist,index}
 }
 
@@ -32,10 +29,7 @@ addUser=(UserId,SocketId,UserConnected)=> {
 
         }else{
             UserConnected.push({SocketId:SocketId,UserId})
-            console.log("chakib")
-
-            console.log(UserConnected)
-
+           
         }
 
 }
