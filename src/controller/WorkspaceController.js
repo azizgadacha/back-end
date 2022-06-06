@@ -104,6 +104,8 @@ exports.deleteworkspace=  async (req, res,next) => {
             validation = false
         if (validation) {
             var item = await Workspace.findOne({_id: id});
+             await notification.deleteMany({idNotified: item._id})
+
             if (item != null) {
                 stack.push(item);
                 workspaceitems.push(item)
@@ -119,10 +121,9 @@ exports.deleteworkspace=  async (req, res,next) => {
                 descendants.join(",")
                 for (item of descendants) {
                     await Workspace.findByIdAndRemove(item.toString())
-                    let ListNotification = await notification.find({idNotified: item._id})
-                    for (let notif of ListNotification) {
-                        await notification.deleteOne({idNotified: notif.idNotified})
-                    }
+                    let ListNotification = await notification.deleteMany({idNotified: item._id})
+                   console.log("dzezrerer")
+                   console.log(ListNotification)
                 }
                 res.json({success: true, workspaceitems})
             } else
