@@ -112,7 +112,23 @@ exports.editWidgets=(req, res) => {
     Workspace.findOne({_id:superiorID})
         .then((work)=>{
             if(work){
-                Widget.findOneAndUpdate({ _id: idWidget },{WidgetName:newName}).then((widget) => {
+
+                Widget.findOne({ WidgetName:newName }).then((widgetexist) => {
+if(widgetexist) {
+
+    res.json({ success: false,Existance:true, msg: "widget with the same name already exist",})
+
+}else{
+    data.find({usedIn:{ $elemMatch : { superiorID:superiorID,WidgetName:newName, type:{$in:["Rate", "Donuts","Bar"]}} }}).then((DataWidget)=> {
+        if (DataWidget.length > 0) {
+
+            res.json({ success: false,existance:true, msg: "widget with the same name already exist",})
+
+        }else{
+
+
+
+                    Widget.findOneAndUpdate({ _id: idWidget },{WidgetName:newName}).then((widget) => {
                     if (widget){
                         widget.WidgetName=newName
 
@@ -123,7 +139,7 @@ exports.editWidgets=(req, res) => {
 
 
                 })
-            }
+            }})}})}
             else
                 res.json({ success: false,msg:"Widget No Longer Exist" })
 

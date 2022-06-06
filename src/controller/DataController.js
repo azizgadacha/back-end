@@ -125,7 +125,8 @@ exports.editWidgetlink=(req, res) => {
         .then((work)=>{
             console.log(work)
             if(work) {
-                data.findOneAndUpdate({_id: idData,'usedIn.WidgetName':WidgetName }, {
+
+                data.findOneAndUpdate({_id: idData,usedIn:{$elemMatch : { superiorID,WidgetName, type:{$in:["Rate", "Donuts","Bar"]}}}  }, {
                     $set:{ 'usedIn.$.WidgetName':
 
                             newName

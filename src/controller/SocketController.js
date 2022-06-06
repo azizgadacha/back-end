@@ -1,3 +1,6 @@
+
+//find user  to Socket table
+
 find= (UserId,string,UserConnected)=> {
     let exist=false
     let index=0
@@ -14,6 +17,7 @@ find= (UserId,string,UserConnected)=> {
    
         return{ exist,index}
 }
+//add user to Socket table
 
 addUser=(UserId,SocketId,UserConnected)=> {
 
@@ -33,6 +37,8 @@ addUser=(UserId,SocketId,UserConnected)=> {
         }
 
 }
+//Delete User Connextion from  Socket table
+
 DeleteUser=(SocketId,UserConnected)=>{
     let index=0
     for (let item of UserConnected){
@@ -46,5 +52,9 @@ DeleteUser=(SocketId,UserConnected)=>{
 
 
 }
+
+
+
+
 module.exports = {find, DeleteUser,addUser }
 
