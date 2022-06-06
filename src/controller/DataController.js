@@ -125,13 +125,30 @@ exports.editWidgetlink=(req, res) => {
         .then((work)=>{
             console.log(work)
             if(work) {
+                Widget.findOne({ WidgetName:newName }).then((widgetexist) => {
+                    if(widgetexist) {
+
+                        res.json({ success: false,Existance:true, msg: "widget with the same name already exist",})
+
+                    }else{
+                        data.find({usedIn:{ $elemMatch : { superiorID:superiorID,WidgetName:newName, type:{$in:["Rate", "Donuts","Bar"]}} }}).then((DataWidget)=> {
+                            if (DataWidget.length > 0) {
+
+                                res.json({ success: false,existance:true, msg: "widget with the same name already exist",})
+
+                            }else{
+
+
+
+
+
 
                 data.findOneAndUpdate({_id: idData,usedIn:{$elemMatch : { superiorID,WidgetName, type:{$in:["Rate", "Donuts","Bar"]}}}  }, {
                     $set:{ 'usedIn.$.WidgetName':
 
                             newName
 
-                    }})
+                    }})}})}})
 
 
               .then((dataUpdated) => {
