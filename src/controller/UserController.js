@@ -1,13 +1,358 @@
-const bcrypt=require('bcrypt');
-const Joi = require("joi");
-const User =require("../../model/user")
+const Workspace =require('../model/workspace');
+const mongoose = require("mongoose");
+const Widget = require("../model/Widget");
+const data = require("../model/data");
+const User = require("../model/user");
+const activeSession = require("../model/activeSession");
+const fs = require("fs");
+const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
+const Joi = require("joi");
+const jwt = require("jsonwebtoken");
+
+
+
+//delete user
+
+exports.DeleteUser=async (req, res) => {
+
+    let id = req.body.userDeleted_id;
+    User.findOneAndDelete({_id: id}).then(async (user) => {
+
+        if (user) {
+            var descendants = []
+            var workspaceitems = []
+
+            //descendants.push(id)
+            var items = await Workspace.find({superior_id: id})
+            for (let item of items) {
+                descendants.push(item._id)
+
+                var stack = [];
+                stack.push(item);
+                workspaceitems.push(item)
+                while (stack.length > 0) {
+                    var currentnode = stack.pop();
+                    var children = await Workspace.find({superior_id: currentnode._id});
+                    children.forEach(function (child) {
+                        descendants.push(child._id);
+                        Workspaceitems.push(child)
+                        stack.push(child);
+                    });
+                }
+                descendants.join(",")
+                for (item of descendants) {
+                    await Workspace.findByIdAndRemove(item.toString())
+
+                }
+
+
+            }
+            activeSession.deleteMany({userId: id})
+                .then((AS) => {
+
+                })
+            Workspace.updateMany ({},{$pull:{share:{sharedWith:id}} })
+                .then((AS) => {
+
+                })
 
 
 
 
+
+            User.password = undefined;
+            let usertable = user
+
+            if (fs.existsSync('./upload/' + user.photo) && (user.photo != 'avatar_1.png')) {
+
+                if (user.photo)
+                    fs.unlinkSync("./upload/" + user.photo)
+            }
+
+
+            res.json({success: true, msg: "User has been deleted ", user: usertable});
+
+        }
+        else {
+            res.json({success: false, msg: "error  user dosn't excite "});
+        }
+    })}
+
+//edit password
+
+exports.editPass=(req, res) => {
+    const { userID,newPassword,oldPassword } = req.body;
+
+    User.findOne({ _id: userID }).then((user) => {
+        if (user) {
+
+            const query = { _id: user._id };
+
+
+            bcrypt.compare(oldPassword, user.password, async (_err2, isMatch) => {
+
+
+
+                if (isMatch) {
+
+                    bcrypt.genSalt(10, (_err, salt) => {
+                        bcrypt.hash(newPassword, salt).then((hash) => {
+
+
+
+
+                            User.findOneAndUpdate(query, {password:hash}).then(
+                                (user1) => {
+                                    user1.password = undefined;
+                                    return res.json({ success: true,passprob:false,user:user1 })
+
+
+
+                                }
+                            ).catch(() => {
+
+                                return  res.json({ success: false, passprob:false, msg: 'There was an error. Please contract the administrator' });
+                            });
+
+
+
+
+
+
+
+                        });
+                    });
+
+
+
+
+
+
+
+                }else {
+
+                    return res.json({success: false, passprob: true, msg: 'Wrong credentials'});
+                }}
+
+
+
+            );
+
+
+        } else {
+
+            return  res.json({ success: false,passprob:false, msg: "User didn't excite" });
+        }
+    }).catch(()=>{
+
+        return  res.json({ success: false,passprob:false, msg: "User didn't excite" })
+    })
+}
+
+//edit role
+exports.editRole=(req, res) => {
+    const { userID,role } = req.body;
+
+    User.findOneAndUpdate({ _id: userID },{role}).then((userUpdated) => {
+        if (userUpdated){
+
+
+            Workspace.updateMany ({},{$pull:{Share:{sharedWith:userID}} })
+                .then((AS) => {
+
+                    userUpdated.password=undefined
+
+                    userUpdated.role=role
+                    res.json({ success: true,user:userUpdated })
+                })
+
+        }
+        else
+            res.json({ success: false, })
+
+
+
+    })
+
+
+}
+//edit User
+
+exports.edituser=(req, res) => {
+    const { id,username, email,password,phone } = req.body;
+
+
+
+    User.findOne({ _id: id }).then((user) => {
+        if (user) {
+            const query = { _id: user._id };
+
+            bcrypt.compare(password, user.password, async (_err2, isMatch) => {
+                let newvalues ;
+
+                if (isMatch) {
+                    if (req.body.sendPhoto==='true')
+                    {
+                        if (fs.existsSync('./upload/' + user.photo) && (user.photo != 'avatar_1.png')) {
+
+                            if (user.photo)
+                                fs.unlinkSync("./upload/" + user.photo)
+                        }
+                        var  file=req.file.filename
+
+                        newvalues = { username, email,phone,photo:file }
+
+                    }
+                    else
+                        newvalues = { username, email,phone}
+
+
+
+
+
+
+                    User. findOneAndUpdate(query, newvalues).then(
+                        (user) => {
+
+                            User.findOne(query).then((use)=>{
+
+                                use.password = undefined;
+
+                                return res.json({ success: true,passprob:false,user:use });}
+
+                            )
+
+
+                        }
+                    ).catch(() => {
+                        return  res.json({ success: false, passprob:false, msg: 'There was an error. Please contact the administrator' });
+                    });
+
+
+
+                }else {
+
+                    return res.json({success: false, passprob: true, msg: 'Wrong credentials'});
+                }});
+
+
+        } else {
+
+            return  res.json({ success: false,passprob:false, msg: "User didn't excite" });
+        }
+    })
+
+
+}
+//get all
+
+exports.getall=(req, res) => {
+    let  id=req.body. user_id
+    let filter
+
+    if(req.body.email){
+        filter={$or: [ {email:req.body.email, _id: { $nin: `${id}` } }, {  _id: { $nin: `${id}` },username:req.body.username}]}
+    }else{
+        filter=   { _id: { $nin: `${id}` } }
+    }
+
+
+    User.find(  filter).then((users) => {
+
+
+        users = users.map((item) => {
+            const x = item;
+            x.password = undefined;
+            return x;
+        });
+        res.json({ success: true, users });
+    }).catch(() => res.json({ success: false }))
+
+
+
+
+    ;
+}
+
+// login
+
+exports.login=(req, res) => {
+
+    // Joy Validation
+
+    const userSchema = Joi.object().keys({
+
+        email: Joi.string().email().required(),
+
+        password: Joi.string().required(),
+    });
+    const result = userSchema.validate(req.body);
+    if (result.error) {
+        res.status(422).json({
+            success: false,
+            msg: `Validation err: ${result.error.details[0].message}`,
+        });
+        return;
+    }
+
+    const { email } = req.body;
+    const { password } = req.body;
+
+    User.findOne({ email }            ).then((user) => {
+        if (!user) {
+            return res.json({ success: false, msg: 'Wrong credentials' });
+        }
+
+        if (!user.password) {
+            return res.json({ success: false, msg: 'No password' });
+        }
+
+        bcrypt.compare(password, user.password, async (_err2, isMatch) => {
+            if (isMatch) {
+                if (!process.env.SECRET) {
+                    throw new Error('SECRET not provided');
+                }
+
+                const token = jwt.sign({
+                    id: user._id,
+                    username: user.username,
+                    email: user.email,
+                }, process.env.SECRET, {
+                    expiresIn: 10860400, // 1 week
+                });
+
+
+                const query = {userId: user.id, token};
+
+                await activeSession.create(query);
+                // Delete the password (hash)
+                user.password = undefined;
+                return res.json({
+                    success: true,
+                    token,
+                    user,
+                });
+            }
+            return res.json({success: false, msg: 'Wrong credentials'});
+        });
+    });
+}
+
+// logOut
+
+exports.logout=(req, res) => {
+    const { token } = req.body;
+
+    activeSession.findOneAndDelete({ token })
+        .then(() => res.json({ success: true }))
+        .catch(() => {
+            res.json({ success: false, msg: 'Token revoked' });
+        });
+}
+
+//Registre
 exports.registre=async (req,res) => {
-console.log("sahbiiiiiiiiiiiiiii")
 
     let   valid={email:req.body.email,username:req.body.username,phone:req.body.phone,role:req.body.role}
 
@@ -36,7 +381,7 @@ console.log("sahbiiiiiiiiiiiiiii")
 
     if (req.body.sendtphoto==='true')
     {
-       file=req.file.filename
+        file=req.file.filename
     }else{
 
         file="avatar_1.png"
@@ -48,12 +393,12 @@ console.log("sahbiiiiiiiiiiiiiii")
 
             res.json({success: false, msg: 'User already excite'});
         } else {
-          //  if(!file)
-          //  {
-          // }
+            //  if(!file)
+            //  {
+            // }
 
 
-           let  password=Math.random().toString(36).slice(-8);
+            let  password=Math.random().toString(36).slice(-8);
             bcrypt.genSalt(10, (_err, salt) => {
                 bcrypt.hash(password, salt).then(async (hash) => {
                     const query = {
@@ -69,7 +414,7 @@ console.log("sahbiiiiiiiiiiiiiii")
                     try {
 
                         let transporter = nodemailer.createTransport({
-                            host:"smtp-mail.outlook.com",
+                            service: 'gmail',
                             secureConnection:false,
                             port :587,
                             tls:{
@@ -107,21 +452,19 @@ console.log("sahbiiiiiiiiiiiiiii")
 
                             u.password = undefined;
 
-                            console.log('sahbi manidrouch2.0')
                             res.json({success: true, user: u, msg: 'The user was successfully registered'});
 
 
                         })
                     }catch (e){
-                        console.log("ena el e")
-                        console.log("ena el e")
-console.log(e)
 
-                            res.status(422).json({
+                        console.log(e)
 
-                                success: false,
-                                msg: "internal Problem please try later",
-                            });
+                        res.status(422).json({
+
+                            success: false,
+                            msg: "internal Problem please try later",
+                        });
 
 
                     }
@@ -132,3 +475,4 @@ console.log(e)
         }
     });
 }
+

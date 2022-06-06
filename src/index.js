@@ -1,18 +1,23 @@
+//Project import
 const express=require("express")
 const app=express()
-const routes=require("./router/routes")
-const WorkspaceRoutes=require("./router/WorkspaceRoutes")
-
-
 const cors=require("cors")
 const compression =require("compression")
-const initPassport =require( './config/passport.js');
-const connection=require( './db/DataBase');
-
+const initPassport =require( './config/passport.js')
 const passport =require('passport');
+
+//Router import And controller
+
+const WorkspaceRoutes=require("./router/WorkspaceRoutes")
+const WidgetRoutes=require("./router/WidgetRoutes")
+const UserRoutes=require("./router/UserRoutes")
+const ForgetRoutes=require("./router/ForgetRoutes")
+const DataRoutes=require("./router/DataRoutes")
+const NotificationRoutes=require("./router/NotificationRoutes")
+const {find, addUser, DeleteUser} = require("./controller/SocketController");
+const connection=require( './db/DataBase');
 const {lpm} = require("./config/lpm");
 
-console.log("salut sava")
 
 app.use(cors());
 
@@ -25,11 +30,16 @@ app.use(compression());
 app.use(express.urlencoded({extended:true}))
 app.use(express.static('upload'))
 app.use(express.json())
-// Passport Config
 initPassport(passport);
+
 app.use(passport.initialize());
-app.use("/api/users",lpm,routes)
-app.use("/api/workspace",lpm,WorkspaceRoutes)
+//Routes  declaration
+app.use("/api/Workspace",lpm,WorkspaceRoutes)
+app.use("/api/Forget",lpm,ForgetRoutes)
+app.use("/api/Notification",lpm,NotificationRoutes)
+app.use("/api/Widget",lpm,WidgetRoutes)
+app.use("/api/Data",lpm,DataRoutes)
+app.use("/api/User",lpm,UserRoutes)
 
 let port=process.env.PORT||5000
 
@@ -41,55 +51,6 @@ let UserConnected=[]
 
 
 
-function find(UserId,string)
-{
- let exist=false
- let index=0
-
- for (let item of UserConnected){
-  if (item.UserId==UserId)
-  {
-   exist=true
-
-   break
-  }else{
-   index++
-  }}
- return{ exist,index}
-}
-
-
-
-
-function addUser(UserId,SocketId){
- let{exist,index}=find(UserId,"send adduser")
-
-
-
- if(exist) {
-  UserConnected.splice(index,1)
-  UserConnected.push({SocketId:SocketId,UserId})
-
- }else{
-  UserConnected.push({SocketId:SocketId,UserId})
- }
-}
-
-function DeleteUser(SocketId){
- let index=0
- for (let item of UserConnected){
-  if (item.SocketId==SocketId)
-  {
-   break
-  }else{
-   index++
-  }}
-  UserConnected.splice(index,1)
-
-
-}
-
-
 const io=require('socket.io')(server,{
  cors:{
   origin:'*'
@@ -97,24 +58,23 @@ const io=require('socket.io')(server,{
 })
 io.on('connection',(socket)=>{
 
-
-console.log('one user is connected '+socket.id)
- socket.on("add_User",(UserId)=>{
-  addUser(UserId,socket.id)
+    socket.on("add_User",(UserId)=>{
+    addUser(UserId,socket.id,UserConnected)
  })
 
  socket.on("send_Notification",(data)=>{
 
-  let{exist,index}=find(data.UserId,"send notif")
+   let{exist,index}= find(data.UserId,"send notif",UserConnected)
 
-if(exist) {
+   if(exist) {
 
- io.to(UserConnected[index].SocketId).emit("send_Notification_to_user", {notification: {user:data.User,notification:data.notification}})
-console.log("salut sava")
-}})
+   io.to(UserConnected[index].SocketId).emit("send_Notification_to_user", {notification: {user:data.User,notification:data.notification}})
+   }
+
+ })
 
  socket.on("disconnect" ,()=>{
-  DeleteUser(socket.id)
+  DeleteUser(socket.id,UserConnected)
   console.log("good by")
   console.log(UserConnected)
  })
