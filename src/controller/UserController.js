@@ -17,11 +17,12 @@ const jwt = require("jsonwebtoken");
 exports.DeleteUser=async (req, res) => {
 
     let id = req.body.userDeleted_id;
+    var descendants = []
+    var Workspaceitems = []
     User.findOneAndDelete({_id: id}).then(async (user) => {
 
         if (user) {
-            var descendants = []
-            var workspaceitems = []
+
 
             //descendants.push(id)
             var items = await Workspace.find({superior_id: id})
@@ -30,7 +31,7 @@ exports.DeleteUser=async (req, res) => {
 
                 var stack = [];
                 stack.push(item);
-                workspaceitems.push(item)
+                Workspaceitems.push(item)
                 while (stack.length > 0) {
                     var currentnode = stack.pop();
                     var children = await Workspace.find({superior_id: currentnode._id});
