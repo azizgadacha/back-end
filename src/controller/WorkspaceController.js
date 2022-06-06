@@ -161,23 +161,50 @@ exports.editworkspace=async (req,res)=>{
     const cardId= String(req.body.card_id);
     const workspaceName= String(req.body.WorkspaceName);
     const Description=String(req.body.description);
+    const superior_id=String(req.body.superior_id);
     const visualisation=req.body.visualise;
+    const onlyDesc=req.body.onlyDesc;
     const user_id=req.body.user_id
     let validation=true
     User.findOne({_id:user_id}).then((user)=>{
         if((visualisation===true)&&(user.role!="administrateur"))
             validation=false
-        if(validation){
-            Workspace.findOneAndUpdate({_id:cardId},{WorkspaceName:workspaceName,description:Description})
-                .then((workspaceitems)=>{
-                    if(workspaceitems!=null) {
-                        Workspace.findOne({_id: cardId}).then((w) => {
-                            res.json({success: true, w})
+        if(validation) {
+            if (onlyDesc == true) {
+                Workspace.findOneAndUpdate({_id: cardId}, {WorkspaceName: workspaceName, description: Description})
+                    .then((workspaceitems) => {
+                        if (workspaceitems != null) {
+                            Workspace.findOne({_id: cardId}).then((w) => {
+                                res.json({success: true, w})
+                            })
+                        } else
+                            res.json({success: false, msg: 'The Workspace not successfully Edited'});
+                    })
+            } else {
+                Workspace.findOne({WorkspaceName: workspaceName, superior_id: superior_id}).then((w1) => {
+                    console.log(superior_id)
+                    console.log(workspaceName)
+                    console.log("alam")
+                    console.log(w1)
+                    if (w1) {
+                        res.json({success: false, msg: 'Workspace already exists'});
+                    } else {
+                        Workspace.findOneAndUpdate({_id: cardId}, {
+                            WorkspaceName: workspaceName,
+                            description: Description
                         })
+                            .then((workspaceitems) => {
+                                if (workspaceitems != null) {
+                                    Workspace.findOne({_id: cardId}).then((w) => {
+                                        res.json({success: true, w})
+                                    })
+                                } else
+                                    res.json({success: false, msg: 'The Workspace not successfully Edited'});
+                            })
                     }
-                    else
-                        res.json({success:false, msg: 'The Workspace not successfully Edited'});
-                })}
+                })
+            }
+        }
         else
         {
             user.password=undefined
