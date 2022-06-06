@@ -122,7 +122,7 @@ if(widgetexist) {
     data.find({usedIn:{ $elemMatch : { superiorID:superiorID,WidgetName:newName, type:{$in:["Rate", "Donuts","Bar"]}} }}).then((DataWidget)=> {
         if (DataWidget.length > 0) {
 
-            res.json({ success: false,existance:true, msg: "widget with the same name already exist",})
+            res.json({ success: false,Existance:true, msg: "widget with the same name already exist",})
 
         }else{
 

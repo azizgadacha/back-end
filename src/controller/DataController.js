@@ -127,19 +127,21 @@ exports.editWidgetlink=(req, res) => {
             if(work) {
                 Widget.findOne({ WidgetName:newName }).then((widgetexist) => {
                     if(widgetexist) {
-
+console.log("1111111111111111111111111")
                         res.json({ success: false,Existance:true, msg: "widget with the same name already exist",})
 
                     }else{
                         data.find({usedIn:{ $elemMatch : { superiorID:superiorID,WidgetName:newName, type:{$in:["Rate", "Donuts","Bar"]}} }}).then((DataWidget)=> {
                             if (DataWidget.length > 0) {
+                                console.log("22222222222222222222222222")
 
-                                res.json({ success: false,existance:true, msg: "widget with the same name already exist",})
+                                res.json({ success: false,Existance:true, msg: "widget with the same name already exist",})
 
                             }else{
 
 
 
+                                console.log("333333333333333333333333333333333333333")
 
 
 
@@ -148,10 +150,7 @@ exports.editWidgetlink=(req, res) => {
 
                             newName
 
-                    }})}})}})
-
-
-              .then((dataUpdated) => {
+                    }})   .then((dataUpdated) => {
                     if (dataUpdated) {
                         let widgetupd = {
                             idData: idData,
@@ -167,7 +166,10 @@ exports.editWidgetlink=(req, res) => {
                         res.json({success: false,})
 
 
-                })
+                })}})}})
+
+
+
             }
             else
                 res.json({success: false,msg:'Workspace No Longer Exist'})
