@@ -48,8 +48,6 @@ exports.ShareDataToWidget= async (req, res,next) => {
 
 
                                             if (dataupdated){
-console.log("rani lena bbb")
-console.log(dataupdated)
                                                 res.json({
                                                     success: true,
                                                     widget: {
@@ -123,17 +121,16 @@ exports.editWidgetlink=(req, res) => {
 
     workspace.findOne({_id:superiorID})
         .then((work)=>{
-            console.log(work)
+
             if(work) {
                 Widget.findOne({ WidgetName:newName }).then((widgetexist) => {
                     if(widgetexist) {
-console.log("1111111111111111111111111")
+
                         res.json({ success: false,Existance:true, msg: "widget with the same name already exist",})
 
                     }else{
                         data.find({usedIn:{ $elemMatch : { superiorID:superiorID,WidgetName:newName, type:{$in:["Rate", "Donuts","Bar"]}} }}).then((DataWidget)=> {
                             if (DataWidget.length > 0) {
-                                console.log("22222222222222222222222222")
 
                                 res.json({ success: false,Existance:true, msg: "widget with the same name already exist",})
 
@@ -141,7 +138,6 @@ console.log("1111111111111111111111111")
 
 
 
-                                console.log("333333333333333333333333333333333333333")
 
 
 

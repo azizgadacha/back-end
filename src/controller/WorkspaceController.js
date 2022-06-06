@@ -122,8 +122,7 @@ exports.deleteworkspace=  async (req, res,next) => {
                 for (item of descendants) {
                     await Workspace.findByIdAndRemove(item.toString())
                     let ListNotification = await notification.deleteMany({idNotified: item._id})
-                   console.log("dzezrerer")
-                   console.log(ListNotification)
+
                 }
                 res.json({success: true, workspaceitems})
             } else
@@ -182,12 +181,9 @@ exports.editworkspace=async (req,res)=>{
                     })
             } else {
                 Workspace.findOne({WorkspaceName: workspaceName, superior_id: superior_id}).then((w1) => {
-                    console.log(superior_id)
-                    console.log(workspaceName)
-                    console.log("alam")
-                    console.log(w1)
+
                     if (w1) {
-                        console.log("test")
+
                         res.json({success: false,Existance:true, msg: 'Workspace already exists'});
                     } else {
                         Workspace.findOneAndUpdate({_id: cardId}, {
@@ -274,7 +270,7 @@ exports.getinsideworkspace=  async (req, res, next) => {
                                 workres = worksp
                             }}
                     } else {
-                        if (!(workres._id == worksp.superior_id)) {
+                        if (!(workres._id === worksp.superior_id)) {
                             exist = false
                             break
                         } else {
@@ -421,7 +417,7 @@ exports.shareWorkspace= async (req, res,next) => {
                         })
                     })
                     .catch((e) => {
-                        console.log(e)
+
                         res.json({success: false})
                     });
             }

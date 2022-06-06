@@ -76,6 +76,6 @@ io.on('connection',(socket)=>{
  socket.on("disconnect" ,()=>{
   DeleteUser(socket.id,UserConnected)
   console.log("good by")
-  console.log(UserConnected)
+
  })
 })

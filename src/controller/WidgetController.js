@@ -192,12 +192,9 @@ exports.getWidget= async (req, res, next) => {
 
                     Widget.find({superior_id:mongoose.Types.ObjectId(list[list.length - 1])})
                         .then((Widgetitems) => {
-console.log("sssdsdddqdsd")
-console.log(Widgetitems)
                             data.find({"usedIn.superiorID": list[list.length - 1]}).then(async (widgetFromData,) => {
 
-                                console.log("azerty")
-                                console.log(mongoose.Types.ObjectId(list[list.length - 1]))
+
 
 
                                     for (let item of widgetFromData) {
