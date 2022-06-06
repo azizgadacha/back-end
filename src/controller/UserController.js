@@ -50,13 +50,11 @@ exports.DeleteUser=async (req, res) => {
             }
             activeSession.deleteMany({userId: id})
                 .then((AS) => {
-                    console.log("ActiveSession deleted Succesufully")
-                    console.log(AS)
+
                 })
             Workspace.updateMany ({},{$pull:{share:{sharedWith:id}} })
                 .then((AS) => {
-                    console.log("ActiveSession deleted Succesufully")
-                    console.log(AS)
+
                 })
 
 
@@ -85,14 +83,11 @@ exports.DeleteUser=async (req, res) => {
 
 exports.editPass=(req, res) => {
     const { userID,newPassword,oldPassword } = req.body;
-    console.log("aeaea")
-    console.log(req.body)
+
     User.findOne({ _id: userID }).then((user) => {
         if (user) {
-            console.log(user)
-            console.log("user")
+
             const query = { _id: user._id };
-            console.log('salut')
 
 
             bcrypt.compare(oldPassword, user.password, async (_err2, isMatch) => {
@@ -161,10 +156,11 @@ exports.editRole=(req, res) => {
 
     User.findOneAndUpdate({ _id: userID },{role}).then((userUpdated) => {
         if (userUpdated){
-            Workspace.updateMany ({},{$pull:{share:{sharedWith:id}} })
+
+
+            Workspace.updateMany ({},{$pull:{Share:{sharedWith:userID}} })
                 .then((AS) => {
-                    console.log("ActiveSession deleted Succesufully")
-                    console.log(AS)
+
                     userUpdated.password=undefined
 
                     userUpdated.role=role
@@ -230,7 +226,6 @@ exports.edituser=(req, res) => {
 
                         }
                     ).catch(() => {
-                        console.log("kkkkkkkkkkkkkkkk")
                         return  res.json({ success: false, passprob:false, msg: 'There was an error. Please contact the administrator' });
                     });
 
@@ -358,7 +353,6 @@ exports.logout=(req, res) => {
 
 //Registre
 exports.registre=async (req,res) => {
-    console.log("sahbiiiiiiiiiiiiiii")
 
     let   valid={email:req.body.email,username:req.body.username,phone:req.body.phone,role:req.body.role}
 
@@ -458,14 +452,12 @@ exports.registre=async (req,res) => {
 
                             u.password = undefined;
 
-                            console.log('sahbi manidrouch2.0')
                             res.json({success: true, user: u, msg: 'The user was successfully registered'});
 
 
                         })
                     }catch (e){
-                        console.log("ena el e")
-                        console.log("ena el e")
+
                         console.log(e)
 
                         res.status(422).json({

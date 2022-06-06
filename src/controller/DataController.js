@@ -47,8 +47,9 @@ exports.ShareDataToWidget= async (req, res,next) => {
                                         (dataupdated) => {
 
 
-                                            if (dataupdated)
-
+                                            if (dataupdated){
+console.log("rani lena bbb")
+console.log(dataupdated)
                                                 res.json({
                                                     success: true,
                                                     widget: {
@@ -60,7 +61,7 @@ exports.ShareDataToWidget= async (req, res,next) => {
                                                         data: dataupdated.data
                                                     },
                                                     WidgetExisite: false
-                                                })
+                                                })}
                                             else {
 
                                                 res.json({
@@ -122,14 +123,17 @@ exports.editWidgetlink=(req, res) => {
 
     workspace.findOne({_id:superiorID})
         .then((work)=>{
+            console.log(work)
             if(work) {
-                data.findOneAndUpdate({_id: idData, usedIn: {superiorID, type, WidgetName}}, {
-                    usedIn: {
-                        superiorID,
-                        type,
-                        WidgetName: newName
-                    }
-                }).then((dataUpdated) => {
+                data.findOneAndUpdate({_id: idData,'usedIn.WidgetName':WidgetName }, {
+                    $set:{ 'usedIn.$.WidgetName':
+
+                            newName
+
+                    }})
+
+
+              .then((dataUpdated) => {
                     if (dataUpdated) {
                         let widgetupd = {
                             idData: idData,
@@ -154,7 +158,7 @@ exports.editWidgetlink=(req, res) => {
 
 //delete Widget link
 exports.deleteLinkWidget= (req, res,next) => {
-    console.log("nemchis")
+
     const {superiorID,idData,type,WidgetName}= req.body;
     workspace.findOne({_id:superiorID})
         .then((work)=>{

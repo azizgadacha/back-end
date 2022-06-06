@@ -6,9 +6,7 @@ exports.SimpleEmployerValidation = (req, res, next) => {
 
     user.findOne({ _id:_id }).then((user) => {
 
-        console.log("im going around")
-        console.log(user)
-        console.log("XDDDDDD")
+
         if (user.role === 'simple employer') {
 
             return next();

@@ -60,19 +60,6 @@ exports.deleteNo=async (req, res) => {
 
 
 
-    notification.deleteMany()
-        .then((notification)=>{
-
-            if (notification)
-                res.json({success: true, notification});
-            else
-                res.json({success: false,msg:"Widget didn't existe"});
-
-        }).catch(()=>{
-
-        res.json({success: false,msg:"Widget Already deleted"});
-
-    })
 }
 
 //Delete Notification
@@ -100,8 +87,7 @@ exports.deleteNotification=async (req, res) => {
 exports.editNotification=async (req, res) => {
 
     let {IdListe} = req.body;
-    console.log("im there")
-    console.log(IdListe)
+
     notification.updateMany({_id:{ $in : IdListe }},{read:true})
         .then((notification)=>{
 

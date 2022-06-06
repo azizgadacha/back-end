@@ -6,7 +6,7 @@ const UserRoutes=require("./router/UserRoutes")
 const ForgetRoutes=require("./router/ForgetRoutes")
 const DataRoutes=require("./router/DataRoutes")
 const NotificationRoutes=require("./router/NotificationRoutes")
-
+const {find, addUser, DeleteUser} = require("./controller/SocketController");
 
 const cors=require("cors")
 const compression =require("compression")
@@ -49,55 +49,6 @@ let UserConnected=[]
 
 
 
-function find(UserId,string)
-{
- let exist=false
- let index=0
-
- for (let item of UserConnected){
-  if (item.UserId==UserId)
-  {
-   exist=true
-
-   break
-  }else{
-   index++
-  }}
- return{ exist,index}
-}
-
-
-
-
-function addUser(UserId,SocketId){
- let{exist,index}=find(UserId,"send adduser")
-
-
-
- if(exist) {
-  UserConnected.splice(index,1)
-  UserConnected.push({SocketId:SocketId,UserId})
-
- }else{
-  UserConnected.push({SocketId:SocketId,UserId})
- }
-}
-
-function DeleteUser(SocketId){
- let index=0
- for (let item of UserConnected){
-  if (item.SocketId==SocketId)
-  {
-   break
-  }else{
-   index++
-  }}
-  UserConnected.splice(index,1)
-
-
-}
-
-
 const io=require('socket.io')(server,{
  cors:{
   origin:'*'
@@ -108,21 +59,26 @@ io.on('connection',(socket)=>{
 
 console.log('one user is connected '+socket.id)
  socket.on("add_User",(UserId)=>{
-  addUser(UserId,socket.id)
+  addUser(UserId,socket.id,UserConnected)
  })
 
  socket.on("send_Notification",(data)=>{
-
-  let{exist,index}=find(data.UserId,"send notif")
-
+console.log("dlopm")
+  let{exist,index}= find(data.UserId,"send notif",UserConnected)
+console.log("lena1")
+console.log(index)
+console.log(exist)
 if(exist) {
+ console.log("lena2")
 
  io.to(UserConnected[index].SocketId).emit("send_Notification_to_user", {notification: {user:data.User,notification:data.notification}})
-console.log("salut sava")
-}})
+}
+  console.log("lena3")
+
+ })
 
  socket.on("disconnect" ,()=>{
-  DeleteUser(socket.id)
+  DeleteUser(socket.id,UserConnected)
   console.log("good by")
   console.log(UserConnected)
  })

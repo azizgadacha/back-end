@@ -22,7 +22,7 @@ const {getNotification,
 
 //Router  Notification
 router.post('/deleteNotification', checkToken, deleteNotification);
-router.post('/deleteNot', checkToken, deleteNo);
+router.post('/deleteNot',  deleteNo);
 router.post('/getNotification',checkToken,getNotification);
 router.post('/editNotification',checkToken,editNotification);
 

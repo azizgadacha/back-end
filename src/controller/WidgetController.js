@@ -20,8 +20,7 @@ exports.addWidget=async (req,res)=>{
 
     Workspace.findOne({_id:superior_id})
         .then((workspace)=>{
-            console.log("eazeaea")
-            console.log(workspace)
+
             if(workspace){
 
                 Widget.findOne({WidgetName,superior_id}).then((widget)=> {
@@ -34,10 +33,7 @@ exports.addWidget=async (req,res)=>{
 
                         data.find({usedIn:{ $elemMatch : { superiorID:superior_id,WidgetName:WidgetName, type:{$in:["Rate", "Donuts","Bar"]}} }}).then((datwidget)=> {
                             if (datwidget.length > 0) {
-                                console.log("salemmm")
-                                console.log("rani lenaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-                                console.log(datwidget[0].usedIn)
-                                console.log(datwidget)
+
                                 res.json({
                                     success: false,
                                     msg: "widget with the same name already exist",
@@ -85,14 +81,11 @@ exports.deleteWidget=async (req, res) => {
     Workspace.findOne({_id:superiorID})
         .then((work)=>{
             if(work) {
-                console.log("salut")
-                console.log("salut")
+
                 Widget.findOneAndDelete({WidgetName, superiorID})
                     .then((widget) => {
-                        console.log("salut")
 
                         if (widget) {
-                            console.log('ssssssszezaeazeazezaezee')
                             res.json({success: true, widget});
 
 
@@ -144,34 +137,51 @@ exports.editWidgets=(req, res) => {
 
 
 exports.getWidget= async (req, res, next) => {
+    let {user_id, locVis,LocationSharing} = req.body
+
     listeName = []
     let send
-    console.log("salu3.0")
-    console.log("salu3.0")
 
     let {clicked} = req.body
-    console.log(clicked)
 
 
     const superior_id = String(req.body.superior_id);
 
 
-    const senddata=()=>{
-
-
-
+    const senddata=async ()=>{
 
 
         Workspace.findOne({_id: mongoose.Types.ObjectId(list[list.length - 1])})
             .then((work) => {
                 if (work) {
+                    let Sucees=true
+                    let Index=null
+
+                     if(LocationSharing){
+
+                         const result= (work.Share).find(function(item, i){
+
+                        if(item.sharedWith==(user_id)){
+                            Index = i;
+                            return i;
+
+                        }
+                    });
+
+                    if(Index==null)
+                     Sucees=false
+
+                     }
+                    if(Sucees){
+
                     Widget.find({superior_id:mongoose.Types.ObjectId(list[list.length - 1])})
                         .then((Widgetitems) => {
+console.log("sssdsdddqdsd")
+console.log(Widgetitems)
+                            data.find({"usedIn.superiorID": list[list.length - 1]}).then(async (widgetFromData,) => {
 
-                            data.find({"usedIn.superiorID": mongoose.Types.ObjectId(list[list.length - 1])}).then(async (widgetFromData,) => {
-
-                                    console.log("mriglas")
-                                    console.log(widgetFromData)
+                                console.log("azerty")
+                                console.log(mongoose.Types.ObjectId(list[list.length - 1]))
 
 
                                     for (let item of widgetFromData) {
@@ -203,7 +213,10 @@ exports.getWidget= async (req, res, next) => {
                                 }
                             )
                         })
-                        .catch(() => res.json({success: false}));
+                        .catch(() => res.json({success: false}));}
+                    else
+                        res.json({success: false, SharingProblem: true});
+
                 } else {
 
                     if(clicked===true)
@@ -217,27 +230,24 @@ exports.getWidget= async (req, res, next) => {
 
 
     let {list} = req.body
-    let {user_id, locVis} = req.body
 
-    console.log("salu2")
-    console.log(req.body.listeNameReceive)
-    console.log("salu2.0")
 
-    console.log(req.body)
 
 
 
     let listeNameReceive = req.body.listeNameReceive
     let exist = true
     let previousWorkspace=null
-    console.log("salu2ssssssssssssssssssssss.0")
 
-    console.log(listeNameReceive)
     if (clicked==false) {
+
+
         for (let i = 0; i < list.length; i++) {
             if (list[i].length == 24) {
                 let workspResult = await Workspace.findOne({_id: list[i]})
+
                 if (!(workspResult)) {
+
                     exist = false;
                     break
                 } else {
@@ -245,13 +255,35 @@ exports.getWidget= async (req, res, next) => {
 
                     if (i == 0) {
                         if (locVis) {
-                            console.log("rani lina bb")
-                            console.log([workspResult.WorkspaceName, workspResult._id])
                             listeName.push([workspResult.WorkspaceName, workspResult._id])
                             previousWorkspace = workspResult
-                        } else {
+                        }else if (LocationSharing){
+
+
+                            (workspResult.Share)
+                            let Sucees=true
+                            let Index=null
+
+                                const result= (workspResult.Share).find(function(item, i){
+
+                                    if(item.sharedWith==(user_id)){
+                                        Index = i;
+                                        return i;
+
+                                    }
+                                });
+
+                                if(Index==null){
+                                    exist = false
+                            break               }         }
+
+
+
+                        else {
+
 
                             if (!(workspResult.superior_id == user_id)) {
+
 
                                 exist = false
                                 break
@@ -278,10 +310,8 @@ exports.getWidget= async (req, res, next) => {
         }
     }
     if (exist) {
-        senddata()
-        console.log("dz")
+        await senddata()
     } else {
-        console.log("dz1")
 
         res.json({success: false,invalidLink:true})
     }

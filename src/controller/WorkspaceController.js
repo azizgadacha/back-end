@@ -11,9 +11,7 @@ exports.addinsideworkspace=async (req,res)=>{
     const {superior_id,WorkspaceName,description} = req.body;
     Workspace.find({_id:superior_id})
         .then((W2)=>{
-            console.log("haw fibeli")
-            console.log(W2)
-            console.log(W2[0].superior_id)
+
             if(W2.length!=0){
                 const query={
                     superior_id:superior_id,
@@ -159,7 +157,6 @@ exports.editworkspace=async (req,res)=>{
         });
         return;
     }
-    console.log(req.body)
     const cardId= String(req.body.card_id);
     const workspaceName= String(req.body.WorkspaceName);
     const Description=String(req.body.description);
@@ -175,7 +172,6 @@ exports.editworkspace=async (req,res)=>{
                     if(workspaceitems!=null) {
                         Workspace.findOne({_id: cardId}).then((w) => {
                             res.json({success: true, w})
-                            console.log("eZEBIIIII")
                         })
                     }
                     else
@@ -195,15 +191,13 @@ exports.getinsideworkspace=  async (req, res, next) => {
     let {clicked} = req.body
     let listeName=[]
     let send
-    console.log("ena eli ne5dem")
     let senddata = async () => {
         if (exist) {
             let space = await Workspace.find({_id: mongoose.Types.ObjectId(list[list.length - 1])})
             if (space.length!==0) {
                 let workspaceitems = await Workspace.find({superior_id: mongoose.Types.ObjectId(list[list.length - 1])})
                 if (workspaceitems) {
-                    console.log("ena eli mened5olub")
-                    console.log(workspaceitems)
+
                     send = listeName
                     if (clicked) {
                         let lastWorkspace = await Workspace.findOne({_id: mongoose.Types.ObjectId(list[list.length - 1])})
@@ -239,8 +233,7 @@ exports.getinsideworkspace=  async (req, res, next) => {
                 } else {
                     if (i == 0) {
                         if(locVis)   {
-                            console.log("rani lina bb")
-                            console.log([worksp.WorkspaceName,worksp._id])
+
                             listeName.push([worksp.WorkspaceName,worksp._id])
                             workres = worksp
                         } else {
@@ -287,7 +280,6 @@ exports.getSharedWorkspace=  async (req, res,next) => {
             if (id === i.sharedWith) {
                 await User.findOne({_id:i.sharedPerson})
                     .then((user)=>{
-                        console.log(user)
                         workspaceitems.push([item1,user.username])
                     })
             }
@@ -315,7 +307,7 @@ exports.removeShare= async (req, res,next) => {
     const owner_id=String(req.body.owner_id)
     const visualisation = req.body.visualise;
     // let ch=[userId,UserName]
-    var alam=[]
+    var finalShare=[]
     var test=[]
     let validation = true
     User.findOne({_id:owner_id}).then(async (user) => {
@@ -326,24 +318,29 @@ exports.removeShare= async (req, res,next) => {
                 .then((workspaceitems) => {
                     for (let item of workspaceitems.Share) {
                         if (item.sharedWith != userId) {
-                            alam.push(item)
+                            finalShare.push(item)
+
                         }
                         test.push(item.sharedWith)
                     }
-                    console.log(workspaceitems.Share.sharedWith)
                 })
-            console.log("alam")
-            console.log(test)
+
             if (test.includes(userId)) {
-                Workspace.findOneAndUpdate({_id: cardId}, {Share: alam})
+                Workspace.findOneAndUpdate({_id: cardId}, {Share: finalShare})
                     .then((work) => {
                         Workspace.findOne({_id: cardId}).then((w) => {
-                            console.log('salam')
-                            console.log('salam')
-                            console.log('salam')
-                            console.log(w)
+                            notification.findOneAndDelete({idNotified:w._id})
+                                .then((notification)=>{
 
-                            res.json({success: true, w})
+
+                                        res.json({success: true, w})
+
+                                }).catch(()=>{
+
+                                res.json({success: false,msg:"internal problem please try later"});
+
+                            })
+
                         })
                     })
                     .catch(() => res.json({success: false}));
@@ -364,7 +361,6 @@ exports.shareWorkspace= async (req, res,next) => {
     const userId = String(req.body.user_id);
     const withShared = String(req.body.withShared);
     const visualisation = req.body.visualise;
-    console.log(req.body)
     let NewChare = {sharedWith:withShared,sharedPerson:userId}
     let validation = true
     User.findOne({_id: userId}).then(async (user) => {
@@ -376,32 +372,26 @@ exports.shareWorkspace= async (req, res,next) => {
             for (let i of item.Share) {
                 list.push(i.sharedWith)
             }
-            console.log(list)
             if (list.includes(withShared)) {
-                console.log("rani lina les amis ")
                 res.json({success: false})
             } else {
-                console.log("rani lina les amis2.0 ")
                 Workspace.findOneAndUpdate({_id: cardId}, {$addToSet: {Share: NewChare}})
                     .then((workspaceitems) => {
-                        console.log("im here1")
-                        console.log("im here1")
+
                         Workspace.findOne({_id: cardId}).then((item) => {
-                            console.log("im here2")
                             notification.create({
                                 receiver: withShared,
                                 sender: userId,
+                                idNotified:workspaceitems._id,
                                 type: "shared",
                                 read: false,
                                 text: ` has shared ${workspaceitems.WorkspaceName} with you`
                             }).then((notification) => {
-                                console.log("im here")
                                 res.json({success: true, workspace: item, notification})
                             })
                         })
                     })
                     .catch((e) => {
-                        console.log("im here3")
                         console.log(e)
                         res.json({success: false})
                     });
@@ -419,14 +409,12 @@ exports.visualizationOfWorkspaces=  async (req, res,next) => {
     const superior_id= String(req.body.user_id);
     var ListUsers =await User.find({});
     var workspaceitems=[]
-    console.log(ListUsers)
     for(let item of ListUsers){
         let ListeWorkspace=[]
         if(item._id!=superior_id) {
             let items = await Workspace.find({superior_id: item._id})
             if(items!=null) {
                 for (let x of items) {
-                    console.log(x)
                     workspaceitems.push([x,item._id,item.username])                }
             }
         }
