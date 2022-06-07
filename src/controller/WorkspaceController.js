@@ -104,8 +104,9 @@ exports.deleteworkspace=  async (req, res,next) => {
             validation = false
         if (validation) {
             var item = await Workspace.findOne({_id: id});
-             await notification.deleteMany({idNotified: item._id})
-
+             const listNotification=await notification.deleteMany({idNotified: item._id})
+console.log("ddzdzdzzzzzzzzzzzzzrrrrrrrr66666666")
+console.log(listNotification)
             if (item != null) {
                 stack.push(item);
                 workspaceitems.push(item)
@@ -247,7 +248,7 @@ exports.getinsideworkspace=  async (req, res, next) => {
     let {user_id,locVis} = req.body
     let listeNameReceive=req.body.listeNameReceive
     let exist = true
-    let workres
+    let workres=null
     if (clicked===false){
         for (let i = 0; i < list.length; i++) {
             if (list[i].length == 24) {
@@ -262,18 +263,31 @@ exports.getinsideworkspace=  async (req, res, next) => {
                             listeName.push([worksp.WorkspaceName,worksp._id])
                             workres = worksp
                         } else {
-                            if (!(worksp.superior_id == user_id)) {
+
+                            console.log('lomooo')
+                            if ((worksp.superior_id != user_id)) {
+                                console.log('lomooo2')
+
                                 exist = false
                                 break
                             } else {
+                                console.log('lomooo3')
                                 listeName.push([worksp.WorkspaceName,worksp._id])
                                 workres = worksp
                             }}
                     } else {
-                        if (!(workres._id === worksp.superior_id)) {
+                        console.log('lomooo4')
+console.log("eeeee" )
+console.log(workres._id )
+console.log(workres._id )
+                        if ((workres._id != worksp.superior_id)) {
+                            console.log('lomooo5')
+
                             exist = false
                             break
                         } else {
+                            console.log('lomooo6')
+
                             listeName.push([worksp.WorkspaceName,worksp._id])
 
                             workres = worksp
@@ -353,12 +367,12 @@ exports.removeShare= async (req, res,next) => {
             if (test.includes(userId)) {
                 Workspace.findOneAndUpdate({_id: cardId}, {Share: finalShare})
                     .then((work) => {
-                        Workspace.findOne({_id: cardId}).then((w) => {
-                            notification.findOneAndDelete({idNotified:w._id})
+                        Workspace.findOne({_id: cardId}).then((Workspace) => {
+                            notification.findOneAndDelete({idNotified:Workspace._id,receiver:userId})
                                 .then((notification)=>{
 
-
-                                        res.json({success: true, w})
+console.log(notification)
+                                        res.json({success: true, Workspace,notification:notification})
 
                                 }).catch(()=>{
 
@@ -417,7 +431,6 @@ exports.shareWorkspace= async (req, res,next) => {
                         })
                     })
                     .catch((e) => {
-
                         res.json({success: false})
                     });
             }

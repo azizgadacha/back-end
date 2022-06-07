@@ -1,7 +1,7 @@
 
 //find user  to Socket table
 
-find= (UserId,string,UserConnected)=> {
+find= (UserId,UserConnected)=> {
     let exist=false
     let index=0
 
@@ -22,7 +22,7 @@ find= (UserId,string,UserConnected)=> {
 addUser=(UserId,SocketId,UserConnected)=> {
 
 
-    let{exist,index}=find(UserId,"send adduser",UserConnected)
+    let{exist,index}=find(UserId,UserConnected)
 
 
 
@@ -49,11 +49,7 @@ DeleteUser=(SocketId,UserConnected)=>{
             index++
         }}
     UserConnected.splice(index,1)
-
-
 }
-
-
 
 
 module.exports = {find, DeleteUser,addUser }

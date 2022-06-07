@@ -453,7 +453,19 @@ exports.registre=async (req,res) => {
 
                             u.password = undefined;
 
-                            res.json({success: true, user: u, msg: 'The user was successfully registered'});
+
+
+
+
+
+                            User.find({}).then(()=>{
+                                    res.json({success: true, user: u, msg: 'The user was successfully registered'});
+
+                                }
+
+                            )
+
+
 
 
                         })

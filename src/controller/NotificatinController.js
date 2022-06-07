@@ -30,20 +30,15 @@ exports.getNotification= (req, res,next) => {
 
             for (let not of notifFound) {
 
-
                 let  usersender = await user.findOne({_id: not.sender})
                 if (usersender) {
-
                     usersender.password = undefined
                     result.push([usersender, not])
                 }
                 else{
-
                     notification.deleteOne({_id:not_id})
                 }
-
             }
-
             res.json({success: true, notifFound: result.reverse()});
 
         })

@@ -273,8 +273,6 @@ exports.getWidget= async (req, res, next) => {
                         }else if (LocationSharing){
 
 
-                            (workspResult.Share)
-                            let Sucees=true
                             let Index=null
 
                                 const result= (workspResult.Share).find(function(item, i){
@@ -295,7 +293,7 @@ exports.getWidget= async (req, res, next) => {
                         else {
 
 
-                            if (!(workspResult.superior_id == user_id)) {
+                            if ((workspResult.superior_id != user_id)) {
 
 
                                 exist = false
@@ -306,7 +304,7 @@ exports.getWidget= async (req, res, next) => {
                             }
                         }
                     } else {
-                        if (!(previousWorkspace._id == workspResult.superior_id)) {
+                        if ((previousWorkspace._id != workspResult.superior_id)) {
                             exist = false
                             break
                         } else {
