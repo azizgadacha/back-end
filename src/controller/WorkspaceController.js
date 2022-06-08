@@ -69,7 +69,7 @@ exports.addworkspace=async (req,res)=>{
         .then((users)=>{
             const query={
                 superior_id:superior_id,
-                WorkspaceName:WorkspaceName.toLowercase(),
+                WorkspaceName:WorkspaceName.toLowerCase(),
                 description
             };
             Workspace.findOne({WorkspaceName:WorkspaceName.toLowerCase(),superior_id:superior_id}).then((w1)=> {
