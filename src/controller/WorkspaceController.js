@@ -118,7 +118,9 @@ exports.deleteworkspace=  async (req, res,next) => {
                         stack.push(child);
                     });
                 }
-                descendants.join(",")
+
+                //descendants.join(",")
+
                 for (item of descendants) {
                     await Workspace.findByIdAndRemove(item.toString())
                     let ListNotification = await notification.deleteMany({idNotified: item._id})
@@ -354,14 +356,18 @@ exports.removeShare= async (req, res,next) => {
         if(validation) {
             await Workspace.findOne({_id: cardId})
                 .then((workspaceitems) => {
-                    for (let item of workspaceitems.Share) {
-                        if (item.sharedWith != userId) {
-                            finalShare.push(item)
+                    if(workspaceitems==null){
+                    }else {
+                        for (let item of workspaceitems.Share) {
+                            if (item.sharedWith != userId) {
+                                finalShare.push(item)
 
+                            }
+                            test.push(item.sharedWith)
                         }
-                        test.push(item.sharedWith)
                     }
                 })
+
 
             if (test.includes(userId)) {
                 Workspace.findOneAndUpdate({_id: cardId}, {Share: finalShare})
@@ -382,9 +388,12 @@ console.log(notification)
                         })
                     })
                     .catch(() => res.json({success: false}));
-            } else {
+            }
+
+            else {
                 res.json({success: false})
             }
+
         }else{
             user.password=undefined
             res.json({success:false,user,adminstratorProblem:true ,msg: 'you are no longer an administrator'});
@@ -407,31 +416,38 @@ exports.shareWorkspace= async (req, res,next) => {
         if (validation) {
             var item = await Workspace.findOne({_id: cardId});
             var list = [];
-            for (let i of item.Share) {
-                list.push(i.sharedWith)
-            }
-            if (list.includes(withShared)) {
-                res.json({success: false})
-            } else {
-                Workspace.findOneAndUpdate({_id: cardId}, {$addToSet: {Share: NewChare}})
-                    .then((workspaceitems) => {
+           if(item!=null) {
+               for (let i of item.Share) {
+                   list.push(i.sharedWith)
+               }
 
-                        Workspace.findOne({_id: cardId}).then((item) => {
-                            notification.create({
-                                receiver: withShared,
-                                sender: userId,
-                                idNotified:workspaceitems._id,
-                                type: "shared",
-                                read: false,
-                                text: ` shared his workspace with you named `
-                            }).then((notification) => {
-                                res.json({success: true, workspace: item, notification,name:item.WorkspaceName})
-                            })
-                        })
-                    })
-                    .catch((e) => {
-                        res.json({success: false})
-                    });
+               if (list.includes(withShared)) {
+                   res.json({success: false})
+               } else {
+                   Workspace.findOneAndUpdate({_id: cardId}, {$addToSet: {Share: NewChare}})
+                       .then((workspaceitems) => {
+
+                           Workspace.findOne({_id: cardId}).then((item) => {
+                               notification.create({
+                                   receiver: withShared,
+                                   sender: userId,
+                                   idNotified: workspaceitems._id,
+                                   type: "shared",
+                                   read: false,
+                                   text: ` shared his workspace with you named `
+                               }).then((notification) => {
+                                   res.json({success: true, workspace: item, notification, name: item.WorkspaceName})
+                               })
+                           })
+                       })
+                       .catch((e) => {
+                           res.json({success: false})
+                       });
+               }
+           }
+        else
+            {
+                res.json({success:false,NoExist:true,msg:"Workspace No Longer Exists"})
             }
         } else {
             user.password = undefined
