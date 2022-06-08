@@ -377,7 +377,7 @@ exports.registre=async (req,res) => {
     User.findOne({ $or: [{ email:email.toLowerCase() }, { username:username.toLowerCase() },{phone}]}).then((user) => {
         if (user) {
 
-            res.json({success: false, msg: 'User already exists'});
+            res.json({success: false, msg: `  a user with same ${ user.email==email.toLowerCase()?'email':user.username==username.toLowerCase()?'username':'phone'} already exist `});
         } else {
             //  if(!file)
             //  {
