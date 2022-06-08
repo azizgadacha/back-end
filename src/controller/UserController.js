@@ -374,10 +374,10 @@ exports.registre=async (req,res) => {
 
     }
 
-    User.findOne({ $or: [{ email }, { username }]}).then((user) => {
+    User.findOne({ $or: [{ email:email.toLowerCase() }, { username:username.toLowerCase() },{phone}]}).then((user) => {
         if (user) {
 
-            res.json({success: false, msg: 'User already excite'});
+            res.json({success: false, msg: 'User already exists'});
         } else {
             //  if(!file)
             //  {

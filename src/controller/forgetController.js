@@ -84,7 +84,7 @@ exports.forget=async (req, res) => {
         }
 
 
-
+//nodemailer c'est un module pour l'envoie des emails
 
         let transporter = nodemailer.createTransport({
             service: 'gmail',
