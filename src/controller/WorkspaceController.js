@@ -68,7 +68,7 @@ exports.addworkspace=async (req,res)=>{
                 WorkspaceName,
                 description
             };
-            Workspace.findOne({WorkspaceName,superior_id:superior_id}).then((w1)=> {
+            Workspace.findOne({WorkspaceName:WorkspaceName.toLowerCase(),superior_id:superior_id}).then((w1)=> {
                 if (w1) {
                     res.json({success: false, msg: 'Workspace already exists'});
                 } else {
@@ -181,7 +181,7 @@ exports.editworkspace=async (req,res)=>{
                             res.json({success: false, msg: 'The Workspace not successfully Edited'});
                     })
             } else {
-                Workspace.findOne({WorkspaceName: workspaceName, superior_id: superior_id}).then((w1) => {
+                Workspace.findOne({WorkspaceName: workspaceName.toLowerCase(), superior_id: superior_id}).then((w1) => {
 
                     if (w1) {
 
