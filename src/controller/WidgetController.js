@@ -23,7 +23,7 @@ exports.addWidget=async (req,res)=>{
 
             if(workspace){
 
-                Widget.findOne({WidgetName,superior_id}).then((widget)=> {
+                Widget.findOne({WidgetName:WidgetName.toLowerCase(),superior_id}).then((widget)=> {
                     if (widget) {
 
                         res.json({success: false,WidgetExisite:true, msg: 'Widget already exists'});
@@ -31,7 +31,7 @@ exports.addWidget=async (req,res)=>{
                     } else {
 
 
-                        data.find({usedIn:{ $elemMatch : { superiorID:superior_id,WidgetName:WidgetName, type:{$in:["Rate", "Donuts","Bar"]}} }}).then((datwidget)=> {
+                        data.find({usedIn:{ $elemMatch : { superiorID:superior_id,WidgetName:WidgetName.toLowerCase(), type:{$in:["Rate", "Donuts","Bar"]}} }}).then((datwidget)=> {
                             if (datwidget.length > 0) {
 
                                 res.json({
@@ -43,7 +43,7 @@ exports.addWidget=async (req,res)=>{
                             else{
 
                                 const query = {
-                                    superior_id, WidgetName, type, label, dataWidget:dataWidgetFinal
+                                    superior_id,WidgetName: WidgetName.toLowerCase(), type, label, dataWidget:dataWidgetFinal
                                 };
                                 Widget.create(query).then((newWidget) => {
 
@@ -113,13 +113,13 @@ exports.editWidgets=(req, res) => {
         .then((work)=>{
             if(work){
 
-                Widget.findOne({ WidgetName:newName }).then((widgetexist) => {
+                Widget.findOne({ WidgetName:newName.toLowerCase() }).then((widgetexist) => {
 if(widgetexist) {
 
     res.json({ success: false,Existance:true, msg: "widget with the same name already exist",})
 
 }else{
-    data.find({usedIn:{ $elemMatch : { superiorID:superiorID,WidgetName:newName, type:{$in:["Rate", "Donuts","Bar"]}} }}).then((DataWidget)=> {
+    data.find({usedIn:{ $elemMatch : { superiorID:superiorID,WidgetName:newName.toLowerCase(), type:{$in:["Rate", "Donuts","Bar"]}} }}).then((DataWidget)=> {
         if (DataWidget.length > 0) {
 
             res.json({ success: false,Existance:true, msg: "widget with the same name already exist",})
@@ -128,9 +128,9 @@ if(widgetexist) {
 
 
 
-                    Widget.findOneAndUpdate({ _id: idWidget },{WidgetName:newName}).then((widget) => {
+                    Widget.findOneAndUpdate({ _id: idWidget },{WidgetName:newName.toLowerCase()}).then((widget) => {
                     if (widget){
-                        widget.WidgetName=newName
+                        widget.WidgetName=newName.toLowerCase()
 
                         res.json({ success: true,widget })}
                     else

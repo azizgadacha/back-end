@@ -188,7 +188,7 @@ exports.editworkspace=async (req,res)=>{
                         res.json({success: false,Existance:true, msg: 'Workspace already exists'});
                     } else {
                         Workspace.findOneAndUpdate({_id: cardId}, {
-                            WorkspaceName: workspaceName,
+                            WorkspaceName: workspaceName.toLowerCase(),
                             description: Description
                         })
                             .then((workspaceitems) => {

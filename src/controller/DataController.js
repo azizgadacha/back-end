@@ -19,13 +19,13 @@ exports.ShareDataToWidget= async (req, res,next) => {
     workspace.findOne({_id:superiorID})
         .then((work)=>{
             if(work) {
-                Widget.findOne({superior_id: superiorID, WidgetName}).then((widgetGetit) => {
+                Widget.findOne({superior_id: superiorID, WidgetName:WidgetName.toLowerCase()}).then((widgetGetit) => {
                     if (widgetGetit) {
 
                         res.json({success: false, msg: "widget already exist", WidgetExisite: true})
 
                     } else {
-                        data.find({usedIn:{ $elemMatch : { superiorID:superiorID,WidgetName:WidgetName, type:{$in:["Rate", "Donuts","Bar"]}} }}).then((datwidget)=> {
+                        data.find({usedIn:{ $elemMatch : { superiorID:superiorID,WidgetName:WidgetName.toLowerCase(), type:{$in:["Rate", "Donuts","Bar"]}} }}).then((datwidget)=> {
                                 if (datwidget.length > 0) {
 
                                     res.json({
@@ -40,7 +40,7 @@ exports.ShareDataToWidget= async (req, res,next) => {
                                             usedIn: {
                                                 superiorID,
                                                 type,
-                                                WidgetName
+                                                WidgetName:WidgetName.toLowerCase()
                                             }
                                         }
                                     }).then(
@@ -52,7 +52,7 @@ exports.ShareDataToWidget= async (req, res,next) => {
                                                     success: true,
                                                     widget: {
                                                         idData: idData,
-                                                        WidgetName: WidgetName,
+                                                        WidgetName: WidgetName.toLowerCase(),
                                                         sourceDB: true,
                                                         type: type,
                                                         label: dataupdated.label,
@@ -123,13 +123,13 @@ exports.editWidgetlink=(req, res) => {
         .then((work)=>{
 
             if(work) {
-                Widget.findOne({ WidgetName:newName }).then((widgetexist) => {
+                Widget.findOne({ WidgetName:newName.toLowerCase() }).then((widgetexist) => {
                     if(widgetexist) {
 
                         res.json({ success: false,Existance:true, msg: "widget with the same name already exist",})
 
                     }else{
-                        data.find({usedIn:{ $elemMatch : { superiorID:superiorID,WidgetName:newName, type:{$in:["Rate", "Donuts","Bar"]}} }}).then((DataWidget)=> {
+                        data.find({usedIn:{ $elemMatch : { superiorID:superiorID,WidgetName:newName.toLowerCase(), type:{$in:["Rate", "Donuts","Bar"]}} }}).then((DataWidget)=> {
                             if (DataWidget.length > 0) {
 
                                 res.json({ success: false,Existance:true, msg: "widget with the same name already exist",})
@@ -141,7 +141,7 @@ exports.editWidgetlink=(req, res) => {
 
 
 
-                data.findOneAndUpdate({_id: idData,usedIn:{$elemMatch : { superiorID,WidgetName, type:{$in:["Rate", "Donuts","Bar"]}}}  }, {
+                data.findOneAndUpdate({_id: idData,usedIn:{$elemMatch : { superiorID,WidgetName:WidgetName.toLowerCase(), type:{$in:["Rate", "Donuts","Bar"]}}}  }, {
                     $set:{ 'usedIn.$.WidgetName':
 
                             newName
@@ -150,9 +150,9 @@ exports.editWidgetlink=(req, res) => {
                     if (dataUpdated) {
                         let widgetupd = {
                             idData: idData,
-                            WidgetName: newName,
+                            WidgetName: newName.toLowerCase(),
                             sourceDB: true,
-                            oldName: WidgetName,
+                            oldName: WidgetName.toLowerCase(),
                             type,
                             label: dataUpdated.label,
                             data: dataUpdated.data
@@ -179,12 +179,12 @@ exports.deleteLinkWidget= (req, res,next) => {
     workspace.findOne({_id:superiorID})
         .then((work)=>{
             if(work) {
-                data.updateOne({_id: idData}, {$pull: {usedIn: {superiorID, type, WidgetName}}})
+                data.updateOne({_id: idData}, {$pull: {usedIn: {superiorID, type, WidgetName:WidgetName.toLowerCase()}}})
                     .then((dataSend) => {
 
                         if (dataSend.modifiedCount == 1) {
 
-                            res.json({success: true, widget: {WidgetName, type}});
+                            res.json({success: true, widget: {WidgetName:WidgetName.toLowerCase(), type}});
                         } else {
 
                             res.json({success: false})
