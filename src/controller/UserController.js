@@ -23,10 +23,13 @@ exports.DeleteUser=async (req, res) => {
     User.findOneAndDelete({_id: id}).then(async (user) => {
 
         if (user) {
+            await notification.deleteMany({$or:[{receiver: user._id},{idNotified: user._id},{sender: user._id}]})
 
+            Workspace.updateMany({Share:{ $elemMatch : { sharedWith:user._id }}}, {$pull: {Share: {sharedWith:user._id}}})
 
             //descendants.push(id)
             var items = await Workspace.find({superior_id: id})
+
             for (let item of items) {
                 descendants.push(item._id)
 
@@ -35,7 +38,9 @@ exports.DeleteUser=async (req, res) => {
                 Workspaceitems.push(item)
                 while (stack.length > 0) {
                     var currentnode = stack.pop();
+
                     var children = await Workspace.find({superior_id: currentnode._id});
+
                     children.forEach(function (child) {
                         descendants.push(child._id);
                         Workspaceitems.push(child)
@@ -137,14 +142,15 @@ exports.editRole=(req, res) => {
     User.findOneAndUpdate({ _id: userID },{role}).then((userUpdated) => {
         if (userUpdated){
 
+            Workspace.updateMany({Share:{ $elemMatch : { sharedWith:userID }}}, {$pull: {Share: {sharedWith:userID}}})
 
-            Workspace.updateMany ({},{$pull:{Share:{sharedWith:userID}} })
-                .then((AS) => {
+                .then(async (AS) => {
+                    await notification.deleteMany({$or: [{receiver: userID}]})
 
-                    userUpdated.password=undefined
+                    userUpdated.password = undefined
 
-                    userUpdated.role=role
-                    res.json({ success: true,user:userUpdated })
+                    userUpdated.role = role
+                    res.json({success: true, user: userUpdated})
                 })
 
         }
@@ -433,7 +439,7 @@ exports.registre=async (req,res) => {
                             u.password = undefined;
 
 
-                            let sender = await User.find({_id: req.body.user_id})
+                            let sender = await User.findOne({_id: req.body.user_id})
 
                             User.find({
                                 role: "administrateur",
@@ -449,8 +455,10 @@ exports.registre=async (req,res) => {
                                             read: false,
                                             text: ` add ed  a new user named `
                                         })
-
-                                        NotificationListe.push({user:sender,notification:noti,NameShared:u.username} )
+console.log("eerrr")
+console.log(noti)
+console.log(u)
+                                        NotificationListe.push({user:sender,notification:noti,NameShared:u.username,UserId:item._id} )
                                     }
                                     res.json({
                                         success: true,

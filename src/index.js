@@ -65,10 +65,10 @@ io.on('connection',(socket)=>{
  socket.on("send_Notification",(data)=>{
     for (let item of data.NotificationListe ){
 console.log("mloozp")
-console.log(data)
+console.log(item)
          let{exist,index}= find(item.UserId,UserConnected)
    if(exist) {
-   io.to(UserConnected[index].SocketId).emit("send_Notification_to_user", {notification: {user:item.User,notification:item.notification,name:item.name}})
+   io.to(UserConnected[index].SocketId).emit("send_Notification_to_user", {notification: {user:item.user,notification:item.notification,name:item.NameShared}})
    }
  }
  })

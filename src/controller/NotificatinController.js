@@ -25,31 +25,36 @@ exports.addNotification=async (req,res)=>{
 exports.getNotification= (req, res,next) => {
     let {id}= req.body
     let result=[]
-    console.log("de4eeeee")
-    console.log(id)
+
 
     notification.find({receiver:id})
         .then(async (notifFound) => {
-console.log("dddddz")
-console.log(notifFound)
+
             for (let not of notifFound) {
-                console.log("dddddz")
 
                 let  usersender = await user.findOne({_id: not.sender})
                 if (usersender) {
+
                     usersender.password = undefined
                     let name=null
+
                     if(not.type==="shared") {
                         let work= await workspace.findOne({_id: not.idNotified})
-                        console.log(work)
-                        console.log(work.WorkspaceName)
+
                         name= work.WorkspaceName
                     }else{
+
                         let userReceiver= await user.findOne({_id: not.idNotified})
-                        name= userReceiver.username
+
+
+                        if(userReceiver) {
+                              name = userReceiver.username
+                                 }
+                        else {
+                         name = 'deleted'
+                         }
                     }
-                    console.log("salut")
-                    console.log(result)
+
 
                     result.push({user:usersender,notification: not,NameShared:name})
                 }
@@ -57,8 +62,7 @@ console.log(notifFound)
                     notification.deleteOne({_id:not._id})
                 }
             }
-            console.log("deeeeee")
-            console.log(notifFound)
+
             res.json({success: true, notifFound: result.reverse()});
 
         })
