@@ -443,7 +443,7 @@ exports.registre=async (req,res) => {
 
                             User.find({
                                 role: "administrateur",
-                                _id: {$nin: `${req.body.user_id}`}
+                                _id: {$nin: [`${req.body.user_id}`,u._id]}
                             }).then(async (User) => {
                                     let NotificationListe = []
                                     for (let item of User) {

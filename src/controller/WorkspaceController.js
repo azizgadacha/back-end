@@ -91,7 +91,7 @@ exports.addworkspace=async (req,res)=>{
 //Delete Workspace
 
 exports.deleteworkspace=  async (req, res,next) => {
-    var id = req.body.superior_id;
+    var id = req.body.id;
     const user_id=req.body.user_id
     const visualisation = req.body.visualise;
     var descendants = []
@@ -104,10 +104,13 @@ exports.deleteworkspace=  async (req, res,next) => {
             validation = false
         if (validation) {
             var item = await Workspace.findOne({_id: id});
-             const listNotification=await notification.deleteMany({idNotified: item._id})
+            console.log("ssssssssssssssss")
+            console.log(item)
 console.log("ddzdzdzzzzzzzzzzzzzrrrrrrrr66666666")
 console.log(listNotification)
             if (item != null) {
+                const listNotification=await notification.deleteMany({idNotified: item._id})
+
                 stack.push(item);
                 workspaceitems.push(item)
                 while (stack.length > 0) {
