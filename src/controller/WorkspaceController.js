@@ -3,6 +3,8 @@ const User =require( '../model/user');
 const notification = require("../model/notification");
 const Joi = require('joi');
 const mongoose = require("mongoose");
+const Widget = require("../model/Widget");
+const data = require("../model/data");
 
 
 //Add inside Workspace
@@ -106,10 +108,8 @@ exports.deleteworkspace=  async (req, res,next) => {
             var item = await Workspace.findOne({_id: id});
             console.log("ssssssssssssssss")
             console.log(item)
-console.log("ddzdzdzzzzzzzzzzzzzrrrrrrrr66666666")
-console.log(listNotification)
+
             if (item != null) {
-                const listNotification=await notification.deleteMany({idNotified: item._id})
 
                 stack.push(item);
                 workspaceitems.push(item)
@@ -126,6 +126,9 @@ console.log(listNotification)
                 for (item of descendants) {
                     await Workspace.findByIdAndRemove(item.toString())
                     let ListNotification = await notification.deleteMany({idNotified: item._id})
+                    await  Widget.deleteMany({superior_id:item._id})
+                  await   data.updateOne({}, {$pull: {usedIn: {superiorID:item._id}}})
+
 
                 }
                 res.json({success: true, workspaceitems})
@@ -279,6 +282,7 @@ exports.getinsideworkspace=  async (req, res, next) => {
                                 workres = worksp
                             }}
                     } else {
+                        console.log('lomooo4')
                         console.log('lomooo4')
 console.log("eeeee" )
 console.log(workres._id )

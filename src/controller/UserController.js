@@ -236,9 +236,12 @@ exports.edituser=(req, res) => {
 exports.getall=(req, res) => {
     let  id=req.body. user_id
     let filter
+const emailgetit=req.body.email
 
-    if(req.body.email){
-        filter={$or: [ {email:req.body.email.toLowerCase(), _id: { $nin: `${id}` } }, {  _id: { $nin: `${id}` },username:req.body.username.toLowerCase()},{  _id: { $nin: `${id}` },phone:req.body.phone.toLowerCase()}]}
+   console.log(typeof (emailgetit))
+console.log(emailgetit)
+    if(emailgetit){
+        filter={$or: [ {email:emailgetit.toLowerCase(), _id: { $nin: `${id}` } }, {  _id: { $nin: `${id}` },username:req.body.username.toLowerCase()},{  _id: { $nin: `${id}` },phone:req.body.phone}]}
     }else{
         filter=   { _id: { $nin: `${id}` } }
     }
@@ -253,7 +256,10 @@ exports.getall=(req, res) => {
             return x;
         });
         res.json({ success: true, users });
-    }).catch(() => res.json({ success: false }))
+    }).catch((e) =>
+    {console.log('eeeeee')
+        console.log(e)
+        res.json({ success: false })})
 
 
 
