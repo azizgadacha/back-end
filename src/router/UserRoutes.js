@@ -46,7 +46,7 @@ const {DeleteUser,
 
 //Router  User
 router.post('/editUser', checkToken,AdminstratorVlidation,editRole );
-router.post('/register',upload.single('file'),checkToken,registre,);
+router.post('/register',upload.single('file'),AdminstratorVlidation,checkToken,registre,);
 router.post('/login', login);
 router.post('/logout', checkToken,logout );
 router.post('/all', checkToken, getall);

@@ -424,9 +424,9 @@ exports.shareWorkspace= async (req, res,next) => {
                                 idNotified:workspaceitems._id,
                                 type: "shared",
                                 read: false,
-                                text: ` has shared ${workspaceitems.WorkspaceName} with you`
+                                text: ` shared his workspace with you named `
                             }).then((notification) => {
-                                res.json({success: true, workspace: item, notification})
+                                res.json({success: true, workspace: item, notification,name:item.WorkspaceName})
                             })
                         })
                     })

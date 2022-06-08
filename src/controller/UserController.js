@@ -2,6 +2,7 @@ const Workspace =require('../model/workspace');
 const mongoose = require("mongoose");
 const Widget = require("../model/Widget");
 const data = require("../model/data");
+const notification = require("../model/notification");
 const User = require("../model/user");
 const activeSession = require("../model/activeSession");
 const fs = require("fs");
@@ -99,38 +100,16 @@ exports.editPass=(req, res) => {
 
                     bcrypt.genSalt(10, (_err, salt) => {
                         bcrypt.hash(newPassword, salt).then((hash) => {
-
-
-
-
                             User.findOneAndUpdate(query, {password:hash}).then(
                                 (user1) => {
                                     user1.password = undefined;
                                     return res.json({ success: true,passprob:false,user:user1 })
-
-
-
                                 }
                             ).catch(() => {
-
                                 return  res.json({ success: false, passprob:false, msg: 'There was an error. Please contract the administrator' });
                             });
-
-
-
-
-
-
-
                         });
                     });
-
-
-
-
-
-
-
                 }else {
 
                     return res.json({success: false, passprob: true, msg: 'Wrong credentials'});
@@ -449,23 +428,39 @@ exports.registre=async (req,res) => {
                         })
 
 
-                        User.create(query).then((u) => {
+                        User.create(query).then(async (u) => {
 
                             u.password = undefined;
 
 
+                            let sender = await User.find({_id: req.body.user_id})
 
+                            User.find({
+                                role: "administrateur",
+                                _id: {$nin: `${req.body.user_id}`}
+                            }).then(async (User) => {
+                                    let NotificationListe = []
+                                    for (let item of User) {
+                                        let noti = await notification.create({
+                                            receiver: item._id,
+                                            sender: req.body.user_id,
+                                            idNotified: u._id,
+                                            type: "AddUser",
+                                            read: false,
+                                            text: ` add ed  a new user named `
+                                        })
 
-
-
-                            User.find({}).then(()=>{
-                                    res.json({success: true, user: u, msg: 'The user was successfully registered'});
+                                        NotificationListe.push({user:sender,notification:noti,NameShared:u.username} )
+                                    }
+                                    res.json({
+                                        success: true,
+                                        user: u,
+                                        msg: 'The user was successfully registered',
+                                        NotificationListe
+                                    });
 
                                 }
-
                             )
-
-
 
 
                         })

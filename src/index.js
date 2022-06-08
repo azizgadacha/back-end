@@ -63,22 +63,29 @@ io.on('connection',(socket)=>{
  })
 
  socket.on("send_Notification",(data)=>{
-   let{exist,index}= find(data.UserId,UserConnected)
+    // for (let item of data.NotificationListe ){
+console.log("mloozp")
+console.log(data)
+         let{exist,index}= find(data.UserId,UserConnected)
    if(exist) {
-   io.to(UserConnected[index].SocketId).emit("send_Notification_to_user", {notification: {user:data.User,notification:data.notification}})
+   io.to(UserConnected[index].SocketId).emit("send_Notification_to_user", {notification: {user:data.User,notification:data.notification,name:data.name}})
    }
+ //}
  })
 
 socket.on("RemoveShareNotification",(data)=>{
-   for (let item of data.NotificationListe ){
+    console.log("wasahbi savaa")
+    console.log(data)
+
+    for (let item of data.NotificationListe ){
     let{exist,index}= find(item.receiver,UserConnected)
    if(exist) {
+       console.log("wasahbi savaa")
    io.to(UserConnected[index].SocketId).emit("delete_Notification_from_user", {notification: item._id})
    }
 
    }
  })
-
  socket.on("disconnect" ,()=>{
   DeleteUser(socket.id,UserConnected)
   console.log("good by")
