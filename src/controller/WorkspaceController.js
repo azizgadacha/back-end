@@ -104,10 +104,6 @@ exports.deleteworkspace=  async (req, res,next) => {
             validation = false
         if (validation) {
             var item = await Workspace.findOne({_id: id});
-            console.log("ssssssssssssssss")
-            console.log(item)
-console.log("ddzdzdzzzzzzzzzzzzzrrrrrrrr66666666")
-console.log(listNotification)
             if (item != null) {
                 const listNotification=await notification.deleteMany({idNotified: item._id})
 
