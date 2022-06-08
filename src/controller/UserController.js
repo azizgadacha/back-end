@@ -234,14 +234,15 @@ exports.edituser=(req, res) => {
 //get all
 
 exports.getall=(req, res) => {
-    console.log("3aslema")
+
     let  id=req.body. user_id
     let filter
-    console.log("3aslema1.0")
+
 
     if(req.body.email){
-        console.log("3aslema2.0")
+
         filter={$or: [ {email:req.body.email.toLowerCase(), _id: { $nin: `${id}` } }, {  _id: { $nin: `${id}` },username:req.body.username.toLowerCase()},{  _id: { $nin: `${id}` },phone:req.body.phone}]}
+
 
     }else{
         filter=   { _id: { $nin: `${id}` } }
@@ -257,11 +258,12 @@ exports.getall=(req, res) => {
             return x;
         });
         res.json({ success: true, users });
-    }).catch((e) => {
+
+    }).catch((e) =>
+    {console.log('eeeeee')
         console.log(e)
-        res.json({
-        success: false
-    })})
+        res.json({ success: false })})
+
 
 
 

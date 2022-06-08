@@ -19,7 +19,8 @@ const {shareWorkspace,
        addworkspace,
        getinsideworkspace,
        visualizationOfWorkspaces,
-       removeShare} = require("../controller/WorkspaceController");
+       removeShare
+        } = require("../controller/WorkspaceController");
 
 
 //Router  Workspace
@@ -33,6 +34,8 @@ router.post('/getsharedWorkspace',checkToken,SimpleEmployerValidation,getSharedW
 router.post('/getinsideworkspace',checkToken,getinsideworkspace);
 router.post('/addworkspace',checkToken,addworkspace);
 router.post('/deleteworkspace',checkToken,deleteworkspace)
+
+
 
 
 

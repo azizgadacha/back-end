@@ -16,7 +16,7 @@ const DataRoutes=require("./router/DataRoutes")
 const NotificationRoutes=require("./router/NotificationRoutes")
 const {find, addUser, DeleteUser} = require("./controller/SocketController");
 const connection=require( './db/DataBase');
-const {lpm} = require("./config/lpm");
+
 
 
 app.use(cors());
@@ -34,12 +34,12 @@ initPassport(passport);
 
 app.use(passport.initialize());
 //Routes  declaration
-app.use("/api/Workspace",lpm,WorkspaceRoutes)
-app.use("/api/Forget",lpm,ForgetRoutes)
-app.use("/api/Notification",lpm,NotificationRoutes)
-app.use("/api/Widget",lpm,WidgetRoutes)
-app.use("/api/Data",lpm,DataRoutes)
-app.use("/api/User",lpm,UserRoutes)
+app.use("/api/Workspace",WorkspaceRoutes)
+app.use("/api/Forget",ForgetRoutes)
+app.use("/api/Notification",NotificationRoutes)
+app.use("/api/Widget",WidgetRoutes)
+app.use("/api/Data",DataRoutes)
+app.use("/api/User",UserRoutes)
 
 let port=process.env.PORT||5000
 

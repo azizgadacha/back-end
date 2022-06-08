@@ -3,6 +3,10 @@ const User =require( '../model/user');
 const notification = require("../model/notification");
 const Joi = require('joi');
 const mongoose = require("mongoose");
+const Widget = require("../model/Widget");
+const data = require("../model/data");
+const activeSession = require("../model/activeSession");
+const forget = require("../model/ForgetToken");
 
 
 //Add inside Workspace
@@ -65,7 +69,7 @@ exports.addworkspace=async (req,res)=>{
         .then((users)=>{
             const query={
                 superior_id:superior_id,
-                WorkspaceName,
+                WorkspaceName:WorkspaceName.toLowercase(),
                 description
             };
             Workspace.findOne({WorkspaceName:WorkspaceName.toLowerCase(),superior_id:superior_id}).then((w1)=> {
@@ -104,8 +108,8 @@ exports.deleteworkspace=  async (req, res,next) => {
             validation = false
         if (validation) {
             var item = await Workspace.findOne({_id: id});
+
             if (item != null) {
-                const listNotification=await notification.deleteMany({idNotified: item._id})
 
                 stack.push(item);
                 workspaceitems.push(item)
@@ -124,6 +128,9 @@ exports.deleteworkspace=  async (req, res,next) => {
                 for (item of descendants) {
                     await Workspace.findByIdAndRemove(item.toString())
                     let ListNotification = await notification.deleteMany({idNotified: item._id})
+                    await  Widget.deleteMany({superior_id:item._id})
+                  await   data.updateOne({}, {$pull: {usedIn: {superiorID:item._id}}})
+
 
                 }
                 res.json({success: true, workspaceitems})
@@ -277,6 +284,7 @@ exports.getinsideworkspace=  async (req, res, next) => {
                                 workres = worksp
                             }}
                     } else {
+                        console.log('lomooo4')
                         console.log('lomooo4')
 console.log("eeeee" )
 console.log(workres._id )

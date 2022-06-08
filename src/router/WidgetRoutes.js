@@ -33,7 +33,7 @@ const { checkToken } =require( '../config/safeRoutes');
 const router = express.Router();
 
 
-const {lpm} = require("../config/lpm");
+
 
 //import  Data
 
