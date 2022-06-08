@@ -63,14 +63,14 @@ io.on('connection',(socket)=>{
  })
 
  socket.on("send_Notification",(data)=>{
-    // for (let item of data.NotificationListe ){
+    for (let item of data.NotificationListe ){
 console.log("mloozp")
 console.log(data)
-         let{exist,index}= find(data.UserId,UserConnected)
+         let{exist,index}= find(item.UserId,UserConnected)
    if(exist) {
-   io.to(UserConnected[index].SocketId).emit("send_Notification_to_user", {notification: {user:data.User,notification:data.notification,name:data.name}})
+   io.to(UserConnected[index].SocketId).emit("send_Notification_to_user", {notification: {user:item.User,notification:item.notification,name:item.name}})
    }
- //}
+ }
  })
 
 socket.on("RemoveShareNotification",(data)=>{
