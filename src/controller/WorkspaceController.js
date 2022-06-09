@@ -284,6 +284,7 @@ exports.getinsideworkspace=  async (req, res, next) => {
 
                         if ((workres._id != worksp.superior_id)) {
 
+
                             exist = false
                             break
                         } else {
@@ -375,6 +376,10 @@ exports.removeShare= async (req, res,next) => {
                             notification.findOneAndDelete({idNotified:Workspace._id,receiver:userId})
                                 .then((notification)=>{
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> d84bd8767350858b0ec574f86403f56100f0e433
                                         res.json({success: true, Workspace,notification:notification})
 
                                 }).catch(()=>{
