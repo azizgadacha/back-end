@@ -119,27 +119,41 @@ if(widgetexist) {
     res.json({ success: false,Existance:true, msg: "widget with the same name already exist",})
 
 }else{
-    data.find({usedIn:{ $elemMatch : { superiorID:superiorID,WidgetName:newName.toLowerCase(), type:{$in:["Rate", "Donuts","Bar"]}} }}).then((DataWidget)=> {
+    data.find({usedIn:{ $elemMatch : { superiorID:superiorID,WidgetName:newName.toLowerCase(), type:{$in:["Rate", "Donuts","Bar"]}} }}).then(async (DataWidget) => {
         if (DataWidget.length > 0) {
 
-            res.json({ success: false,Existance:true, msg: "widget with the same name already exist",})
+            res.json({success: false, Existance: true, msg: "widget with the same name already exist",})
 
-        }else{
-
-
-
-                    Widget.findOneAndUpdate({ _id: idWidget },{WidgetName:newName.toLowerCase()}).then((widget) => {
-                    if (widget){
-                        widget.WidgetName=newName.toLowerCase()
-
-                        res.json({ success: true,widget })}
-                    else
-                        res.json({ success: false, })
+        } else {
 
 
+            let Oldwidget = await Widget.findOne({_id: idWidget},)
 
-                })
-            }})}})}
+            Widget.findOneAndUpdate({_id: idWidget}, {WidgetName: newName.toLowerCase()}).then((widget) => {
+                if (widget) {
+                    widget.WidgetName = newName.toLowerCase()
+                    console.log("sali")
+                    console.log(widget)
+                    res.json({
+                        success: true,
+                        widget: {
+                            _id: widget._id,
+                            superior_id: widget.superior_id,
+                            WidgetName: widget.WidgetName,
+                            type: widget.type,
+                            label: widget.label,
+                            oldName:Oldwidget.WidgetName,
+                            dataWidget: widget.dataWidget,
+                            date: widget.date
+                        }
+                    })
+                } else
+                    res.json({success: false,})
+
+
+            })
+        }
+    })}})}
             else
                 res.json({ success: false,msg:"Widget No Longer Exist" })
 
