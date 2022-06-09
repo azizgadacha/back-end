@@ -132,8 +132,6 @@ if(widgetexist) {
             Widget.findOneAndUpdate({_id: idWidget}, {WidgetName: newName.toLowerCase()}).then((widget) => {
                 if (widget) {
                     widget.WidgetName = newName.toLowerCase()
-                    console.log("sali")
-                    console.log(widget)
                     res.json({
                         success: true,
                         widget: {

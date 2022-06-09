@@ -272,30 +272,21 @@ exports.getinsideworkspace=  async (req, res, next) => {
                             workres = worksp
                         } else {
 
-                            console.log('lomooo')
                             if ((worksp.superior_id != user_id)) {
-                                console.log('lomooo2')
 
                                 exist = false
                                 break
                             } else {
-                                console.log('lomooo3')
                                 listeName.push([worksp.WorkspaceName,worksp._id])
                                 workres = worksp
                             }}
                     } else {
-                        console.log('lomooo4')
-                        console.log('lomooo4')
-console.log("eeeee" )
-console.log(workres._id )
-console.log(workres._id )
+
                         if ((workres._id != worksp.superior_id)) {
-                            console.log('lomooo5')
 
                             exist = false
                             break
                         } else {
-                            console.log('lomooo6')
 
                             listeName.push([worksp.WorkspaceName,worksp._id])
 
@@ -384,7 +375,6 @@ exports.removeShare= async (req, res,next) => {
                             notification.findOneAndDelete({idNotified:Workspace._id,receiver:userId})
                                 .then((notification)=>{
 
-console.log(notification)
                                         res.json({success: true, Workspace,notification:notification})
 
                                 }).catch(()=>{

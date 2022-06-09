@@ -260,7 +260,7 @@ exports.getall=(req, res) => {
         res.json({ success: true, users });
 
     }).catch((e) =>
-    {console.log('eeeeee')
+    {
         console.log(e)
         res.json({ success: false })})
 
@@ -466,8 +466,7 @@ exports.registre=async (req,res) => {
                                             text: ` add ed  a new user named `
                                         })
 console.log("eerrr")
-console.log(noti)
-console.log(u)
+
                                         NotificationListe.push({user:sender,notification:noti,NameShared:u.username,UserId:item._id} )
                                     }
                                     res.json({

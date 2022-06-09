@@ -44,7 +44,6 @@ app.use("/api/User",UserRoutes)
 let port=process.env.PORT||5000
 
 const server=app.listen(port,()=>{
- console.log("im working")
 })
 
 let UserConnected=[]
@@ -64,8 +63,7 @@ io.on('connection',(socket)=>{
 
  socket.on("send_Notification",(data)=>{
     for (let item of data.NotificationListe ){
-console.log("mloozp")
-console.log(item)
+
          let{exist,index}= find(item.UserId,UserConnected)
    if(exist) {
    io.to(UserConnected[index].SocketId).emit("send_Notification_to_user", {notification: {user:item.user,notification:item.notification,name:item.NameShared}})
@@ -74,13 +72,11 @@ console.log(item)
  })
 
 socket.on("RemoveShareNotification",(data)=>{
-    console.log("wasahbi savaa")
-    console.log(data)
+
 
     for (let item of data.NotificationListe ){
     let{exist,index}= find(item.receiver,UserConnected)
    if(exist) {
-       console.log("wasahbi savaa")
    io.to(UserConnected[index].SocketId).emit("delete_Notification_from_user", {notification: item._id})
    }
 
